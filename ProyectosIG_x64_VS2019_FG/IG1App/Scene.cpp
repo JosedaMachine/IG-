@@ -17,6 +17,10 @@ void Scene::init()
 	Texture* text = new Texture();
 	text->load("../Bmps/baldosaP.bmp");
 	gTextures.push_back(text);
+	
+	Texture* caja = new Texture();
+	caja->load("../Bmps/container.bmp");
+	gTextures.push_back(caja);
 
 	// allocate memory and load resources
 	// Lights
@@ -49,16 +53,18 @@ void Scene::init()
 	else if (mid == 1) {
 		
 		gObjects.push_back(new EjesRGB(400.0));
-		//gObjects.push_back(new Caja(200.));
 		gObjects.push_back(new Suelo(700, 700, 5, 5));
 		gObjects.back()->setTexture(t);
 		gObjects.back()->setModelMat(glm::rotate(dmat4(1), radians(-90.0), dvec3(1, 0, 0)));
 
-		gObjects.push_back(new Estrella3D(200, 8, 200));
+		/*gObjects.push_back(new Estrella3D(200, 4, 200));
 		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 100, 0)));
-		gObjects.back()->setTexture(text);
+		gObjects.back()->setTexture(text);*/
 
+
+		gObjects.push_back(new Caja(200.));
+		gObjects.back()->setTexture(caja);
 	}
 
 }

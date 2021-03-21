@@ -211,7 +211,7 @@ void Estrella3D::render(glm::dmat4 const& modelViewMat) const
 
 
 		mTexture->unbind();
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glLineWidth(1);
 		glColor3d(1, 1, 1);
 	}
@@ -226,14 +226,12 @@ void Estrella3D::update() {
 	setModelMat(rotate(dmat4(1), -radians(angZ), dvec3(0, 1, 0)) * modelMat()); //Pasamos negativo porque los ángulos pues son iguales para todos los sitios
 
 	setModelMat(rotate(modelMat(), -radians(angY), dvec3(0, 0, 1)));
-
-
 }
 //-------------------------------------------------------------------------
 
 Caja::Caja(GLdouble ld)
 {
-	mMesh = Mesh::generaContCubo(ld);
+	mMesh = Mesh::generaContCuboTexCor(ld);
 }
 
 Caja::~Caja()
@@ -246,13 +244,17 @@ void Caja::render(glm::dmat4 const& modelViewMat) const
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		glColor3d(mColor.r, mColor.g, mColor.b);
+
+		mTexture->bind(GL_REPLACE);
 		upload(aMat);
-		glPolygonMode(GL_BACK, GL_LINE);
-		glPolygonMode(GL_FRONT, GL_LINE);
+		/*glPolygonMode(GL_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT, GL_LINE);*/
+
 		mMesh->render();
 
+		mTexture->unbind();
 		//Se restauran los valores por defecto
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glLineWidth(1);
 		glColor3d(1, 1, 1);
 	}

@@ -222,7 +222,6 @@ Mesh* Mesh::generaEstrella3D(GLdouble re, GLuint np, GLdouble h)
 }
 Mesh* Mesh::generaContCubo(GLdouble ld)
 {
-
 	Mesh* mesh = new Mesh();
 
 	mesh->mPrimitive = GL_TRIANGLE_STRIP;
@@ -261,58 +260,43 @@ Mesh* Mesh::generaEstrellaTexCor(GLdouble re, GLuint np, GLdouble h)
 
 	m->vTexCoords.reserve(m->mNumVertices);
 
-	/*
-
-
-	float ang = 90;
-	vec2 c(0, 0);
-
-	m->vTexCoords.emplace_back(c.x, c.y, 0);
-	for (int i = 0; i < m->mNumVertices - 1; i++) {
-		if (i % 2 == 0) {
-			m->vTexCoords.emplace_back(c.x + re * cos(radians(ang)), c.y + re * sin(radians(ang)), h);
-		}
-		else m->vTexCoords.emplace_back(c.x + (re / 3) * cos(radians(ang)), c.y + (re / 3) * sin(radians(ang)), h);
-		ang = ang + 360.0 / (2.0f * np);
-	}*/
-
 	float ang = 90;
 	vec2 c(0, 0);
 	m->vTexCoords.emplace_back(0.5f, 0.5f);
 
 	for (int i = 0; i < m->mNumVertices - 1; i++) {
-
 		float newAng = radians(ang);
-
-
 		float x, y;
 
 		if (i % 2 == 0) {
 			
 			x = cos(newAng);
 			y = sin(newAng);
-
-
 			//Paso las coordenadas (x,y) de sus cuadrantes, a las coordenadas (u,v).
-			
-
 			y =+ y*0.5f + 0.5f;
 			x =+ x*0.5f + 0.5f;
-
 			m->vTexCoords.emplace_back(x, y);
 		}
-		else
-		{
+		else{
 			x = cos(newAng) / 2;
 			y = sin(newAng) / 2;
-
 			y = +y * 0.5f + 0.5f;
 			x = +x * 0.5f + 0.5f;
-
 			m->vTexCoords.emplace_back(x, y);
 		}
 		ang = ang + 360.0 / (2.0f * np);
 	}
+
+	return m;
+}
+Mesh* Mesh::generaContCuboTexCor(GLdouble nl){
+	Mesh* m = Mesh::generaContCubo(nl);
+	m->vTexCoords.reserve(m->mNumVertices);
+
+	m->vTexCoords.emplace_back(0, 1.0);
+	m->vTexCoords.emplace_back(0, 0);
+	m->vTexCoords.emplace_back(1.0, 1.0);
+	m->vTexCoords.emplace_back(1.0, 0);
 
 	return m;
 }
