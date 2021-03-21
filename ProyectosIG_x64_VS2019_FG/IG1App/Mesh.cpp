@@ -1,0 +1,257 @@
+#include "Mesh.h"
+#include "CheckML.h"
+#include <fstream>
+
+using namespace std;
+using namespace glm;
+
+//-------------------------------------------------------------------------
+
+void Mesh::draw() const 
+{
+  glDrawArrays(mPrimitive, 0, size());   // primitive graphic, first index and number of elements to be rendered
+}
+//-------------------------------------------------------------------------
+
+void Mesh::render() const 
+{
+  if (vVertices.size() > 0) {  // transfer data
+	// transfer the coordinates of the vertices
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(3, GL_DOUBLE, 0, vVertices.data());  // number of coordinates per vertex, type of each coordinate, stride, pointer 
+	if (vColors.size() > 0) { // transfer colors
+	  glEnableClientState(GL_COLOR_ARRAY);
+	  glColorPointer(4, GL_DOUBLE, 0, vColors.data());  // components number (rgba=4), type of each component, stride, pointer  
+	}
+	
+	if(vTexCoords.size() > 0) { // transfer texture  data
+	  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	  glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());  // components number (rgba=4), type of each component, stride, pointer  
+	}
+
+	draw();
+
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
+  }
+}
+//-------------------------------------------------------------------------
+
+Mesh * Mesh::createRGBAxes(GLdouble l)
+{
+  Mesh* mesh = new Mesh();
+
+  mesh->mPrimitive = GL_LINES;
+
+  mesh->mNumVertices = 6;
+  mesh->vVertices.reserve(mesh->mNumVertices);
+
+  // X axis vertices
+  mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
+  mesh->vVertices.emplace_back(l, 0.0, 0.0);
+  // Y axis vertices
+  mesh->vVertices.emplace_back(0, 0.0, 0.0);
+  mesh->vVertices.emplace_back(0.0, l, 0.0);
+  // Z axis vertices
+  mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
+  mesh->vVertices.emplace_back(0.0, 0.0, l);
+
+  mesh->vColors.reserve(mesh->mNumVertices);
+  // X axis color: red  (Alpha = 1 : fully opaque)
+  mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+  mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+  // Y axis color: green
+  mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+  mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+  // Z axis color: blue
+  mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+  mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+ 
+  return mesh;
+}
+
+Mesh* Mesh::createTrianguloRGB(GLdouble rd) {
+	//Mesh* mesh = new Mesh();
+	Mesh* mesh = generaPoligono(3,rd);
+
+	mesh->mPrimitive = GL_TRIANGLES;
+
+	mesh->mNumVertices = 3;
+	mesh->vVertices.reserve(mesh->mNumVertices);//REservamos vértices
+
+	mesh->vColors.reserve(mesh->mNumVertices);//Reservamos colores
+
+	//Vértices
+	mesh->vVertices.emplace_back(0.0, 50.0, 0.0);
+	mesh->vVertices.emplace_back(-50.0, -25.0, 0.0);
+	mesh->vVertices.emplace_back(50.0, -25.0, 0.0);
+
+	//Coloritos
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+
+	return mesh;
+}
+
+Mesh* Mesh::generaPoligono(GLuint numL, GLdouble rd) {
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_LINE_LOOP;
+
+	mesh->mNumVertices = numL;
+	mesh->vVertices.reserve(mesh->mNumVertices);//REservamos vértices
+
+	//mesh->vColors.reserve(mesh->mNumVertices);//Reservamos colores
+
+	float ang = (360.0 / numL) + 90;
+	vec2 c(0, 0);
+
+	for (int i = 0; i < numL; i++) {
+		mesh->vVertices.emplace_back(c.x + rd * cos(radians(ang)), c.y + rd * sin(radians(ang)), 0);
+		ang = ang + 360.0 / numL;
+	}
+
+
+	return mesh;
+}
+
+Mesh* Mesh::generaSierpinski(GLdouble rd, GLuint numP) {
+	Mesh* triangulo = generaPoligono(3, rd);
+
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_POINTS;
+
+	mesh->mNumVertices = numP;
+	mesh->vVertices.reserve(mesh->mNumVertices);
+
+	dvec3 p = triangulo->vertices()[rand() % 3];
+	dvec3 p1;
+
+	dvec3 vertices[3] = { triangulo->vertices()[0], triangulo->vertices()[1], triangulo->vertices()[2] };
+
+	// An arbitrary initial point inside the triangle
+	mesh->vVertices.emplace_back(p);
+	// compute and store N-1 new points
+	for (int i = 1; i < numP; ++i) {
+		int j = rand() % 3; // pick a vertex at random
+		// Compute the point halfway between the selected vertex
+		// and the previous point
+		p1 = (p + vertices[j]) / 2.0;
+		mesh->vVertices.emplace_back(p1);
+		p = p1;
+	}
+
+	delete triangulo; triangulo = nullptr;
+	return mesh;
+}
+
+Mesh* Mesh::generaRectangulo(GLdouble w, GLdouble h) {
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 4;
+	mesh->vVertices.reserve(mesh->mNumVertices);//REservamos vértices
+
+	//mesh->vColors.reserve(mesh->mNumVertices);//Reservamos colores
+
+	mesh->vVertices.emplace_back(-w/2, h/2, 0.0);
+	mesh->vVertices.emplace_back(-w/2, -h/2, 0.0);
+	mesh->vVertices.emplace_back(w/2, h/2, 0.0);
+	mesh->vVertices.emplace_back(w / 2, -h / 2, 0.0);
+
+	return mesh;
+}
+
+Mesh* Mesh::generaRectanguloRGB(GLdouble w, GLdouble h) {
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 4;
+	mesh->vVertices.reserve(mesh->mNumVertices);//REservamos vértices
+
+	mesh->vColors.reserve(mesh->mNumVertices);//Reservamos colores
+
+	//mesh->vColors.reserve(mesh->mNumVertices);//Reservamos colores
+
+	mesh->vVertices.emplace_back(-w / 2, h / 2, 0.0);
+	mesh->vVertices.emplace_back(-w / 2, -h / 2, 0.0);
+	mesh->vVertices.emplace_back(w / 2, h / 2, 0.0);
+	mesh->vVertices.emplace_back(w / 2, -h / 2, 0.0);
+
+
+	//Coloritos
+	mesh->vColors.emplace_back(1.0, 0.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 0.0, 1.0, 1.0);
+	mesh->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	return mesh;
+}
+
+Mesh* Mesh::generaEstrella3D(GLdouble re, GLuint np, GLdouble h)
+{
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_TRIANGLE_FAN;
+
+	mesh->mNumVertices = 2 * np + 2;
+	mesh->vVertices.reserve(mesh->mNumVertices);//REservamos vértices
+
+	//mesh->vColors.reserve(mesh->mNumVertices);//Reservamos colores
+
+	float ang = 90;
+	vec2 c(0, 0);
+
+	mesh->vVertices.emplace_back(c.x , c.y, 0);
+	for (int i = 0; i < mesh->mNumVertices - 1 ; i++) {
+		if (i % 2 == 0) {
+			mesh->vVertices.emplace_back(c.x + re * cos(radians(ang)), c.y + re * sin(radians(ang)), h);
+		}
+		else mesh->vVertices.emplace_back(c.x + (re/3) * cos(radians(ang)), c.y + (re/3) * sin(radians(ang)), h);
+		ang = ang + 360.0 / (2.0f * np);
+	}
+
+
+	return mesh;
+}
+Mesh* Mesh::generaContCubo(GLdouble ld)
+{
+
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 10;
+	mesh->vVertices.reserve(mesh->mNumVertices);//REservamos vértices
+
+
+	mesh->vVertices.emplace_back(-ld/2,ld/2,ld/2); //v0
+	mesh->vVertices.emplace_back(-ld/2,-ld/2,ld/2); //v1
+	mesh->vVertices.emplace_back(ld/2,ld/2,ld/2); //v2
+	mesh->vVertices.emplace_back(ld/2,-ld/2,ld/2); //v3
+	mesh->vVertices.emplace_back(ld/2,ld/2,-ld/2); //v4
+	mesh->vVertices.emplace_back(ld/2,-ld/2,-ld/2); //v5
+	mesh->vVertices.emplace_back(-ld/2,ld/2,-ld/2); //v6
+	mesh->vVertices.emplace_back(-ld/2,-ld/2,-ld/2); //v7
+	mesh->vVertices.emplace_back(-ld/2,ld/2,ld/2); //v8
+	mesh->vVertices.emplace_back(-ld/2,-ld/2,ld/2); //v9
+
+	return mesh;
+}
+Mesh* Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
+{
+	Mesh* m = Mesh::generaRectangulo(w, h);
+
+	m->vTexCoords.reserve(m->mNumVertices); 
+	m->vTexCoords.emplace_back(0, 1.0*rh);  
+	m->vTexCoords.emplace_back(0, 0); 
+	m->vTexCoords.emplace_back(1.0*rw, 1.0*rh);
+	m->vTexCoords.emplace_back(1.0*rw, 0);
+	return m;
+}
+//-------------------------------------------------------------------------
+

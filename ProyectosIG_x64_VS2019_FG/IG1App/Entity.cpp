@@ -1,0 +1,281 @@
+#include "Entity.h"
+
+#include <gtc/matrix_transform.hpp>  
+#include <gtc/type_ptr.hpp>
+
+using namespace glm;
+
+//-------------------------------------------------------------------------
+
+void Abs_Entity::setColor(dvec4 mCol)
+{
+	mColor = mCol;
+}
+
+void Abs_Entity::upload(dmat4 const& modelViewMat) const
+{ 
+	glMatrixMode(GL_MODELVIEW);
+	glLoadMatrixd(value_ptr(modelViewMat));  // transfers modelView matrix to the GPU
+}
+//-------------------------------------------------------------------------
+//-------------------------------------------------------------------------
+
+EjesRGB::EjesRGB(GLdouble l): Abs_Entity()
+{
+  mMesh = Mesh::createRGBAxes(l);
+}
+//-------------------------------------------------------------------------
+
+EjesRGB::~EjesRGB() 
+{ 
+	delete mMesh; mMesh = nullptr; 
+};
+//-------------------------------------------------------------------------
+
+void EjesRGB::render(dmat4 const& modelViewMat) const 
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		glLineWidth(4);
+		mMesh->render();
+		glLineWidth(1);
+	}
+}
+
+TrianguloRGB::TrianguloRGB(GLdouble rd, float rad) {
+	mMesh = Mesh::createTrianguloRGB(rd);
+
+	radius = rad;
+	angLoc = 0;
+	angGlob = 0;
+}
+
+TrianguloRGB::~TrianguloRGB() {
+	delete mMesh; mMesh = nullptr;
+
+}
+void TrianguloRGB::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+
+		//glPolygonMode(GL_BACK, GL_LINE); 
+		glPolygonMode(GL_BACK, GL_LINE);
+		mMesh->render();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+}
+
+void TrianguloRGB::update() {
+	angLoc = angLoc + 10.0;
+	angGlob = angGlob + 0.05;
+
+	setModelMat(translate(dmat4(1), dvec3(radius* cos(angGlob), radius * sin(angGlob),0)));
+
+	setModelMat(rotate(modelMat(), radians(-angLoc), dvec3(0, 0, 1))); //Pasamos negativo porque los ángulos pues son iguales para todos los sitios
+
+}
+
+Poligono::Poligono(GLuint numL, GLdouble rd) {
+	mMesh = Mesh::generaPoligono(numL,  rd);
+}
+
+Poligono::~Poligono() {
+	delete mMesh; mMesh = nullptr;
+
+}
+
+void Poligono::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		glColor3d(mColor.r, mColor.g, mColor.b);
+		glLineWidth(2);
+		upload(aMat);
+		mMesh->render();
+
+		glLineWidth(1);
+		glColor3d(1, 1, 1);
+	}
+}
+
+SerPinspi::SerPinspi(GLuint rd, GLdouble numP) {
+	mMesh = Mesh::generaSierpinski(rd, numP);
+}
+
+SerPinspi::~SerPinspi()
+{
+	delete mMesh; mMesh = nullptr;
+}
+
+void SerPinspi::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		glColor3d(mColor.r, mColor.g, mColor.b);
+		glLineWidth(2);
+		upload(aMat);
+		mMesh->render();
+
+		glLineWidth(1);
+		glColor3d(1, 1, 1);
+	}
+}
+
+Rectangulo::Rectangulo(GLdouble w, GLdouble h) {
+	mMesh = Mesh::generaRectangulo(w, h);
+}
+
+Rectangulo::~Rectangulo()
+{
+	delete mMesh; mMesh = nullptr;
+}
+
+void Rectangulo::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		glColor3d(mColor.r, mColor.g, mColor.b);
+		glLineWidth(2);
+		upload(aMat);
+		glPolygonMode(GL_BACK, GL_LINE);
+		mMesh->render();
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glLineWidth(1);
+		glColor3d(1, 1, 1);
+	}
+}
+
+
+
+RectanguloRGB::RectanguloRGB(GLdouble w, GLdouble h) {
+	mMesh = Mesh::generaRectanguloRGB(w, h);
+}
+
+RectanguloRGB::~RectanguloRGB()
+{
+	delete mMesh; mMesh = nullptr;
+}
+
+void RectanguloRGB::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		glColor3d(mColor.r, mColor.g, mColor.b);
+		glLineWidth(2);
+		upload(aMat);
+		glPolygonMode(GL_BACK, GL_POINT);
+		mMesh->render();
+
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glLineWidth(1);
+		glColor3d(1, 1, 1);
+	}
+}
+
+
+Estrella3D::Estrella3D(GLdouble re, GLuint np, GLdouble h) {
+	mMesh = Mesh::generaEstrella3D(re, np, h);
+
+	angZ = 0;
+	angY = 0;
+}
+
+Estrella3D::~Estrella3D()
+{
+	delete mMesh; mMesh = nullptr;
+}
+
+void Estrella3D::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		glColor3d(mColor.r, mColor.g, mColor.b);
+		glLineWidth(2);
+		upload(aMat);
+		glPolygonMode(GL_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT, GL_LINE);
+		mMesh->render();
+
+		aMat = modelViewMat * rotate(modelMat(), radians(180.0), dvec3(1, 0, 0));
+		upload(aMat);
+		mMesh->render();
+
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glLineWidth(1);
+		glColor3d(1, 1, 1);
+	}
+}
+
+void Estrella3D::update() {
+	angZ = angZ + 1.0f;
+	angY = angY + 1.0f;
+
+	setModelMat(rotate(modelMat(), radians(angZ), dvec3(0, 0, 1))); //Pasamos negativo porque los ángulos pues son iguales para todos los sitios
+
+	setModelMat(rotate(modelMat(), radians(angY), dvec3(0, 1, 0)));
+}
+//-------------------------------------------------------------------------
+
+Caja::Caja(GLdouble ld)
+{
+	mMesh = Mesh::generaContCubo(ld);
+}
+
+Caja::~Caja()
+{
+	delete mMesh; mMesh = nullptr;
+}
+
+void Caja::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		glColor3d(mColor.r, mColor.g, mColor.b);
+		upload(aMat);
+		glPolygonMode(GL_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT, GL_LINE);
+		mMesh->render();
+
+		//Se restauran los valores por defecto
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glLineWidth(1);
+		glColor3d(1, 1, 1);
+	}
+}
+
+void Caja::update()
+{
+}
+
+Suelo::Suelo(GLdouble w, GLdouble h, GLuint rw, GLuint  rh)
+{
+	mMesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);
+}
+
+Suelo::~Suelo()
+{
+	delete mMesh; mMesh = nullptr;
+}
+
+void Suelo::render(glm::dmat4 const& modelViewMat) const
+{
+	if(mMesh!= nullptr)
+	{
+		dmat4 aMat = modelViewMat * mModelMat;
+		upload(aMat);	
+		mTexture->bind(GL_REPLACE);
+
+		mMesh->render();
+
+		mTexture->unbind();
+	}
+}
+
+void Suelo::update()
+{
+}
