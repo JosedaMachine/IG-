@@ -221,9 +221,13 @@ void Estrella3D::update() {
 	angZ = angZ + 1.0f;
 	angY = angY + 1.0f;
 
-	setModelMat(rotate(modelMat(), radians(angZ), dvec3(0, 0, 1))); //Pasamos negativo porque los ángulos pues son iguales para todos los sitios
+	
 
-	setModelMat(rotate(modelMat(), radians(angY), dvec3(0, 1, 0)));
+	setModelMat(rotate(dmat4(1), -radians(angZ), dvec3(0, 1, 0)) * modelMat()); //Pasamos negativo porque los ángulos pues son iguales para todos los sitios
+
+	setModelMat(rotate(modelMat(), -radians(angY), dvec3(0, 0, 1)));
+
+
 }
 //-------------------------------------------------------------------------
 
