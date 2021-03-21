@@ -14,6 +14,10 @@ void Scene::init()
 	t->load("../Bmps/baldosaC.bmp");
 	gTextures.push_back(t);
 
+	Texture* text = new Texture();
+	text->load("../Bmps/baldosaP.bmp");
+	gTextures.push_back(text);
+
 	// allocate memory and load resources
 	// Lights
 	// Textures
@@ -22,14 +26,14 @@ void Scene::init()
 
 	if (mid == 0) {
 
-		//Rectángulo
+		//Rectï¿½ngulo
 		/*gObjects.push_back(new RectanguloRGB(800, 800));
 		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 0, -100)));*/
 
 		//gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 		/*gObjects.push_back(new Poligono(100, 300));
 		gObjects.back()->setColor(dvec4(1.0, 1.0, 0.0, 0.0));*/
-		/*gObjects.push_back(new Poligono(360, 200)); //igual hay que meterle 360 lados porque un círculo tiene 360 grados //Igual no
+		/*gObjects.push_back(new Poligono(360, 200)); //igual hay que meterle 360 lados porque un cï¿½rculo tiene 360 grados //Igual no
 		gObjects.back()->setColor(dvec4(1.0, 0.07, 0.57, 0.0));*/
 
 
@@ -38,19 +42,23 @@ void Scene::init()
 		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));*/
 
 
-		//Triángulo
+		//Triï¿½ngulo
 		/*gObjects.push_back(new TrianguloRGB(20, 200));
 		gObjects.back()->setModelMat(translate(gObjects.back()->modelMat(), dvec3(200, 0, 0)));*/
 	}
 	else if (mid == 1) {
-		//gObjects.push_back(new EjesRGB(400.0));
-		gObjects.push_back(new Estrella3D(200, 4, 200));
-		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+		
+		gObjects.push_back(new EjesRGB(400.0));
 		//gObjects.push_back(new Caja(200.));
 		gObjects.push_back(new Suelo(700, 700, 5, 5));
 		gObjects.back()->setTexture(t);
-		//gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 		gObjects.back()->setModelMat(glm::rotate(dmat4(1), radians(-90.0), dvec3(1, 0, 0)));
+
+		gObjects.push_back(new Estrella3D(200, 8, 200));
+		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 100, 0)));
+		gObjects.back()->setTexture(text);
+
 	}
 
 }

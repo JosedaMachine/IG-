@@ -179,7 +179,7 @@ void RectanguloRGB::render(glm::dmat4 const& modelViewMat) const
 
 
 Estrella3D::Estrella3D(GLdouble re, GLuint np, GLdouble h) {
-	mMesh = Mesh::generaEstrella3D(re, np, h);
+	mMesh = Mesh::generaEstrellaTexCor(re, np,h);
 
 	angZ = 0;
 	angY = 0;
@@ -196,15 +196,21 @@ void Estrella3D::render(glm::dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		glColor3d(mColor.r, mColor.g, mColor.b);
 		glLineWidth(2);
+
+		mTexture->bind(GL_REPLACE);
+
 		upload(aMat);
-		glPolygonMode(GL_BACK, GL_LINE);
-		glPolygonMode(GL_FRONT, GL_LINE);
+		/*glPolygonMode(GL_BACK, GL_LINE);
+		glPolygonMode(GL_FRONT, GL_LINE);*/
+
 		mMesh->render();
 
 		aMat = modelViewMat * rotate(modelMat(), radians(180.0), dvec3(1, 0, 0));
 		upload(aMat);
 		mMesh->render();
 
+
+		mTexture->unbind();
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glLineWidth(1);
 		glColor3d(1, 1, 1);
@@ -269,9 +275,7 @@ void Suelo::render(glm::dmat4 const& modelViewMat) const
 		dmat4 aMat = modelViewMat * mModelMat;
 		upload(aMat);	
 		mTexture->bind(GL_REPLACE);
-
 		mMesh->render();
-
 		mTexture->unbind();
 	}
 }

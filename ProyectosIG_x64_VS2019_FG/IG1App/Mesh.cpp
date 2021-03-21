@@ -208,10 +208,12 @@ Mesh* Mesh::generaEstrella3D(GLdouble re, GLuint np, GLdouble h)
 
 	mesh->vVertices.emplace_back(c.x , c.y, 0);
 	for (int i = 0; i < mesh->mNumVertices - 1 ; i++) {
+
+		float newAng = radians(ang);
 		if (i % 2 == 0) {
-			mesh->vVertices.emplace_back(c.x + re * cos(radians(ang)), c.y + re * sin(radians(ang)), h);
+			mesh->vVertices.emplace_back(c.x + re * cos(newAng), c.y + re * sin(newAng), h);
 		}
-		else mesh->vVertices.emplace_back(c.x + (re/3) * cos(radians(ang)), c.y + (re/3) * sin(radians(ang)), h);
+		else mesh->vVertices.emplace_back(c.x + (re/2) * cos(newAng), c.y + (re/2) * sin(newAng), h);
 		ang = ang + 360.0 / (2.0f * np);
 	}
 
@@ -251,6 +253,67 @@ Mesh* Mesh::generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint rh)
 	m->vTexCoords.emplace_back(0, 0); 
 	m->vTexCoords.emplace_back(1.0*rw, 1.0*rh);
 	m->vTexCoords.emplace_back(1.0*rw, 0);
+	return m;
+}
+Mesh* Mesh::generaEstrellaTexCor(GLdouble re, GLuint np, GLdouble h)
+{
+	Mesh* m = Mesh::generaEstrella3D(re, np, h);
+
+	m->vTexCoords.reserve(m->mNumVertices);
+
+	/*
+
+
+	float ang = 90;
+	vec2 c(0, 0);
+
+	m->vTexCoords.emplace_back(c.x, c.y, 0);
+	for (int i = 0; i < m->mNumVertices - 1; i++) {
+		if (i % 2 == 0) {
+			m->vTexCoords.emplace_back(c.x + re * cos(radians(ang)), c.y + re * sin(radians(ang)), h);
+		}
+		else m->vTexCoords.emplace_back(c.x + (re / 3) * cos(radians(ang)), c.y + (re / 3) * sin(radians(ang)), h);
+		ang = ang + 360.0 / (2.0f * np);
+	}*/
+
+	float ang = 90;
+	vec2 c(0, 0);
+	m->vTexCoords.emplace_back(0.5f, 0.5f);
+
+	for (int i = 0; i < m->mNumVertices - 1; i++) {
+
+		float newAng = radians(ang);
+
+
+		float x, y;
+
+		if (i % 2 == 0) {
+			
+			x = cos(newAng);
+			y = sin(newAng);
+
+
+			//Paso las coordenadas (x,y) de sus cuadrantes, a las coordenadas (u,v).
+			
+
+			y =+ y*0.5f + 0.5f;
+			x =+ x*0.5f + 0.5f;
+
+			m->vTexCoords.emplace_back(x, y);
+		}
+		else
+		{
+			x = cos(newAng) / 2;
+			y = sin(newAng) / 2;
+
+			y = +y * 0.5f + 0.5f;
+			x = +x * 0.5f + 0.5f;
+
+			m->vTexCoords.emplace_back(x, y);
+		}
+		ang = ang + 360.0 / (2.0f * np);
+	}
+
 	return m;
 }
 //-------------------------------------------------------------------------
