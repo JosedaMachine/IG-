@@ -240,33 +240,41 @@ Caja::~Caja()
 	delete mMesh; mMesh = nullptr;
 }
 
+/// <summary>
+/// Renderiza la caja
+/// </summary>
+/// <param name="modelViewMat"></param>
 void Caja::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		glColor3d(mColor.r, mColor.g, mColor.b);
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);	//No se ve lo de atrás
-		
-		mTexture->bind(GL_REPLACE);
-
-
 		upload(aMat);
 
-		/*glPolygonMode(GL_BACK, GL_LINE);
-		glPolygonMode(GL_FRONT, GL_LINE);*/
 
+		//Activamos el modo cool 
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);//No se ve lo de atrás
+		
+		//Hacemos Bind de la texture
+		mTexture->bind(GL_REPLACE);
+
+		//Renderizamos
 		mMesh->render();
+		//Quitamos la textura
 		mTexture->unbind();
-		glCullFace(GL_FRONT);	//No se ve lo de delante
-		interior->bind(GL_REPLACE);
 
+		glCullFace(GL_FRONT);	//No se ve lo de delante
+
+		interior->bind(GL_REPLACE);
 
 		upload(aMat);
 		mMesh->render();
 
 		interior->unbind();
+
 		glDisable(GL_CULL_FACE);
+
 		//Se restauran los valores por defecto
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glLineWidth(1);
