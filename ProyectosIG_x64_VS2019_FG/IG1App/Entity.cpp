@@ -232,6 +232,7 @@ void Estrella3D::update() {
 Caja::Caja(GLdouble ld, Texture* interi)
 {
 	mMesh = Mesh::generaContCuboTexCor(ld);
+	interior = interi;
 }
 
 Caja::~Caja()
@@ -244,6 +245,8 @@ void Caja::render(glm::dmat4 const& modelViewMat) const
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		glColor3d(mColor.r, mColor.g, mColor.b);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);	//No se ve lo de atrás
 		
 		mTexture->bind(GL_REPLACE);
 
@@ -255,12 +258,13 @@ void Caja::render(glm::dmat4 const& modelViewMat) const
 
 		mMesh->render();
 		mTexture->unbind();
-
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT / GL_BACK);
+		glCullFace(GL_FRONT);	//No se ve lo de delante
 		interior->bind(GL_REPLACE);
 
+
+		upload(aMat);
 		mMesh->render();
+
 		interior->unbind();
 		glDisable(GL_CULL_FACE);
 		//Se restauran los valores por defecto
