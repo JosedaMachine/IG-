@@ -8,6 +8,8 @@
 #include "Mesh.h"
 #include "Texture.h"
 
+class IG1App;
+
 using namespace glm;
 //-------------------------------------------------------------------------
 
@@ -139,6 +141,19 @@ public:
 
 private:
 	
+};
+
+class Foto : public Abs_Entity
+{
+public:
+	explicit Foto(GLsizei width, GLsizei height, GLuint buffer);
+	~Foto();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+
+	virtual void update();
+
+private:
+
 };
 
 //-------------------------------------------------------------------------

@@ -34,6 +34,9 @@ public:
 
 	void run();    // the main event processing loop
 	void close();  // the application
+
+	int winWidth() { return mWinW; }
+	int winheigth() { return mWinH; }
 	
 protected:
 

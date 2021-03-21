@@ -2,6 +2,7 @@
 
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
+#include "IG1App.h"
 
 using namespace glm;
 
@@ -310,4 +311,38 @@ void Suelo::render(glm::dmat4 const& modelViewMat) const
 
 void Suelo::update()
 {
+	
 }
+
+Foto::Foto(GLsizei width, GLsizei height, GLuint buffer)
+{
+	mTexture = new Texture();
+
+	mTexture->loadColorBuffer(width, height, buffer);
+
+	mMesh = Mesh::generaRectanguloTexCor(width, height, 1, 1);
+}
+
+Foto::~Foto()
+{
+	delete mTexture;
+}
+
+void Foto::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr)
+	{
+		dmat4 aMat = modelViewMat * mModelMat;
+		upload(aMat);
+		mTexture->bind(GL_REPLACE);
+		mMesh->render();
+		mTexture->unbind();
+	}
+}
+
+void Foto::update()
+{
+	mTexture->loadColorBuffer(IG1App::s_ig1app.winWidth(), IG1App::s_ig1app.winheigth(), GL_FRONT);
+}
+
+

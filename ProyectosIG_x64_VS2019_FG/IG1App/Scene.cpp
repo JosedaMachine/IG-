@@ -70,6 +70,13 @@ void Scene::init()
 		gObjects.push_back(new Caja(200.0, chuches));
 		gObjects.back()->setTexture(caja);
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 100, 0)));
+
+
+		gObjects.push_back(new Foto(500, 500, GL_FRONT));
+
+		Texture* sandokan = new Texture();
+		gTextures.push_back(sandokan);
+		gObjects.back()->setTexture(sandokan);
 	}
 
 }

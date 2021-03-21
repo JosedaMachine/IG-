@@ -61,4 +61,23 @@ void Texture::setWrap(GLuint wp) // GL_REPEAT, GL_CLAMP
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wp);  
   glBindTexture(GL_TEXTURE_2D, 0); 
 }
+void Texture::loadColorBuffer(GLsizei width, GLsizei height, GLuint buffer)
+{
+	if (mId == 0) init();
+
+	glReadBuffer(buffer);
+								//Identificador de la textura donde estoy
+	glBindTexture(GL_TEXTURE_2D,mId);
+
+	//Target(lo que quieres copiar) 
+	//Level (A saber, el nivel de la cámara o algo yo que se)
+	//Formato de la foto
+	//Posición x e y que quieres rederizar (esquinca de arriba a la izquieda de la foto)
+	//Ancho y alto del espacio que coges para imprimir
+	//Border(el ancho del borde)
+	glCopyTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,0,0,width,height,0);
+	glReadBuffer(GL_BACK);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
 //-------------------------------------------------------------------------

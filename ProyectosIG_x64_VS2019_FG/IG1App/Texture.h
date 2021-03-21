@@ -28,6 +28,8 @@ public:
   
   void setWrap(GLuint wp);  // GL_REPEAT, GL_CLAMP 
 
+  void loadColorBuffer(GLsizei width,GLsizei height,GLuint buffer);
+
 protected:
 
   void init();
