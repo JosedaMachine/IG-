@@ -61,10 +61,10 @@ void Scene::init()
 		gObjects.back()->setTexture(t);
 		gObjects.back()->setModelMat(glm::rotate(dmat4(1), radians(-90.0), dvec3(1, 0, 0)));
 
-		/*gObjects.push_back(new Estrella3D(200, 4, 200));
+		gObjects.push_back(new Estrella3D(100, 4, 100));
 		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 100, 0)));
-		gObjects.back()->setTexture(text);*/
+		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 300, 0)));
+		gObjects.back()->setTexture(text);
 
 
 		gObjects.push_back(new Caja(200.0, chuches));

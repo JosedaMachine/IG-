@@ -1,4 +1,4 @@
-#include "Entity.h"
+ï»¿#include "Entity.h"
 
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
@@ -74,7 +74,7 @@ void TrianguloRGB::update() {
 
 	setModelMat(translate(dmat4(1), dvec3(radius* cos(angGlob), radius * sin(angGlob),0)));
 
-	setModelMat(rotate(modelMat(), radians(-angLoc), dvec3(0, 0, 1))); //Pasamos negativo porque los ángulos pues son iguales para todos los sitios
+	setModelMat(rotate(modelMat(), radians(-angLoc), dvec3(0, 0, 1))); //Pasamos negativo porque los Ã¡ngulos pues son iguales para todos los sitios
 
 }
 
@@ -221,9 +221,9 @@ void Estrella3D::update() {
 	angZ = angZ + 1.0f;
 	angY = angY + 1.0f;
 
-	setModelMat(translate(dmat4(1), dvec3(0, 100, 0)));
+	setModelMat(translate(dmat4(1), dvec3(0, 300, 0)));
 
-	setModelMat(rotate(dmat4(1), -radians(angZ), dvec3(0, 1, 0)) * modelMat()); //Pasamos negativo porque los ángulos pues son iguales para todos los sitios
+	setModelMat(rotate(modelMat(), -radians(angZ), dvec3(0, 1, 0))); //Pasamos negativo porque los ï¿½ngulos pues son iguales para todos los sitios
 
 	setModelMat(rotate(modelMat(), -radians(angY), dvec3(0, 0, 1)));
 }
@@ -254,7 +254,7 @@ void Caja::render(glm::dmat4 const& modelViewMat) const
 
 		//Activamos el modo cool 
 		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);//No se ve lo de atrás
+		glCullFace(GL_BACK);//No se ve lo de atrÃ¡s
 		
 		//Hacemos Bind de la texture
 		mTexture->bind(GL_REPLACE);
