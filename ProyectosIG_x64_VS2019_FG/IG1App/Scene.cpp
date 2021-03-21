@@ -45,10 +45,11 @@ void Scene::init()
 	else if (mid == 1) {
 		//gObjects.push_back(new EjesRGB(400.0));
 		gObjects.push_back(new Estrella3D(200, 4, 200));
+		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 		//gObjects.push_back(new Caja(200.));
 		gObjects.push_back(new Suelo(700, 700, 5, 5));
 		gObjects.back()->setTexture(t);
-		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+		//gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 		gObjects.back()->setModelMat(glm::rotate(dmat4(1), radians(-90.0), dvec3(1, 0, 0)));
 	}
 
