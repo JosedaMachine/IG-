@@ -22,6 +22,10 @@ void Scene::init()
 	caja->load("../Bmps/container.bmp");
 	gTextures.push_back(caja);
 
+	Texture* chuches = new Texture();
+	chuches->load("../Bmps/papelC.bmp");
+	gTextures.push_back(chuches);
+
 	// allocate memory and load resources
 	// Lights
 	// Textures
@@ -63,8 +67,9 @@ void Scene::init()
 		gObjects.back()->setTexture(text);*/
 
 
-		gObjects.push_back(new Caja(200.));
+		gObjects.push_back(new Caja(200.0, chuches));
 		gObjects.back()->setTexture(caja);
+		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 100, 0)));
 	}
 
 }

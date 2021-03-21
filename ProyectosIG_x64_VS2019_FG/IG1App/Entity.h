@@ -118,13 +118,14 @@ private:
 class Caja : public Abs_Entity
 {
 public:
-	explicit Caja(GLdouble ld);
+	explicit Caja(GLdouble ld, Texture* interi);
 	~Caja();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 
 	virtual void update();
 
 private:
+	Texture* interior;
 };
 
 class Suelo : public Abs_Entity
@@ -137,6 +138,7 @@ public:
 	virtual void update();
 
 private:
+	
 };
 
 //-------------------------------------------------------------------------

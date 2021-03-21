@@ -293,10 +293,26 @@ Mesh* Mesh::generaContCuboTexCor(GLdouble nl){
 	Mesh* m = Mesh::generaContCubo(nl);
 	m->vTexCoords.reserve(m->mNumVertices);
 
-	m->vTexCoords.emplace_back(0, 1.0);
-	m->vTexCoords.emplace_back(0, 0);
-	m->vTexCoords.emplace_back(1.0, 1.0);
-	m->vTexCoords.emplace_back(1.0, 0);
+	float x = 0;
+	for (int i = 0; i < m->mNumVertices; i++) {
+		if (i % 2 == 0) {
+			m->vTexCoords.emplace_back(x, 1);
+		}
+		else {
+			m->vTexCoords.emplace_back(x, 0);
+			x = x + 1;
+		}
+	}
+	//m->vTexCoords.emplace_back(0, 1); //v0
+	//m->vTexCoords.emplace_back(0, 0); //v1
+	//m->vTexCoords.emplace_back(0.2, 1); //v2
+	//m->vTexCoords.emplace_back(0.2, 0); //v3
+	//m->vTexCoords.emplace_back(0.4, 1); //v4
+	//m->vTexCoords.emplace_back(0.4, 0); //v5
+	//m->vTexCoords.emplace_back(0.6, 1); //v6
+	//m->vTexCoords.emplace_back(0.6, 0); //v7
+	//m->vTexCoords.emplace_back(0.8, 1); //v8
+	//m->vTexCoords.emplace_back(0.8, 0); //v9
 
 	return m;
 }
