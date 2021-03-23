@@ -60,6 +60,8 @@ void IG1App::iniWinOpenGL()
 	glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);  // GLUT_CORE_PROFILE
 	glutInitContextFlags(GLUT_DEBUG);		// GLUT_FORWARD_COMPATIBLE
 
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
+
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
 	glutInitWindowSize(mWinW, mWinH);   // window size

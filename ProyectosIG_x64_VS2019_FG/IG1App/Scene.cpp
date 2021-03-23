@@ -10,6 +10,8 @@ void Scene::init()
 {
 	setGL();  // OpenGL settings
 
+	glEnable(GL_DEPTH_TEST);
+
 	Texture* t = new Texture();
 	t->load("../Bmps/baldosaC.bmp");
 	gTextures.push_back(t);
@@ -25,6 +27,10 @@ void Scene::init()
 	Texture* chuches = new Texture();
 	chuches->load("../Bmps/papelC.bmp");
 	gTextures.push_back(chuches);
+
+	Texture* glass = new Texture();
+	glass->load("../Bmps/windowV.bmp");
+	gTextures.push_back(glass);
 
 	// allocate memory and load resources
 	// Lights
@@ -61,7 +67,7 @@ void Scene::init()
 		gObjects.back()->setTexture(t);
 		gObjects.back()->setModelMat(glm::rotate(dmat4(1), radians(-90.0), dvec3(1, 0, 0)));
 
-		gObjects.push_back(new Estrella3D(100, 4, 100));
+		gObjects.push_back(new Estrella3D(100, 10, 100));
 		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 300, 0)));
 		gObjects.back()->setTexture(text);
@@ -77,6 +83,9 @@ void Scene::init()
 		Texture* sandokan = new Texture();
 		gTextures.push_back(sandokan);
 		gObjects.back()->setTexture(sandokan);
+
+		gObjects.push_back(new Glass(600.0));
+		gObjects.back()->setTexture(glass);
 	}
 
 }

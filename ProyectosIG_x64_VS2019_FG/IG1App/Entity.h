@@ -156,6 +156,19 @@ private:
 
 };
 
+class Glass : public Abs_Entity
+{
+public:
+	explicit Glass(GLdouble ld);
+	~Glass();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+
+	virtual void update();
+
+private:
+
+};
+
 //-------------------------------------------------------------------------
 
 #endif //_H_Entities_H_

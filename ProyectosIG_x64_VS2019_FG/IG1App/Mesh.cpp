@@ -208,15 +208,12 @@ Mesh* Mesh::generaEstrella3D(GLdouble re, GLuint np, GLdouble h)
 
 	mesh->vVertices.emplace_back(c.x , c.y, 0);
 	for (int i = 0; i < mesh->mNumVertices - 1 ; i++) {
-
 		float newAng = radians(ang);
 		if (i % 2 == 0) {
-			mesh->vVertices.emplace_back(c.x + re * cos(newAng), c.y + re * sin(newAng), h);
-		}
-		else mesh->vVertices.emplace_back(c.x + (re/2) * cos(newAng), c.y + (re/2) * sin(newAng), h);
+			mesh->vVertices.emplace_back(c.x + re * cos(newAng), c.y + re * sin(newAng), h + ((re*2.0f)/3.0f));}
+		else mesh->vVertices.emplace_back(c.x + (re/2.0f) * cos(newAng), c.y + (re/ 2.0f) * sin(newAng), h + ((re * 2.0f) / 3.0f));
 		ang = ang + 360.0 / (2.0f * np);
 	}
-
 
 	return mesh;
 }
@@ -289,6 +286,7 @@ Mesh* Mesh::generaEstrellaTexCor(GLdouble re, GLuint np, GLdouble h)
 
 	return m;
 }
+
 Mesh* Mesh::generaContCuboTexCor(GLdouble nl){
 	Mesh* m = Mesh::generaContCubo(nl);
 	m->vTexCoords.reserve(m->mNumVertices);
@@ -315,6 +313,10 @@ Mesh* Mesh::generaContCuboTexCor(GLdouble nl){
 	//m->vTexCoords.emplace_back(0.8, 0); //v9
 
 	return m;
+}
+Mesh* Mesh::generaFascista(GLdouble nl)
+{
+	return nullptr;
 }
 //-------------------------------------------------------------------------
 

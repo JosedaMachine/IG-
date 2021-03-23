@@ -345,4 +345,57 @@ void Foto::update()
 	mTexture->loadColorBuffer(IG1App::s_ig1app.winWidth(), IG1App::s_ig1app.winheigth(), GL_FRONT);
 }
 
+Glass::Glass(GLdouble ld)
+{
+	mMesh = Mesh::generaContCuboTexCor(ld);
+}
 
+Glass::~Glass()
+{
+}
+
+void Glass::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		glColor3d(mColor.r, mColor.g, mColor.b);
+		upload(aMat);
+
+		//Activar modo Blender3D
+		glEnable(GL_BLEND);
+
+		//Activamos el modo cool 
+		//glEnable(GL_CULL_FACE);
+
+		//glCullFace(GL_BACK);//No se ve lo de atrás
+
+		//Hacemos Bind de la texture
+		mTexture->bind(GL_REPLACE);
+
+		//Renderizamos
+		mMesh->render();
+		//Quitamos la textura
+		mTexture->unbind();
+
+		//glCullFace(GL_FRONT);	//No se ve lo de delante
+
+
+		upload(aMat);
+		mMesh->render();
+
+
+		//glDisable(GL_CULL_FACE);
+
+		//Desactivar modo Blender3D
+		glDisable(GL_BLEND);
+
+		//Se restauran los valores por defecto
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glLineWidth(1);
+		glColor3d(1, 1, 1);
+	}
+}
+
+void Glass::update()
+{
+}
