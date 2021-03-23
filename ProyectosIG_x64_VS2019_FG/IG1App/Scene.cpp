@@ -29,7 +29,7 @@ void Scene::init()
 	gTextures.push_back(chuches);
 
 	Texture* glass = new Texture();
-	glass->load("../Bmps/windowV.bmp");
+	glass->load("../Bmps/windowV.bmp", 255 / 2);
 	gTextures.push_back(glass);
 
 	// allocate memory and load resources
