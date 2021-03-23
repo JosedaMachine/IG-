@@ -31,7 +31,7 @@ public:
 	glm::dmat4 const& modelMat() const { return mModelMat; };
 	void setModelMat(glm::dmat4 const& aMat) { mModelMat = aMat; };
 
-	//Método update
+	//Mï¿½todo update
 	virtual void update() {};
 protected:
 

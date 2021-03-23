@@ -63,6 +63,7 @@ void Scene::init()
 	else if (mid == 1) {
 		
 		gObjects.push_back(new EjesRGB(400.0));
+
 		gObjects.push_back(new Suelo(700, 700, 5, 5));
 		gObjects.back()->setTexture(t);
 		gObjects.back()->setModelMat(glm::rotate(dmat4(1), radians(-90.0), dvec3(1, 0, 0)));
@@ -78,14 +79,16 @@ void Scene::init()
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 100, 0)));
 
 
-		gObjects.push_back(new Foto(500, 500, GL_FRONT));
+		gObjects.push_back(new Foto(200, 200, GL_FRONT));
 
 		Texture* sandokan = new Texture();
 		gTextures.push_back(sandokan);
 		gObjects.back()->setTexture(sandokan);
 
-		gObjects.push_back(new Glass(600.0));
+		gObjects.push_back(new Glass(400.0));
 		gObjects.back()->setTexture(glass);
+
+		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 200, 0)));
 	}
 
 }
