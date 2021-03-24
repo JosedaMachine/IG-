@@ -219,10 +219,10 @@ void Estrella3D::render(glm::dmat4 const& modelViewMat) const
 }
 
 void Estrella3D::update() {
-	angZ = angZ + 1.0f;
-	angY = angY + 1.0f;
+	angZ += 3.0f;
+	angY += 3.0f;
 
-	setModelMat(translate(dmat4(1), dvec3(0, 300, 0)));
+	setModelMat(translate(dmat4(1), dvec3(-200, 300, -200)));
 
 	setModelMat(rotate(modelMat(), -radians(angZ), dvec3(0, 1, 0))); //Pasamos negativo porque los �ngulos pues son iguales para todos los sitios
 

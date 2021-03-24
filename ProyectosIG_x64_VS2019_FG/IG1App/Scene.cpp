@@ -62,26 +62,27 @@ void Scene::init()
 
 	}
 	else if (mid == 1) {
+
 		gObjects.push_back(new EjesRGB(400.0));
 
 		gObjects.push_back(new Suelo(700, 700, 5, 5));
 		gObjects.back()->setTexture(t);
 		gObjects.back()->setModelMat(glm::rotate(dmat4(1), radians(-90.0), dvec3(1, 0, 0)));
 
-		gObjects.push_back(new Estrella3D(100, 10, 100));
+		gObjects.push_back(new Estrella3D(50, 10, 100));
 		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 300, 0)));
+		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(-200, 300, - 200)));
 		gObjects.back()->setTexture(text);
 
 
 		int sideCube = 200.0f;
 		gObjects.push_back(new Caja(sideCube, chuches));
 		gObjects.back()->setTexture(caja);
-		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(100, sideCube / 2, 0)));
+		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(-sideCube, sideCube / 2, -sideCube)));
 
 		int sizePhoto = 100;
 		gObjects.push_back(new Foto(sizePhoto, sizePhoto, GL_FRONT));
-		gObjects.back()->setModelMat(glm::translate(dmat4(1), dvec3(-100, 20, 0)));
+		gObjects.back()->setModelMat(glm::translate(dmat4(1), dvec3(0, 5, 0)));
 		gObjects.back()->setModelMat(glm::rotate(gObjects.back()->modelMat(), radians(-90.0), dvec3(1, 0, 0)));
 
 		Texture* sandokan = new Texture();
