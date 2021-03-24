@@ -74,12 +74,15 @@ void Scene::init()
 		gObjects.back()->setTexture(text);
 
 
-		gObjects.push_back(new Caja(200.0, chuches));
+		int sideCube = 200.0f;
+		gObjects.push_back(new Caja(sideCube, chuches));
 		gObjects.back()->setTexture(caja);
-		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 100, 0)));
+		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(100, sideCube / 2, 0)));
 
-
-		gObjects.push_back(new Foto(200, 200, GL_FRONT));
+		int sizePhoto = 100;
+		gObjects.push_back(new Foto(sizePhoto, sizePhoto, GL_FRONT));
+		gObjects.back()->setModelMat(glm::translate(dmat4(1), dvec3(-100, 20, 0)));
+		gObjects.back()->setModelMat(glm::rotate(gObjects.back()->modelMat(), radians(-90.0), dvec3(1, 0, 0)));
 
 		Texture* sandokan = new Texture();
 		gTextures.push_back(sandokan);
