@@ -314,9 +314,46 @@ Mesh* Mesh::generaContCuboTexCor(GLdouble nl){
 
 	return m;
 }
-Mesh* Mesh::generaFascista(GLdouble nl)
+Mesh* Mesh::generaCristalera(GLdouble w, GLdouble h)
 {
-	return nullptr;
+	Mesh* m = Mesh::generaCuboContTextIrregular(w,h);
+	m->vTexCoords.reserve(m->mNumVertices);
+
+	float x = 0;
+	for (int i = 0; i < m->mNumVertices; i++) {
+		if (i % 2 == 0) {
+			m->vTexCoords.emplace_back(x, 1);
+		}
+		else {
+			m->vTexCoords.emplace_back(x, 0);
+			x = x + 1;
+		}
+	}
+
+	return m;
+}
+Mesh* Mesh::generaCuboContTextIrregular(GLdouble w, GLdouble h)
+{
+	Mesh* mesh = new Mesh();
+
+	mesh->mPrimitive = GL_TRIANGLE_STRIP;
+
+	mesh->mNumVertices = 10;
+	mesh->vVertices.reserve(mesh->mNumVertices);//REservamos vértices
+
+
+	mesh->vVertices.emplace_back(-w / 2, h / 2, w / 2); //v0
+	mesh->vVertices.emplace_back(-w / 2, -h / 2, w / 2); //v1
+	mesh->vVertices.emplace_back(w / 2, h / 2, w / 2); //v2
+	mesh->vVertices.emplace_back(w / 2, -h / 2, w / 2); //v3
+	mesh->vVertices.emplace_back(w / 2, h / 2, -w / 2); //v4
+	mesh->vVertices.emplace_back(w / 2, -h / 2, -w / 2); //v5
+	mesh->vVertices.emplace_back(-w / 2, h / 2, -w / 2); //v6
+	mesh->vVertices.emplace_back(-w / 2, -h / 2, -w / 2); //v7
+	mesh->vVertices.emplace_back(-w / 2, h / 2, w / 2); //v8
+	mesh->vVertices.emplace_back(-w / 2, -h / 2, w / 2); //v9
+
+	return mesh;
 }
 //-------------------------------------------------------------------------
 

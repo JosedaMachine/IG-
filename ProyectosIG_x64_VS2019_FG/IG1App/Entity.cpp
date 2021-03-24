@@ -345,9 +345,9 @@ void Foto::update()
 	mTexture->loadColorBuffer(IG1App::s_ig1app.winWidth(), IG1App::s_ig1app.winheigth(), GL_FRONT);
 }
 
-Glass::Glass(GLdouble ld)
+Glass::Glass(GLdouble w, GLdouble h)
 {
-	mMesh = Mesh::generaContCuboTexCor(ld);
+	mMesh = Mesh::generaCristalera(w,h);
 }
 
 Glass::~Glass()
@@ -366,10 +366,6 @@ void Glass::render(glm::dmat4 const& modelViewMat) const
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		//Activamos el modo cool 
-		//glEnable(GL_CULL_FACE);
-
-		//glCullFace(GL_BACK);//No se ve lo de atrás
 
 		//Hacemos Bind de la texture
 		mTexture->bind(GL_REPLACE);
@@ -378,9 +374,6 @@ void Glass::render(glm::dmat4 const& modelViewMat) const
 		mMesh->render();
 		//Quitamos la textura
 		mTexture->unbind();
-
-		//glCullFace(GL_FRONT);	//No se ve lo de delante
-
 
 		upload(aMat);
 		mMesh->render();

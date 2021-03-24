@@ -25,7 +25,8 @@ public:
 	static Mesh* generaRectanguloTexCor(GLdouble w, GLdouble h, GLuint rw, GLuint  rh);
 	static Mesh* generaEstrellaTexCor(GLdouble re, GLuint np, GLdouble h);
 	static Mesh* generaContCuboTexCor(GLdouble nl);
-	static Mesh* generaFascista(GLdouble nl);
+	static Mesh* generaCristalera(GLdouble w, GLdouble h);
+	static Mesh* generaCuboContTextIrregular(GLdouble w, GLdouble h);
 
 	Mesh() {};
 	virtual ~Mesh() {};

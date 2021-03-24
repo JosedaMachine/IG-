@@ -59,9 +59,9 @@ void Scene::init()
 		//Tri�ngulo
 		/*gObjects.push_back(new TrianguloRGB(20, 200));
 		gObjects.back()->setModelMat(translate(gObjects.back()->modelMat(), dvec3(200, 0, 0)));*/
+
 	}
 	else if (mid == 1) {
-		
 		gObjects.push_back(new EjesRGB(400.0));
 
 		gObjects.push_back(new Suelo(700, 700, 5, 5));
@@ -85,10 +85,11 @@ void Scene::init()
 		gTextures.push_back(sandokan);
 		gObjects.back()->setTexture(sandokan);
 
-		gObjects.push_back(new Glass(400.0));
+		gObjects.push_back(new Glass(700.0, 200));
 		gObjects.back()->setTexture(glass);
 
-		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 200, 0)));
+		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 100, 0)));
+		
 	}
 
 }

@@ -159,7 +159,7 @@ private:
 class Glass : public Abs_Entity
 {
 public:
-	explicit Glass(GLdouble ld);
+	explicit Glass(GLdouble w, GLdouble h);
 	~Glass();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 
