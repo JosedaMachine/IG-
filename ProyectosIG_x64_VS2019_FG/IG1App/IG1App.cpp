@@ -141,6 +141,13 @@ void IG1App::key(unsigned char key, int x, int y)
 	case '1':
 		mScene->changeScene(1);
 		break;
+	case 'p':
+		mCamera->changePrj();
+		mCamera->setScale(0.00);
+		break;
+	case 'k':
+		mCamera->changePrj();
+		break;
 	default:
 		need_redisplay = false;
 		break;

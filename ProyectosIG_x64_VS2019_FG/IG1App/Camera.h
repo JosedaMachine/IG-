@@ -32,6 +32,8 @@ public:
 	void moveFB(GLdouble cs); // Forward / Backward
 	void moveUD(GLdouble cs);
 
+	void orbit(GLdouble incAng, GLdouble incY);
+
 	// projection matrix
 	glm::dmat4 const& projMat() const { return mProjMat; };
 	
@@ -43,8 +45,12 @@ public:
 	// transfers its viewport, the view matrix and projection matrix to the GPU
 	void upload() const { mViewPort->upload();  uploadVM(); uploadPM(); }; 
 
+	void changePrj();
+
 protected:
 	
+	GLdouble mRadio, mAng;
+
 	glm::dvec3 mEye = { 0.0, 0.0, 500.0 };  // camera's position
 	glm::dvec3 mLook = { 0.0, 0.0, 0.0 };   // target's position
 	glm::dvec3 mUp = { 0.0, 1.0, 0.0 };     // the up vector
@@ -53,6 +59,7 @@ protected:
 	glm::dvec3 mRight = { 0.0, 1.0, 0.0 };     // the up vector 
 	glm::dvec3 mUpward = { 0.0, 1.0, 0.0 };     // the up vector 
 	glm::dvec3 mFront = { 0.0, 1.0, 0.0 };     // the up vector 
+
 
 	glm::dmat4 mViewMat;    // view matrix = inverse of modeling matrix 
 	void uploadVM() const;  // transfers viewMat to the GPU
@@ -65,14 +72,13 @@ protected:
 	GLdouble xRight, xLeft, yTop, yBot;      // size of scene visible area
 	GLdouble mNearVal = 1, mFarVal = 10000;  // view volume
 	GLdouble mScaleFact = 1;   // scale factor
+
 	bool bOrto = true;   // orthogonal or perspective projection
 
 	Viewport* mViewPort;   // the viewport
 
 	void setVM();
 	void setPM();
-
-
 };
 //-------------------------------------------------------------------------
 

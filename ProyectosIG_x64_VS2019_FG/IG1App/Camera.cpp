@@ -11,7 +11,7 @@ Camera::Camera(Viewport* vp): mViewPort(vp), mViewMat(1.0), mProjMat(1.0),
 							  xRight(vp->width() / 2.0), xLeft(-xRight),
 							  yTop(vp->height() / 2.0), yBot(-yTop)
 {
-    setPM();
+	setPM();
 }
 //-------------------------------------------------------------------------
 
@@ -25,6 +25,14 @@ void Camera::setAxes(){
 	mRight = row(mViewMat, 0);
 	mUpward = row(mViewMat, 1);
 	mFront = -row(mViewMat, 2);
+}
+
+void Camera::changePrj()
+{
+	if (bOrto)
+		bOrto = false;
+	else
+		bOrto = true;
 }
 //-------------------------------------------------------------------------
 
@@ -49,6 +57,10 @@ void Camera::set3D()
 	mEye = dvec3(500, 500, 500);  
 	mLook = dvec3(0, 10, 0);   
 	mUp = dvec3(0, 1, 0);
+
+	mRadio = 1000;
+	mAng = 0;
+
 	setVM();
 }
 //-------------------------------------------------------------------------
@@ -90,6 +102,14 @@ void Camera::moveUD(GLdouble cs){
 	mLook += mUpward * cs; 
 	setVM();
 }
+
+void Camera::orbit(GLdouble incAng, GLdouble incY){
+	mAng += incAng; 
+	mEye.x = mLook.x + cos(radians(mAng)) * mRadio; 
+	mEye.z = mLook.z - sin(radians(mAng)) * mRadio; 
+	mEye.y += incY; setVM();
+}
+
 //-------------------------------------------------------------------------
 
 void Camera::setSize(GLdouble xw, GLdouble yh) 
@@ -115,6 +135,10 @@ void Camera::setPM()
 	if (bOrto) { //  if orthogonal projection
 		mProjMat = ortho(xLeft*mScaleFact, xRight*mScaleFact, yBot*mScaleFact, yTop*mScaleFact, mNearVal, mFarVal);
 		// glm::ortho defines the orthogonal projection matrix
+	}
+	else
+	{
+		mProjMat = frustum(xLeft, xRight, yBot, yTop , mNearVal, mFarVal);
 	}
 }
 //-------------------------------------------------------------------------
