@@ -121,7 +121,7 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 27:  // Escape key 
 		glutLeaveMainLoop();  // stops main loop and destroy the OpenGL context
 	case '+':
-		mCamera->setScale(+0.01);  // zoom in  (increases the scale)
+		mCamera->setScale(+1.01);  // zoom in  (increases the scale)
 		break;
 	case '-':
 		mCamera->setScale(-0.01);  // zoom out (decreases the scale)
@@ -135,13 +135,20 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'u':
 		mScene->update();
 		break;
-	case 'n':
+	case 's':
+		//Rotar en el eje vertical
 		mCamera->orbit(0,-1);
+	case 'w':
+		//Rotar en el eje vertical
+		mCamera->orbit(0,1);
 		break;
-	case 'm':
-		mCamera->orbit(1,0);
-		break;
-
+	case 'd':
+		//Rotar en el eje hortizontal
+		mCamera->orbit(10,0);
+	//case 'a':
+	//	//Rotar en el eje hortizontal
+	//	mCamera->orbit(-10,0);
+	//	break;
 	case '0':
 		mScene->changeScene(0);
 		break;
