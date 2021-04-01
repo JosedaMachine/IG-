@@ -24,9 +24,9 @@ public:
 	void set2D();
 	void set3D();
 	
-	void pitch(GLdouble a); // rotates a degrees on the X axis
-	void yaw(GLdouble a);   // rotates a degrees on the Y axis
-	void roll(GLdouble a);  // rotates a degrees on the Z axis
+	//void pitch(GLdouble a); // rotates a degrees on the X axis
+	//void yaw(GLdouble a);   // rotates a degrees on the Y axis
+	//void roll(GLdouble a);  // rotates a degrees on the Z axis
 
 	void moveLR(GLdouble cs); // Left / Right
 	void moveFB(GLdouble cs); // Forward / Backward

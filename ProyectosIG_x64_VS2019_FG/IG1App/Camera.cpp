@@ -2,7 +2,6 @@
 
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
-//#include <gtc/matrix_access.hpp>
 
 using namespace glm;
 
@@ -24,8 +23,8 @@ void Camera::uploadVM() const
 
 void Camera::setAxes(){
 	mRight = row(mViewMat, 0);
-	mRight = row(mViewMat, 1);
-	mRight = row(mViewMat, 2);
+	mUpward = row(mViewMat, 1);
+	mFront = -row(mViewMat, 2);
 }
 //-------------------------------------------------------------------------
 
@@ -54,36 +53,42 @@ void Camera::set3D()
 }
 //-------------------------------------------------------------------------
 
-void Camera::pitch(GLdouble a) 
-{  
-	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(1.0, 0, 0));
-	// glm::rotate returns mViewMat * rotationMatrix
-}
-//-------------------------------------------------------------------------
-
-void Camera::yaw(GLdouble a) 
-{
-	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 1.0, 0));
-	// glm::rotate returns mViewMat * rotationMatrix
-}
-//-------------------------------------------------------------------------
-
-void Camera::roll(GLdouble a) 
-{
-	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 0, 1.0));
-	// glm::rotate returns mViewMat * rotationMatrix
-}
+//void Camera::pitch(GLdouble a) 
+//{  
+//	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(1.0, 0, 0));
+//	// glm::rotate returns mViewMat * rotationMatrix
+//}
+////-------------------------------------------------------------------------
+//
+//void Camera::yaw(GLdouble a) 
+//{
+//	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 1.0, 0));
+//	// glm::rotate returns mViewMat * rotationMatrix
+//}
+////-------------------------------------------------------------------------
+//
+//void Camera::roll(GLdouble a) 
+//{
+//	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 0, 1.0));
+//	// glm::rotate returns mViewMat * rotationMatrix
+//}
 
 void Camera::moveLR(GLdouble cs){
-
+	mEye += mRight * cs;
+	mLook += mRight * cs;
+	setVM();
 }
 
 void Camera::moveFB(GLdouble cs){
-
+	mEye += mFront * cs;
+	mLook += mFront * cs;
+	setVM();
 }
 
 void Camera::moveUD(GLdouble cs){
-
+	mEye += mUpward * cs; 
+	mLook += mUpward * cs; 
+	setVM();
 }
 //-------------------------------------------------------------------------
 
