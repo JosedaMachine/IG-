@@ -21,11 +21,18 @@ void Camera::uploadVM() const
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(mViewMat)); // transfers view matrix to the GPU 
 }
+
+void Camera::setAxes(){
+	mRight = row(mViewMat, 0);
+	mRight = row(mViewMat, 1);
+	mRight = row(mViewMat, 2);
+}
 //-------------------------------------------------------------------------
 
 void Camera::setVM() 
 {
 	mViewMat = lookAt(mEye, mLook, mUp);  // glm::lookAt defines the view matrix 
+	setAxes();
 }
 //-------------------------------------------------------------------------
 
@@ -65,6 +72,18 @@ void Camera::roll(GLdouble a)
 {
 	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 0, 1.0));
 	// glm::rotate returns mViewMat * rotationMatrix
+}
+
+void Camera::moveLR(GLdouble cs){
+
+}
+
+void Camera::moveFB(GLdouble cs){
+
+}
+
+void Camera::moveUD(GLdouble cs){
+
 }
 //-------------------------------------------------------------------------
 
