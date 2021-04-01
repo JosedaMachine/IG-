@@ -135,6 +135,13 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'u':
 		mScene->update();
 		break;
+	case 'n':
+		mCamera->orbit(0,-1);
+		break;
+	case 'm':
+		mCamera->orbit(1,0);
+		break;
+
 	case '0':
 		mScene->changeScene(0);
 		break;

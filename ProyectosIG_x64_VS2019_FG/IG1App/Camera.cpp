@@ -29,10 +29,8 @@ void Camera::setAxes(){
 
 void Camera::changePrj()
 {
-	if (bOrto)
-		bOrto = false;
-	else
-		bOrto = true;
+	bOrto = !bOrto;
+	setPM();
 }
 //-------------------------------------------------------------------------
 
@@ -134,12 +132,15 @@ void Camera::setPM()
 {
 	if (bOrto) { //  if orthogonal projection
 		mProjMat = ortho(xLeft*mScaleFact, xRight*mScaleFact, yBot*mScaleFact, yTop*mScaleFact, mNearVal, mFarVal);
+
 		// glm::ortho defines the orthogonal projection matrix
 	}
 	else
 	{
-		mProjMat = frustum(xLeft, xRight, yBot, yTop , mNearVal, mFarVal);
+		mProjMat = frustum(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, mNearVal, mFarVal);
 	}
+	//actualizar la proyeccion
+	uploadPM();
 }
 //-------------------------------------------------------------------------
 
