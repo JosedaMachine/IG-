@@ -121,7 +121,7 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 27:  // Escape key 
 		glutLeaveMainLoop();  // stops main loop and destroy the OpenGL context
 	case '+':
-		mCamera->setScale(+1.01);  // zoom in  (increases the scale)
+		mCamera->setScale(+0.01);  // zoom in  (increases the scale)
 		break;
 	case '-':
 		mCamera->setScale(-0.01);  // zoom out (decreases the scale)

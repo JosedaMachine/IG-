@@ -130,22 +130,39 @@ void Camera::setScale(GLdouble s)
 
 void Camera::setPM() 
 {
-	if (bOrto) { //  if orthogonal projection
-		mProjMat = ortho(xLeft*mScaleFact, xRight*mScaleFact, yBot*mScaleFact, yTop*mScaleFact, mNearVal, mFarVal);
+	//if (bOrto) { //  if orthogonal projection
+	//	mProjMat = ortho(xLeft*mScaleFact, xRight*mScaleFact, yBot*mScaleFact, yTop*mScaleFact, mNearVal, mFarVal);
 
-		// glm::ortho defines the orthogonal projection matrix
+	//	// glm::ortho defines the orthogonal projection matrix
+	//}
+	//else
+	//{
+	//	mProjMat = frustum(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, mNearVal, mFarVal);
+	//}
+	////actualizar la proyeccion
+	//uploadPM();
+
+	if (bOrto) {//si orto esta a true la vista sera ortogonal
+		//glMatrixMode(GL_PROJECTION);
+		mProjMat = ortho(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, mNearVal, mFarVal);
+		//(left, right, bottom, top, near, far)
+		//glLoadMatrixd(value_ptr(mProjMat)); // transfers projection matrix to the GPU
+		//glMatrixMode(GL_MODELVIEW);
+		//uploadPM();
 	}
-	else
-	{
-		mProjMat = frustum(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, mNearVal, mFarVal);
+	else {//si no, sera en perspectiva
+		//glMatrixMode(GL_PROJECTION);
+		//Para que no se vaya al carajo, ponemos top como 2 * yTop, si lo ponemos a mNearVal = 1, se ve muy lejos
+		mProjMat = frustum(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, 2 * yTop, mFarVal);
+		//near es 2*top para un fov de 60. Si se quiere un fov de 90 near = top
+		//glLoadMatrixd(value_ptr(mProjMat)); // transfers projection matrix to the GPU
+		//glMatrixMode(GL_MODELVIEW);
 	}
-	//actualizar la proyeccion
 	uploadPM();
 }
 //-------------------------------------------------------------------------
 
-void Camera::uploadPM() const 
-{
+void Camera::uploadPM() const {
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixd(value_ptr(mProjMat)); // transfers projection matrix to the GPU
 	glMatrixMode(GL_MODELVIEW);
