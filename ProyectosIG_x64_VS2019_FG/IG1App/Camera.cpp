@@ -57,7 +57,8 @@ void Camera::set3D()
 	mUp = dvec3(0, 1, 0);
 
 	mRadio = 1000;
-	mAng = 0;
+	//Porque la cámara empieza en -45
+	mAng = -45;
 
 	setVM();
 }
@@ -105,7 +106,8 @@ void Camera::orbit(GLdouble incAng, GLdouble incY){
 	mAng += incAng; 
 	mEye.x = mLook.x + cos(radians(mAng)) * mRadio; 
 	mEye.z = mLook.z - sin(radians(mAng)) * mRadio; 
-	mEye.y += incY; setVM();
+	mEye.y += incY;
+	setVM();
 }
 
 //-------------------------------------------------------------------------

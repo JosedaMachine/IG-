@@ -137,10 +137,10 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 's':
 		//Rotar en el eje vertical
-		mCamera->orbit(0,-4);
+		mCamera->orbit(0,-40);
 	case 'w':
 		//Rotar en el eje vertical
-		mCamera->orbit(0,4);
+		mCamera->orbit(0,40);
 		break;
 	case 'd':
 		//Rotar en el eje hortizontal
