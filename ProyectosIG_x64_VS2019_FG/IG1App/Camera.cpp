@@ -34,8 +34,7 @@ void Camera::changePrj()
 }
 //-------------------------------------------------------------------------
 
-void Camera::setVM() 
-{
+void Camera::setVM() {
 	mViewMat = lookAt(mEye, mLook, mUp);  // glm::lookAt defines the view matrix 
 	setAxes();
 }
@@ -50,8 +49,7 @@ void Camera::set2D()
 }
 //-------------------------------------------------------------------------
 
-void Camera::set3D() 
-{
+void Camera::set3D() {
 	mEye = dvec3(500, 500, 500);  
 	mLook = dvec3(0, 10, 0);   
 	mUp = dvec3(0, 1, 0);
@@ -112,8 +110,7 @@ void Camera::orbit(GLdouble incAng, GLdouble incY){
 
 //-------------------------------------------------------------------------
 
-void Camera::setSize(GLdouble xw, GLdouble yh) 
-{
+void Camera::setSize(GLdouble xw, GLdouble yh) {
 	xRight = xw / 2.0;
 	xLeft = -xRight;
 	yTop = yh / 2.0;
@@ -122,43 +119,22 @@ void Camera::setSize(GLdouble xw, GLdouble yh)
 }
 //-------------------------------------------------------------------------
 
-void Camera::setScale(GLdouble s) 
-{
+void Camera::setScale(GLdouble s) {
 	mScaleFact -= s;
 	if (mScaleFact < 0) mScaleFact = 0.01;
 	setPM();
 }
 //-------------------------------------------------------------------------
 
-void Camera::setPM() 
-{
-	//if (bOrto) { //  if orthogonal projection
-	//	mProjMat = ortho(xLeft*mScaleFact, xRight*mScaleFact, yBot*mScaleFact, yTop*mScaleFact, mNearVal, mFarVal);
-
-	//	// glm::ortho defines the orthogonal projection matrix
-	//}
-	//else
-	//{
-	//	mProjMat = frustum(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, mNearVal, mFarVal);
-	//}
-	////actualizar la proyeccion
-	//uploadPM();
-
+void Camera::setPM() {
 	if (bOrto) {//si orto esta a true la vista sera ortogonal
-		//glMatrixMode(GL_PROJECTION);
-		mProjMat = ortho(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, mNearVal, mFarVal);
 		//(left, right, bottom, top, near, far)
-		//glLoadMatrixd(value_ptr(mProjMat)); // transfers projection matrix to the GPU
-		//glMatrixMode(GL_MODELVIEW);
-		//uploadPM();
+		mProjMat = ortho(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, mNearVal, mFarVal);
 	}
 	else {//si no, sera en perspectiva
-		//glMatrixMode(GL_PROJECTION);
 		//Para que no se vaya al carajo, ponemos top como 2 * yTop, si lo ponemos a mNearVal = 1, se ve muy lejos
 		mProjMat = frustum(xLeft * mScaleFact, xRight * mScaleFact, yBot * mScaleFact, yTop * mScaleFact, 2 * yTop, mFarVal);
 		//near es 2*top para un fov de 60. Si se quiere un fov de 90 near = top
-		//glLoadMatrixd(value_ptr(mProjMat)); // transfers projection matrix to the GPU
-		//glMatrixMode(GL_MODELVIEW);
 	}
 	uploadPM();
 }
