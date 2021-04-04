@@ -7,21 +7,21 @@ using namespace glm;
 
 //-------------------------------------------------------------------------
 
-Camera::Camera(Viewport* vp): mViewPort(vp), mViewMat(1.0), mProjMat(1.0),  
-							  xRight(vp->width() / 2.0), xLeft(-xRight),
-							  yTop(vp->height() / 2.0), yBot(-yTop)
+Camera::Camera(Viewport* vp) : mViewPort(vp), mViewMat(1.0), mProjMat(1.0),
+xRight(vp->width() / 2.0), xLeft(-xRight),
+yTop(vp->height() / 2.0), yBot(-yTop)
 {
 	setPM();
 }
 //-------------------------------------------------------------------------
 
-void Camera::uploadVM() const 
+void Camera::uploadVM() const
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(mViewMat)); // transfers view matrix to the GPU 
 }
 
-void Camera::setAxes(){
+void Camera::setAxes() {
 	mRight = row(mViewMat, 0);
 	mUpward = row(mViewMat, 1);
 	mFront = -row(mViewMat, 2);
@@ -40,7 +40,7 @@ void Camera::setVM() {
 }
 //-------------------------------------------------------------------------
 
-void Camera::set2D() 
+void Camera::set2D()
 {
 	mEye = dvec3(0, 0, 500);
 	mLook = dvec3(0, 0, 0);
@@ -50,8 +50,8 @@ void Camera::set2D()
 //-------------------------------------------------------------------------
 
 void Camera::set3D() {
-	mEye = dvec3(500, 500, 500);  
-	mLook = dvec3(0, 10, 0);   
+	mEye = dvec3(500, 500, 500);
+	mLook = dvec3(0, 10, 0);
 	mUp = dvec3(0, 1, 0);
 
 	mRadio = 1000;
@@ -82,31 +82,29 @@ void Camera::set3D() {
 //	// glm::rotate returns mViewMat * rotationMatrix
 //}
 
-void Camera::moveLR(GLdouble cs){
+void Camera::moveLR(GLdouble cs) {
 	mEye += mRight * cs;
 	mLook += mRight * cs;
 	setVM();
 }
 
-void Camera::moveFB(GLdouble cs){
+void Camera::moveFB(GLdouble cs) {
 	mEye += mFront * cs;
 	mLook += mFront * cs;
 	setVM();
 }
 
-void Camera::moveUD(GLdouble cs){
-	mEye += mUpward * cs; 
-	mLook += mUpward * cs; 
+void Camera::moveUD(GLdouble cs) {
+	mEye += mUpward * cs;
+	mLook += mUpward * cs;
 	setVM();
 }
 
-void Camera::orbit(GLdouble incAng, GLdouble incY){
-	mAng += incAng; 
-	mEye.x = mLook.x + cos(radians(mAng)) * mRadio; 
-	mEye.z = mLook.z - sin(radians(mAng)) * mRadio; 
-	if (mEye.y >= 89.5)mEye.y = 89.5;
-	else if (mEye.y <= -89.5) mEye.y = -89.5;
-	else mEye.y += incY;
+void Camera::orbit(GLdouble incAng, GLdouble incY) {
+	mAng += incAng;
+	mEye.x = mLook.x + cos(radians(mAng)) * mRadio;
+	mEye.z = mLook.z - sin(radians(mAng)) * mRadio;
+	mEye.y += incY;
 	setVM();
 }
 
