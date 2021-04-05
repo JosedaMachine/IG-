@@ -118,6 +118,7 @@ void IG1App::display2Vistas() const {
 
 	//3D
 	mViewPort->setPos(mWinW / 2, 0);
+	auxCam.setCenital();
 	//auxCam.set3D();
 	mScene->render(auxCam);
 

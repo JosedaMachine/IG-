@@ -47,6 +47,8 @@ public:
 
 	void changePrj();
 
+	void setCenital();
+
 protected:
 	
 	GLdouble mRadio, mAng;
