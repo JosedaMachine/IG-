@@ -55,7 +55,7 @@ void Camera::set3D() {
 	mUp = dvec3(0, 1, 0);
 
 	mRadio = 1000;
-	//Porque la cámara empieza en -45
+	//Porque la cï¿½mara empieza en -45
 	mAng = -45;
 
 	setVM();
