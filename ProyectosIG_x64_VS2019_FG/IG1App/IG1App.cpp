@@ -113,21 +113,19 @@ void IG1App::display2Vistas() const {
 
 	//2D
 	mViewPort->setPos(0, 0);
-	auxCam.set2D();
+	//auxCam.set2D();
 	mScene->render(auxCam);
 
 	//3D
 	mViewPort->setPos(mWinW / 2, 0);
-	auxCam.set3D();
+	//auxCam.set3D();
 	mScene->render(auxCam);
 
 	*mViewPort = auxVP; //restauramos el puntero de vista
 }
 
 //-------------------------------------------------------------------------
-
-void IG1App::resize(int newWidth, int newHeight) 
-{
+void IG1App::resize(int newWidth, int newHeight) {
 	mWinW = newWidth; mWinH = newHeight;
 
 	// Resize Viewport to the new window size
