@@ -95,27 +95,31 @@ void IG1App::display() const
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
 
 	if (m2Vistas) display2Vistas();
+	else mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
 
-	mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
 	
 	glutSwapBuffers();	// swaps the front and back buffer
 }
 
-void IG1App::display2Vistas() const
-{
+void IG1App::display2Vistas() const {
 	Camera auxCam = *mCamera; //camara auxiliar para renderizar las vistas
 	Viewport auxVP = *mViewPort; //se copia el puntero del puerto de vista para no alterar el original
 
 	//Para que sea dos vistas tienen que tener la misma altura, pero anchura la mitad
 	mViewPort->setSize(mWinW / 2, mWinH);
 
-	auxCam.setSize(mViewPort->width(), mViewPort->height());
-
 	//Asignamos el tamaño a la camara, segun el VP
 	auxCam.setSize(mViewPort->width(), mViewPort->height());
 
+	//2D
+	mViewPort->setPos(0, 0);
+	auxCam.set2D();
+	mScene->render(auxCam);
 
-
+	//3D
+	mViewPort->setPos(mWinW / 2, 0);
+	auxCam.set3D();
+	mScene->render(auxCam);
 
 	*mViewPort = auxVP; //restauramos el puntero de vista
 }
