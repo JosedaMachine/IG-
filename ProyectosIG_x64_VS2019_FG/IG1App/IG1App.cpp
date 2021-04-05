@@ -92,13 +92,34 @@ void IG1App::free()
 
 void IG1App::display() const   
 {  // double buffering
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
+
+	if (m2Vistas) display2Vistas();
 
 	mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
 	
 	glutSwapBuffers();	// swaps the front and back buffer
 }
+
+void IG1App::display2Vistas() const
+{
+	Camera auxCam = *mCamera; //camara auxiliar para renderizar las vistas
+	Viewport auxVP = *mViewPort; //se copia el puntero del puerto de vista para no alterar el original
+
+	//Para que sea dos vistas tienen que tener la misma altura, pero anchura la mitad
+	mViewPort->setSize(mWinW / 2, mWinH);
+
+	auxCam.setSize(mViewPort->width(), mViewPort->height());
+
+	//Asignamos el tamaño a la camara, segun el VP
+	auxCam.setSize(mViewPort->width(), mViewPort->height());
+
+
+
+
+	*mViewPort = auxVP; //restauramos el puntero de vista
+}
+
 //-------------------------------------------------------------------------
 
 void IG1App::resize(int newWidth, int newHeight) 
@@ -135,6 +156,9 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'u':
 		mScene->update();
 		break;
+	case 'k':
+		m2Vistas = !m2Vistas;
+		break;
 	case 's':
 		//Rotar en el eje vertical
 		mCamera->orbit(0,-40);
@@ -160,9 +184,6 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'p':
 		mCamera->changePrj();
 		mCamera->setScale(0.00);
-		break;
-	case 'k':
-		mCamera->changePrj();
 		break;
 	default:
 		need_redisplay = false;
