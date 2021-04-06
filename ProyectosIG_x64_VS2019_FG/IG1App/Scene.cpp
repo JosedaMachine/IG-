@@ -41,24 +41,24 @@ void Scene::init()
 	if (mid == 0) {
 
 		//Rect�ngulo
-		/*gObjects.push_back(new RectanguloRGB(800, 800));
-		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 0, -100)));*/
+		gObjects.push_back(new RectanguloRGB(800, 800));
+		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 0, -100)));
 
-		//gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-		/*gObjects.push_back(new Poligono(100, 300));
-		gObjects.back()->setColor(dvec4(1.0, 1.0, 0.0, 0.0));*/
-		/*gObjects.push_back(new Poligono(360, 200)); //igual hay que meterle 360 lados porque un c�rculo tiene 360 grados //Igual no
-		gObjects.back()->setColor(dvec4(1.0, 0.07, 0.57, 0.0));*/
+		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+		gObjects.push_back(new Poligono(100, 300));
+		gObjects.back()->setColor(dvec4(1.0, 1.0, 0.0, 0.0));
+		gObjects.push_back(new Poligono(360, 200)); //igual hay que meterle 360 lados porque un c�rculo tiene 360 grados //Igual no
+		gObjects.back()->setColor(dvec4(1.0, 0.07, 0.57, 0.0));
 
 
 		//Serpinpi
-		/*gObjects.push_back(new SerPinspi(200, 10000));
-		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));*/
+		gObjects.push_back(new SerPinspi(200, 10000));
+		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 
 
 		//Tri�ngulo
-		/*gObjects.push_back(new TrianguloRGB(20, 200));
-		gObjects.back()->setModelMat(translate(gObjects.back()->modelMat(), dvec3(200, 0, 0)));*/
+		gObjects.push_back(new TrianguloRGB(20, 200));
+		gObjects.back()->setModelMat(translate(gObjects.back()->modelMat(), dvec3(200, 0, 0)));
 
 	}
 	else if (mid == 1) {

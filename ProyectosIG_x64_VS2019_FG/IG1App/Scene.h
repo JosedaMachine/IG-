@@ -29,6 +29,7 @@ public:
 	void update();
 
 	void changeScene(int id);
+	void setMid(int scene) { mid = scene; }
 	
 protected:
 	void free();

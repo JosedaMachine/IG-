@@ -78,7 +78,8 @@ protected:
 	Camera *mCamera = nullptr;
 	// Graphics objects of the scene
 	Scene *mScene = nullptr;
-	
+	Scene* mScene1 = nullptr;
+
 	bool mStop = false; // main event processing loop
 	bool m2Vistas = false; //visualizar dos vistas
 	int mWinId = 0;	    // window's identifier

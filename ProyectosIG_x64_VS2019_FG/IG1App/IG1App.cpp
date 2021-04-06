@@ -42,9 +42,13 @@ void IG1App::init()
 	mViewPort = new Viewport(mWinW, mWinH); //glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT)
 	mCamera = new Camera(mViewPort);
 	mScene = new Scene;
-	
+	mScene1 = new Scene;
+
 	mCamera->set2D();
 	mScene->init();
+	mScene1->init();
+
+	mScene1->setMid(1);
 
 	GLuintmLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
 
@@ -124,9 +128,9 @@ void IG1App::display2Vistas() const {
 
 	//3D
 	mViewPort->setPos(mWinW / 2, 0);
-	auxCam.setCenital();
+	//auxCam.setCenital();
 	//auxCam.set3D();
-	mScene->render(auxCam);
+	mScene1->render(auxCam);
 
 	*mViewPort = auxVP; //restauramos el puntero de vista
 }
