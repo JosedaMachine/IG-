@@ -114,7 +114,7 @@ void IG1App::display2Vistas() const {
 	//Para que sea dos vistas tienen que tener la misma altura, pero anchura la mitad
 	mViewPort->setSize(mWinW / 2, mWinH);
 
-	//Asignamos el tamaño a la camara, segun el VP
+	//Asignamos el tamaï¿½o a la camara, segun el VP
 	auxCam.setSize(mViewPort->width(), mViewPort->height());
 
 	//2D
@@ -266,7 +266,7 @@ void IG1App::motion(int x, int y)
 		mCamera->moveLR(displacement.x);
 		mCamera->moveUD(-displacement.y);
 	}
-	else {
+	else if(mBot == GLUT_LEFT_BUTTON) {
 		mCamera->orbit(displacement.x * 0.05f, -displacement.y);
 	}
 
@@ -275,7 +275,7 @@ void IG1App::motion(int x, int y)
 
 void IG1App::mouseWheel(int n, int d, int x, int y){
 	if (!glutGetModifiers()) 
-		mCamera->moveFB(d);
+		mCamera->moveFB(d * 10);
 	else{
 		if (GLUT_ACTIVE_CTRL)
 			mCamera->setScale(d);

@@ -85,7 +85,7 @@ protected:
 	int mWinW = 800;    // window's width 
 	int mWinH = 600;    // window's height
 
-	//Atributos de ratón
+	//Atributos de ratï¿½n
 	dvec2 mCoord;
 	int mBot;
 
