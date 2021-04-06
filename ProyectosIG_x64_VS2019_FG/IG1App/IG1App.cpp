@@ -171,14 +171,42 @@ void IG1App::key(unsigned char key, int x, int y)
 		mCamera->setScale(-0.01);  // zoom out (decreases the scale)
 		break;
 	case 'l':
-		mCamera->set3D();
+		if (m2Vistas) {
+
+			if (mCoord.x >= (mWinW / 2)) {
+				mCamera1->set3D();
+				mScene1->set2D(false);
+			}
+			else {
+				mCamera->set3D();
+				mScene->set2D(false);
+			}
+		}
+		else {
+			mCamera->set3D();
+			mScene->set2D(false);
+		}
 		break;
 	case 'o':
-		mCamera->set2D();
+		if (m2Vistas) {
+
+			if (mCoord.x >= (mWinW / 2)) {
+				mCamera1->set2D();
+				mScene1->set2D(true);
+			}
+			else {
+				mCamera->set2D();
+				mScene->set2D(true);
+			}
+		}
+		else {
+			mCamera->set2D();
+			mScene->set2D(true);
+		}
 		break;
 	case 'u':
-		mScene->update();
-		mScene1->update();
+		if(mCoord.x >= (mWinW / 2))mScene1->update();
+		else mScene->update();
 		break;
 	case 'k':
 		m2Vistas = !m2Vistas;
@@ -206,8 +234,20 @@ void IG1App::key(unsigned char key, int x, int y)
 		mScene->changeScene(1);
 		break;
 	case 'p':
-		mCamera->changePrj();
-		mCamera->setScale(0.00);
+		if (m2Vistas) {
+			if (mCoord.x >= (mWinW / 2)) {
+				mCamera1->changePrj();
+				mCamera1->setScale(0.00);
+			}
+			else {
+				mCamera->changePrj();
+				mCamera->setScale(0.00);
+			}
+		}
+		else {
+			mCamera->changePrj();
+			mCamera->setScale(0.00);
+		}
 		break;
 	default:
 		need_redisplay = false;
@@ -291,8 +331,8 @@ void IG1App::motion(int x, int y)
 		}
 
 	}
-	else if(mBot == GLUT_LEFT_BUTTON) {
-		if(mCoord.x >= (mWinW / 2)) mCamera1->orbit(displacement.x * 0.05f, -displacement.y);
+	else if(mBot == GLUT_LEFT_BUTTON && !mScene->get2D()) {
+		if(mCoord.x >= (mWinW / 2) && m2Vistas ) mCamera1->orbit(displacement.x * 0.05f, -displacement.y);
 		else mCamera->orbit(displacement.x * 0.05f, -displacement.y);
 	}
 
@@ -307,7 +347,7 @@ void IG1App::mouseWheel(int n, int d, int x, int y){
 	}
 	else{
 		if (GLUT_ACTIVE_CTRL){
-			if (mCoord.x >= (mWinW / 2)) mCamera1->setScale(d);
+			if (mCoord.x >= (mWinW / 2) && m2Vistas) mCamera1->setScale(d);
 			else mCamera->setScale(d);
 		}
 	}

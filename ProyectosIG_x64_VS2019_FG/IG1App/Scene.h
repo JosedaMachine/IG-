@@ -30,6 +30,8 @@ public:
 
 	void changeScene(int id);
 	void setMid(int scene) { mid = scene; }
+	void set2D(bool dimension) { es2D = dimension; }
+	bool get2D() { return es2D; }
 	
 protected:
 	void free();
@@ -40,6 +42,7 @@ protected:
 	std::vector<Texture*> gTextures;
 
 	int mid = 0;
+	bool es2D = true;
 };
 //-------------------------------------------------------------------------
 

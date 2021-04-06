@@ -86,7 +86,7 @@ protected:
 	int mWinId = 0;	    // window's identifier
 	int mWinW = 800;    // window's width 
 	int mWinH = 600;    // window's height
-
+	bool es2D = true;
 	//Atributos de rat�n
 	dvec2 mCoord;
 	int mBot;
