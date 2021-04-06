@@ -168,6 +168,7 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'u':
 		mScene->update();
+		mScene1->update();
 		break;
 	case 'k':
 		m2Vistas = !m2Vistas;
