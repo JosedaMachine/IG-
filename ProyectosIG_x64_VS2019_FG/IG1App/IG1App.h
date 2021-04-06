@@ -55,12 +55,20 @@ protected:
 	void specialKey(int key, int x, int y);     // keypress event for special characters
 	void update();
 	void glutIdleFunc();
+	
+	
+
+	void mouse(int b, int s, int x, int y);
+	void motion(int x, int y);
 
 	// static callbacks 
 	static void s_display() { s_ig1app.display(); };
 	static void s_resize(int newWidth, int newHeight) { s_ig1app.resize(newWidth, newHeight); };
 	static void s_key(unsigned char key, int x, int y) { s_ig1app.key(key, x, y); };
 	static void s_specialKey(int key, int x, int y) { s_ig1app.specialKey(key, x, y); };
+	static void s_mouse(int button, int state, int x, int y);
+	static void s_motion(int x, int y);
+	static void s_mouseWheel(int n, int d, int x, int y);
 	//static void s_update() { update(); };
 
 	// Viewport position and size
@@ -75,6 +83,10 @@ protected:
 	int mWinId = 0;	    // window's identifier
 	int mWinW = 800;    // window's width 
 	int mWinH = 600;    // window's height
+
+	//Atributos de ratón
+	dvec2 mCoord;
+	int mBot;
 
 private:
 	float GLuintmLastUpdateTime;

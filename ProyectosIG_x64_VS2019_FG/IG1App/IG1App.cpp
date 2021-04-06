@@ -47,6 +47,8 @@ void IG1App::init()
 	mScene->init();
 
 	GLuintmLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
+
+	
 }
 //-------------------------------------------------------------------------
 
@@ -77,6 +79,8 @@ void IG1App::iniWinOpenGL()
 	glutSpecialFunc(s_specialKey);
 	glutDisplayFunc(s_display);
 	
+	glutMouseFunc(s_mouse);
+
 	cout << glGetString(GL_VERSION) << '\n';
 	cout << glGetString(GL_VENDOR) << '\n';
 }
@@ -244,6 +248,30 @@ void IG1App::update()
 	}
 
 	GLuintmLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
+}
+void IG1App::mouse(int b, int s, int x, int y)
+{
+	s_ig1app.mCoord = dvec2(x, y);
+	mBot = b;
+}
+void IG1App::motion(int x, int y)
+{
+	dvec2 newP(x, y);
+
+	dvec2 displacement = newP - mCoord;
+
+	mCoord = newP;
+	if (mBot == GLUT_RIGHT_BUTTON) {
+		mCamera->moveLR(displacement.x);
+		mCamera->moveUD(displacement.y);
+	}
+	else {
+		mCamera->orbit();
+	}
+}
+void IG1App::s_mouse(int button, int state, int x, int y)
+{
+	s_ig1app.mouse(button,state,x,y);
 }
 //-------------------------------------------------------------------------
 
