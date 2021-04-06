@@ -81,6 +81,7 @@ void IG1App::iniWinOpenGL()
 	
 	glutMouseFunc(s_mouse);
 	glutMotionFunc(s_motion);
+	glutMouseWheelFunc(s_mouseWheel);
 
 	cout << glGetString(GL_VERSION) << '\n';
 	cout << glGetString(GL_VENDOR) << '\n';
@@ -271,12 +272,25 @@ void IG1App::motion(int x, int y)
 
 	glutPostRedisplay();//renderiza la escena
 }
+
+void IG1App::mouseWheel(int n, int d, int x, int y){
+
+	if (glutGetModifiers()) mCamera->moveFB(d);
+	
+	if (n == GLUT_ACTIVE_CTRL) mCamera->setScale(d);
+
+	glutPostRedisplay();
+}
+
 void IG1App::s_mouse(int button, int state, int x, int y){
 	s_ig1app.mouse(button,state,x,y);
 }
 
 void IG1App::s_motion(int x, int y){
 	s_ig1app.motion(x, y);
+}
+void IG1App::s_mouseWheel(int n, int d, int x, int y){
+	s_ig1app.mouseWheel(n, d, x, y);
 }
 //-------------------------------------------------------------------------
 

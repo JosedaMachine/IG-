@@ -60,6 +60,7 @@ protected:
 
 	void mouse(int b, int s, int x, int y);
 	void motion(int x, int y);
+	void mouseWheel(int n, int d, int x, int y);
 
 	// static callbacks 
 	static void s_display() { s_ig1app.display(); };
