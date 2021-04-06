@@ -76,6 +76,7 @@ protected:
 	Viewport *mViewPort = nullptr;
 	// Camera position, view volume and projection
 	Camera *mCamera = nullptr;
+	Camera *mCamera1 = nullptr;
 	// Graphics objects of the scene
 	Scene *mScene = nullptr;
 	Scene* mScene1 = nullptr;

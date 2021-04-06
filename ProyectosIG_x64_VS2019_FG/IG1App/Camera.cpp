@@ -34,16 +34,6 @@ void Camera::changePrj()
 }
 void Camera::setCenital()
 {
-
-	////desplazar la posicion de la camara sin cambiar la direccion de vista
-	//mEye = dvec3(0, 0, 0);
-
-	////direccion hacia donde mira
-	//mLook = dvec3(0, 10, 0);
-
-	//
-	//mUp = dvec3(0, 1, 0);
-
 	mEye = dvec3(0, 1000, 0);
 	mLook = dvec3(0, 10, 0);
 	mUp = dvec3(1, 0, 0);
