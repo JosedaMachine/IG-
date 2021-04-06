@@ -274,10 +274,12 @@ void IG1App::motion(int x, int y)
 }
 
 void IG1App::mouseWheel(int n, int d, int x, int y){
-
-	if (glutGetModifiers()) mCamera->moveFB(d);
-	
-	if (n == GLUT_ACTIVE_CTRL) mCamera->setScale(d);
+	if (!glutGetModifiers()) 
+		mCamera->moveFB(d);
+	else{
+		if (GLUT_ACTIVE_CTRL)
+			mCamera->setScale(d);
+	}
 
 	glutPostRedisplay();
 }
