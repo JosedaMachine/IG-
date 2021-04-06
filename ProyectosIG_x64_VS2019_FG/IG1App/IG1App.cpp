@@ -259,14 +259,14 @@ void IG1App::motion(int x, int y)
 {
 	dvec2 newP(x, y);
 
-	dvec2 displacement = newP - mCoord;
+	dvec2 displacement = mCoord - newP;
 	mCoord = newP;
 	if (mBot == GLUT_RIGHT_BUTTON) {
-		mCamera->moveLR(-displacement.x);
-		mCamera->moveUD(displacement.y);
+		mCamera->moveLR(displacement.x);
+		mCamera->moveUD(-displacement.y);
 	}
 	else {
-		mCamera->orbit(displacement.x * 0.05f, displacement.y);
+		mCamera->orbit(displacement.x * 0.05f, -displacement.y);
 	}
 
 	glutPostRedisplay();//renderiza la escena
