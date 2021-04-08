@@ -361,6 +361,8 @@ void Glass::render(glm::dmat4 const& modelViewMat) const
 		glColor3d(mColor.r, mColor.g, mColor.b);
 		upload(aMat);
 
+		glDepthMask(GL_FALSE);
+		//si  hay mas de uno, donde se rendericen los objetos traslucidos 
 		//Activar modo Blend
 		glEnable(GL_BLEND);
 
@@ -383,6 +385,8 @@ void Glass::render(glm::dmat4 const& modelViewMat) const
 
 		//Desactivar modo Blender3D
 		glDisable(GL_BLEND);
+		glDepthMask(GL_TRUE);
+
 
 		//Se restauran los valores por defecto
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

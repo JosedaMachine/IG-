@@ -109,7 +109,7 @@ void IG1App::free()
 
 void IG1App::display() const   
 {  // double buffering
-	glClear(/*GL_COLOR_BUFFER_BIT |*/ GL_DEPTH_BUFFER_BIT);  // clears the back buffer
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
 
 	if (m2Scenes) display2Scenes();
 	else if (m2Vistas) display2Vistas();

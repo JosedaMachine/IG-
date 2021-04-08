@@ -85,14 +85,14 @@ void Scene::init()
 		gObjects.back()->setModelMat(glm::translate(dmat4(1), dvec3(0, 5, 0)));
 		gObjects.back()->setModelMat(glm::rotate(gObjects.back()->modelMat(), radians(-90.0), dvec3(1, 0, 0)));
 
-		gObjects.push_back(new Glass(700.0, 200));
-		gObjects.back()->setTexture(glass);
 
 		Texture* foto = new Texture();
 		gTextures.push_back(foto);
 		gObjects.back()->setTexture(foto);
 
 
+		gObjects.push_back(new Glass(700.0, 200));
+		gObjects.back()->setTexture(glass);
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 100, 0)));
 		
 	}
