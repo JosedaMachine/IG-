@@ -361,7 +361,7 @@ void Glass::render(glm::dmat4 const& modelViewMat) const
 		glColor3d(mColor.r, mColor.g, mColor.b);
 		upload(aMat);
 
-		//Activar modo Blender3D
+		//Activar modo Blend
 		glEnable(GL_BLEND);
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
