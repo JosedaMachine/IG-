@@ -228,9 +228,12 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'k':
 		m2Scenes = !m2Scenes;
+		if (m2Vistas)m2Vistas = false;
 		break;
 	case 'j':
 		m2Vistas = !m2Vistas;
+
+		if (m2Scenes)m2Scenes = false;
 		break;
 	case 's':
 		//Rotar en el eje vertical
@@ -338,10 +341,17 @@ void IG1App::motion(int x, int y) {
 	mCoord = newP;
 
 	if (mBot == GLUT_RIGHT_BUTTON) {
-		if (mCoord.x >= (mWinW / 2)) {
-			mCamera1->moveLR(displacement.x);
-			mCamera1->moveUD(-displacement.y);
 
+		if (m2Scenes) {
+			if (mCoord.x >= (mWinW / 2)) {
+				mCamera1->moveLR(displacement.x);
+				mCamera1->moveUD(-displacement.y);
+
+			}
+			else{
+				mCamera->moveLR(displacement.x);
+				mCamera->moveUD(-displacement.y);
+			}
 		}
 		else{
 			mCamera->moveLR(displacement.x);
