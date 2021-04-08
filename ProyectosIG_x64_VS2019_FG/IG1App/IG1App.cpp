@@ -71,8 +71,6 @@ void IG1App::iniWinOpenGL()
 	glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);  // GLUT_CORE_PROFILE
 	glutInitContextFlags(GLUT_DEBUG);		// GLUT_FORWARD_COMPATIBLE
 
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
 	glutInitWindowSize(mWinW, mWinH);   // window size
@@ -114,7 +112,6 @@ void IG1App::display() const
 	if (m2Scenes) display2Scenes();
 	else if (m2Vistas) display2Vistas();
 	else mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
-
 	
 	glutSwapBuffers();	// swaps the front and back buffer
 }

@@ -39,6 +39,7 @@ protected:
 	void resetGL();
 
 	std::vector<Abs_Entity*> gObjects;  // Entities (graphic objects) of the scene
+	std::vector<Abs_Entity*> gObjectsTrans;  // Entities (graphic objects) of the scene
 	std::vector<Texture*> gTextures;
 
 	int mid = 0;

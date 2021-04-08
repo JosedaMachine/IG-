@@ -345,8 +345,7 @@ void Foto::update()
 	mTexture->loadColorBuffer(IG1App::s_ig1app.winWidth(), IG1App::s_ig1app.winheigth(), GL_FRONT);
 }
 
-Glass::Glass(GLdouble w, GLdouble h)
-{
+Glass::Glass(GLdouble w, GLdouble h){
 	mMesh = Mesh::generaCristalera(w,h);
 }
 
@@ -354,44 +353,29 @@ Glass::~Glass()
 {
 }
 
-void Glass::render(glm::dmat4 const& modelViewMat) const
-{
+void Glass::render(glm::dmat4 const& modelViewMat) const {
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
-		glColor3d(mColor.r, mColor.g, mColor.b);
 		upload(aMat);
 
+		//Activar modo Blender3D
 		glDepthMask(GL_FALSE);
-		//si  hay mas de uno, donde se rendericen los objetos traslucidos 
-		//Activar modo Blend
-		glEnable(GL_BLEND);
-
+		glEnable(GL_BLEND); //Activar blending
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+		//glEnable(GL_CULL_FACE);
 
 		//Hacemos Bind de la texture
 		mTexture->bind(GL_REPLACE);
+		//glCullFace(GL_BACK);
 
 		//Renderizamos
 		mMesh->render();
 		//Quitamos la textura
 		mTexture->unbind();
 
-		upload(aMat);
-		mMesh->render();
-
-
 		//glDisable(GL_CULL_FACE);
-
-		//Desactivar modo Blender3D
-		glDisable(GL_BLEND);
 		glDepthMask(GL_TRUE);
-
-
-		//Se restauran los valores por defecto
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		glLineWidth(1);
-		glColor3d(1, 1, 1);
+		glDisable(GL_BLEND);
 	}
 }
 

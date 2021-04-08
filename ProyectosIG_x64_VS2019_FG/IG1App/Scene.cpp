@@ -10,7 +10,7 @@ void Scene::init()
 {
 	setGL();  // OpenGL settings
 
-	glEnable(GL_DEPTH_TEST);
+	
 
 	Texture* t = new Texture();
 	t->load("../Bmps/baldosaC.bmp");
@@ -74,7 +74,6 @@ void Scene::init()
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(-200, 300, - 200)));
 		gObjects.back()->setTexture(text);
 
-
 		int sideCube = 200.0f;
 		gObjects.push_back(new Caja(sideCube, chuches));
 		gObjects.back()->setTexture(caja);
@@ -86,15 +85,13 @@ void Scene::init()
 		gObjects.back()->setModelMat(glm::rotate(gObjects.back()->modelMat(), radians(-90.0), dvec3(1, 0, 0)));
 
 
-		Texture* foto = new Texture();
-		gTextures.push_back(foto);
-		gObjects.back()->setTexture(foto);
+		gObjectsTrans.push_back(new Glass(700.0, 200));
+		gObjectsTrans.back()->setTexture(glass);
+		gObjectsTrans.back()->setModelMat(glm::translate(gObjectsTrans.back()->modelMat(), dvec3(0, 100, 0)));
 
-
-		gObjects.push_back(new Glass(700.0, 200));
-		gObjects.back()->setTexture(glass);
-		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(0, 100, 0)));
-		
+		Texture* sandokan = new Texture();
+		gTextures.push_back(sandokan);
+		gObjects.back()->setTexture(sandokan);
 	}
 
 }
@@ -102,18 +99,21 @@ void Scene::init()
 void Scene::free()
 { // release memory and resources   
 
-	for (Abs_Entity* el : gObjects)
-	{
+	for (Abs_Entity* el : gObjects){
 		delete el;  el = nullptr;
 	}
+
+	for (Abs_Entity* cosa : gObjectsTrans){
+		delete cosa;  cosa = nullptr;
+	}
 	
-	for (Texture* el : gTextures)
-	{
+	for (Texture* el : gTextures){
 		delete el;  el = nullptr;
 	}
 
 	gTextures.clear();
 	gObjects.clear();
+	gObjectsTrans.clear();
 }
 //-------------------------------------------------------------------------
 void Scene::setGL()
@@ -137,9 +137,13 @@ void Scene::render(Camera const& cam) const
 {
 	cam.upload(); //viewport proyect
 
-	for (Abs_Entity* el : gObjects)
-	{
+	for (Abs_Entity* el : gObjects) {
 		el->render(cam.viewMat());	//cada elemento renderiza
+	}
+	
+	for (Abs_Entity* cosa : gObjectsTrans)
+	{
+		cosa->render(cam.viewMat());	//cada elemento renderiza
 	}
 }
 
