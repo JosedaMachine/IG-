@@ -172,7 +172,6 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'l':
 		if (m2Vistas) {
-
 			if (mCoord.x >= (mWinW / 2)) {
 				mCamera1->set3D();
 				mScene1->set2D(false);
@@ -189,7 +188,6 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'o':
 		if (m2Vistas) {
-
 			if (mCoord.x >= (mWinW / 2)) {
 				mCamera1->set2D();
 				mScene1->set2D(true);
@@ -311,16 +309,13 @@ void IG1App::mouse(int b, int s, int x, int y){
 	mBot = b;
 }
 
-void IG1App::motion(int x, int y)
-{
+void IG1App::motion(int x, int y) {
 	dvec2 newP(x, y);
-
 	dvec2 displacement = mCoord - newP;
 	mCoord = newP;
-	if (mBot == GLUT_RIGHT_BUTTON) {
 
-		if (mCoord.x >= (mWinW / 2))
-		{
+	if (mBot == GLUT_RIGHT_BUTTON) {
+		if (mCoord.x >= (mWinW / 2)) {
 			mCamera1->moveLR(displacement.x);
 			mCamera1->moveUD(-displacement.y);
 
@@ -329,25 +324,37 @@ void IG1App::motion(int x, int y)
 			mCamera->moveLR(displacement.x);
 			mCamera->moveUD(-displacement.y);
 		}
-
 	}
-	else if(mBot == GLUT_LEFT_BUTTON && !mScene->get2D()) {
-		if(mCoord.x >= (mWinW / 2) && m2Vistas ) mCamera1->orbit(displacement.x * 0.05f, -displacement.y);
-		else mCamera->orbit(displacement.x * 0.05f, -displacement.y);
-	}
+	else if(mBot == GLUT_LEFT_BUTTON) {
 
+		if (m2Vistas){
+			if (mCoord.x >= (mWinW / 2)) {
+				if(!mScene1->get2D())  
+					mCamera1->orbit(displacement.x * 0.05f, -displacement.y);
+			}
+			else  if(!mScene->get2D()) 
+				mCamera->orbit(displacement.x * 0.05f, -displacement.y);
+		}
+		else if(!mScene->get2D()){
+			mCamera->orbit(displacement.x * 0.05f, -displacement.y);
+		}
+
+		//if(mCoord.x >= (mWinW / 2) && m2Vistas) mCamera1->orbit(displacement.x * 0.05f, -displacement.y);
+		//else mCamera->orbit(displacement.x * 0.05f, -displacement.y);
+	}
 	glutPostRedisplay();//renderiza la escena
 }
 
 void IG1App::mouseWheel(int n, int d, int x, int y){
 	if (!glutGetModifiers())
 	{
-		if (mCoord.x >= (mWinW / 2)) mCamera1->moveFB(d * 10);
+		if (m2Vistas && mCoord.x >= (mWinW / 2))
+			mCamera1->moveFB(d * 10);
 		else mCamera->moveFB(d * 10);
 	}
 	else{
 		if (GLUT_ACTIVE_CTRL){
-			if (mCoord.x >= (mWinW / 2) && m2Vistas) mCamera1->setScale(d);
+			if (m2Vistas && mCoord.x >= (mWinW / 2)) mCamera1->setScale(d);
 			else mCamera->setScale(d);
 		}
 	}
