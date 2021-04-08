@@ -30,7 +30,7 @@ public:
 
 	void moveLR(GLdouble cs); // Left / Right
 	void moveFB(GLdouble cs); // Forward / Backward
-	void moveUD(GLdouble cs);
+	void moveUD(GLdouble cs);// Up // Down
 
 	void orbit(GLdouble incAng, GLdouble incY);
 

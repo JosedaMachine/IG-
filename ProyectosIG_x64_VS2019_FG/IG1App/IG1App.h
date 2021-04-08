@@ -49,6 +49,7 @@ protected:
 	void free();   
  
 	void display() const;   // the scene
+	void display2Scenes() const; //the scene divide en 2 viewports
 	void display2Vistas() const; //the scene divide en 2 viewports
 	void resize(int newWidth, int newHeight);   // the viewport (without changing the scale) 
 	void key(unsigned char key, int x, int y);  // keypress event
@@ -82,7 +83,8 @@ protected:
 	Scene* mScene1 = nullptr;
 
 	bool mStop = false; // main event processing loop
-	bool m2Vistas = false; //visualizar dos vistas
+	bool m2Scenes = false; //visualizar dos vistas
+	bool m2Vistas= false; //visualizar dos vistas
 	int mWinId = 0;	    // window's identifier
 	int mWinW = 800;    // window's width 
 	int mWinH = 600;    // window's height

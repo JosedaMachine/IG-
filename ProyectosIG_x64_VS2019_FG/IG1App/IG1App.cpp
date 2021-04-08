@@ -52,7 +52,8 @@ void IG1App::init()
 	mScene->init();
 	
 	mScene1->init();
-	mScene1->setMid(1);
+	mScene1->setMid(0);
+	mScene->setMid(1);
 
 	GLuintmLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
 
@@ -110,14 +111,15 @@ void IG1App::display() const
 {  // double buffering
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
 
-	if (m2Vistas) display2Vistas();
+	if (m2Scenes) display2Scenes();
+	else if (m2Vistas) display2Vistas();
 	else mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
 
 	
 	glutSwapBuffers();	// swaps the front and back buffer
 }
 
-void IG1App::display2Vistas() const {
+void IG1App::display2Scenes() const {
 	Camera auxCam = *mCamera; //camara auxiliar para renderizar las vistas
 	Camera auxCam1 = *mCamera1; //camara auxiliar para renderizar las vistas
 
@@ -131,8 +133,8 @@ void IG1App::display2Vistas() const {
 
 	//2D
 	mViewPort->setPos(0, 0);
-	//auxCam.set2D();
 	mScene->render(auxCam);
+	//auxCam.set2D();
 
 	//3D
 	mViewPort->setPos(mWinW / 2, 0);
@@ -140,6 +142,24 @@ void IG1App::display2Vistas() const {
 	//auxCam.set3D();
 	mScene1->render(auxCam1);
 
+	*mViewPort = auxVP; //restauramos el puntero de vista
+}
+
+void IG1App::display2Vistas() const
+{
+	Camera auxCam = *mCamera; //camara auxiliar para renderizar las vistas
+	Viewport auxVP = *mViewPort; //se copia el puntero del puerto de vista para no alterar el original
+	//Para que sea dos vistas tienen que tener la misma altura, pero anchura la mitad
+	mViewPort->setSize(mWinW / 2, mWinH);
+	auxCam.setSize(mViewPort->width(), mViewPort->height());
+
+	mViewPort->setPos(0, 0);
+	mScene->render(auxCam);
+
+	mViewPort->setPos(mWinW / 2, 0);
+	auxCam.setCenital();
+	mScene->render(auxCam);
+	
 	*mViewPort = auxVP; //restauramos el puntero de vista
 }
 
@@ -171,7 +191,7 @@ void IG1App::key(unsigned char key, int x, int y)
 		mCamera->setScale(-0.01);  // zoom out (decreases the scale)
 		break;
 	case 'l':
-		if (m2Vistas) {
+		if (m2Scenes) {
 			if (mCoord.x >= (mWinW / 2)) {
 				mCamera1->set3D();
 				mScene1->set2D(false);
@@ -187,7 +207,7 @@ void IG1App::key(unsigned char key, int x, int y)
 		}
 		break;
 	case 'o':
-		if (m2Vistas) {
+		if (m2Scenes) {
 			if (mCoord.x >= (mWinW / 2)) {
 				mCamera1->set2D();
 				mScene1->set2D(true);
@@ -207,6 +227,9 @@ void IG1App::key(unsigned char key, int x, int y)
 		else mScene->update();
 		break;
 	case 'k':
+		m2Scenes = !m2Scenes;
+		break;
+	case 'j':
 		m2Vistas = !m2Vistas;
 		break;
 	case 's':
@@ -232,7 +255,7 @@ void IG1App::key(unsigned char key, int x, int y)
 		mScene->changeScene(1);
 		break;
 	case 'p':
-		if (m2Vistas) {
+		if (m2Scenes) {
 			if (mCoord.x >= (mWinW / 2)) {
 				mCamera1->changePrj();
 				mCamera1->setScale(0.00);
@@ -327,7 +350,7 @@ void IG1App::motion(int x, int y) {
 	}
 	else if(mBot == GLUT_LEFT_BUTTON) {
 
-		if (m2Vistas){
+		if (m2Scenes){
 			if (mCoord.x >= (mWinW / 2)) {
 				if(!mScene1->get2D())  
 					mCamera1->orbit(displacement.x * 0.05f, -displacement.y);
@@ -348,13 +371,13 @@ void IG1App::motion(int x, int y) {
 void IG1App::mouseWheel(int n, int d, int x, int y){
 	if (!glutGetModifiers())
 	{
-		if (m2Vistas && mCoord.x >= (mWinW / 2))
+		if (m2Scenes && mCoord.x >= (mWinW / 2))
 			mCamera1->moveFB(d * 10);
 		else mCamera->moveFB(d * 10);
 	}
 	else{
 		if (GLUT_ACTIVE_CTRL){
-			if (m2Vistas && mCoord.x >= (mWinW / 2)) mCamera1->setScale(d);
+			if (m2Scenes && mCoord.x >= (mWinW / 2)) mCamera1->setScale(d);
 			else mCamera->setScale(d);
 		}
 	}
