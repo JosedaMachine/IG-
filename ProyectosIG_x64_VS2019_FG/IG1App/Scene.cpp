@@ -10,27 +10,27 @@ void Scene::init()
 {
 	setGL();  // OpenGL settings
 
-	
-
 	Texture* t = new Texture();
+
+
 	t->load("../Bmps/baldosaC.bmp");
 	gTextures.push_back(t);
 
-	Texture* text = new Texture();
-	text->load("../Bmps/baldosaP.bmp");
-	gTextures.push_back(text);
+	t = new Texture();
+	t->load("../Bmps/baldosaP.bmp");
+	gTextures.push_back(t);
 	
-	Texture* caja = new Texture();
-	caja->load("../Bmps/container.bmp");
-	gTextures.push_back(caja);
+	t = new Texture();
+	t->load("../Bmps/container.bmp");
+	gTextures.push_back(t);
 
-	Texture* chuches = new Texture();
-	chuches->load("../Bmps/papelC.bmp");
-	gTextures.push_back(chuches);
+	t = new Texture();
+	t->load("../Bmps/papelC.bmp");
+	gTextures.push_back(t);
 
-	Texture* glass = new Texture();
-	glass->load("../Bmps/windowV.bmp", 255 / 2);
-	gTextures.push_back(glass);
+	t = new Texture();
+	t->load("../Bmps/windowV.bmp", 255 / 2);
+	gTextures.push_back(t);
 
 	// allocate memory and load resources
 	// Lights
@@ -72,11 +72,11 @@ void Scene::init()
 		gObjects.push_back(new Estrella3D(50, 10, 100));
 		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(-200, 300, - 200)));
-		gObjects.back()->setTexture(text);
+		gObjects.back()->setTexture(gTextures[1]);
 
 		int sideCube = 200.0f;
-		gObjects.push_back(new Caja(sideCube, chuches));
-		gObjects.back()->setTexture(caja);
+		gObjects.push_back(new Caja(sideCube, gTextures[3]));
+		gObjects.back()->setTexture(gTextures[2]);
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(-sideCube, sideCube / 2, -sideCube)));
 
 		int sizePhoto = 100;
@@ -84,9 +84,8 @@ void Scene::init()
 		gObjects.back()->setModelMat(glm::translate(dmat4(1), dvec3(0, 5, 0)));
 		gObjects.back()->setModelMat(glm::rotate(gObjects.back()->modelMat(), radians(-90.0), dvec3(1, 0, 0)));
 
-
 		gObjectsTrans.push_back(new Glass(700.0, 200));
-		gObjectsTrans.back()->setTexture(glass);
+		gObjectsTrans.back()->setTexture(gTextures[4]);
 		gObjectsTrans.back()->setModelMat(glm::translate(gObjectsTrans.back()->modelMat(), dvec3(0, 100, 0)));
 
 		Texture* cristal = new Texture();
