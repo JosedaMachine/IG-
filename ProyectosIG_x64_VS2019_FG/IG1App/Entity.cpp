@@ -325,7 +325,6 @@ Foto::Foto(GLsizei width, GLsizei height, GLuint buffer)
 
 Foto::~Foto()
 {
-	delete mTexture;
 }
 
 void Foto::render(glm::dmat4 const& modelViewMat) const

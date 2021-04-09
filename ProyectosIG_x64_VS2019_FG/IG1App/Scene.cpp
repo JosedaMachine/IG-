@@ -79,18 +79,18 @@ void Scene::init()
 		gObjects.back()->setTexture(gTextures[2]);
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(-sideCube, sideCube / 2, -sideCube)));
 
+		gObjectsTrans.push_back(new Glass(700.0, 200));
+		gObjectsTrans.back()->setTexture(gTextures[4]);
+		gObjectsTrans.back()->setModelMat(glm::translate(gObjectsTrans.back()->modelMat(), dvec3(0, 100, 0)));
+
 		int sizePhoto = 100;
 		gObjects.push_back(new Foto(sizePhoto, sizePhoto, GL_FRONT));
 		gObjects.back()->setModelMat(glm::translate(dmat4(1), dvec3(0, 5, 0)));
 		gObjects.back()->setModelMat(glm::rotate(gObjects.back()->modelMat(), radians(-90.0), dvec3(1, 0, 0)));
 
-		gObjectsTrans.push_back(new Glass(700.0, 200));
-		gObjectsTrans.back()->setTexture(gTextures[4]);
-		gObjectsTrans.back()->setModelMat(glm::translate(gObjectsTrans.back()->modelMat(), dvec3(0, 100, 0)));
-
-		Texture* cristal = new Texture();
-		gTextures.push_back(cristal);
-		gObjects.back()->setTexture(cristal);
+		t = new Texture();
+		gTextures.push_back(t);
+		gObjects.back()->setTexture(t);
 	}
 	else if (mid == 2) {
 		gObjects.push_back(new EjesRGB(400.0));
