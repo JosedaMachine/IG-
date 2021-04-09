@@ -93,7 +93,9 @@ void Scene::init()
 		gTextures.push_back(sandokan);
 		gObjects.back()->setTexture(sandokan);
 	}
-
+	else if (mid == 2) {
+		gObjects.push_back(new EjesRGB(400.0));
+	}
 }
 //-------------------------------------------------------------------------
 void Scene::free()
