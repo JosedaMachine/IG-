@@ -38,6 +38,8 @@ protected:
 	void setGL();
 	void resetGL();
 
+	void sceneDirLight(Camera const& cam) const;
+
 	std::vector<Abs_Entity*> gObjects;  // Entities (graphic objects) of the scene
 	std::vector<Abs_Entity*> gObjectsTrans;  // Entities (graphic objects) of the scene
 	std::vector<Texture*> gTextures;
