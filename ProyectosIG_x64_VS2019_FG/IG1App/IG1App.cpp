@@ -56,8 +56,6 @@ void IG1App::init()
 	mScene->setMid(1);
 
 	GLuintmLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
-
-	
 }
 //-------------------------------------------------------------------------
 
