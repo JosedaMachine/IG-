@@ -27,3 +27,12 @@ public:
 protected:
 	GLdouble rS, rI, h;
 };
+
+class Disk : public QuadricEntity
+{
+public:
+	Disk(GLdouble re, GLdouble ri); // r es el radio de la esfera
+	void render(glm::dmat4 const& modelViewMat) const;
+protected:
+	GLdouble rE, rI;
+};

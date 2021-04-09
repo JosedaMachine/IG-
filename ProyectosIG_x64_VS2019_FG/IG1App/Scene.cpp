@@ -95,16 +95,23 @@ void Scene::init()
 	}
 	else if (mid == 2) {
 
-		Sphere* esfera = new Sphere(100.0);
+		/*Sphere* esfera = new Sphere(100.0);
 		gObjects.push_back(esfera);
 		Cylinder* cono = new Cylinder(50.0, 0, 100.0);
 		glm::dmat4 mAux = cono->modelMat();
 		mAux = translate(mAux, dvec3(0, 85, 0));
 		mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
 		cono->setModelMat(mAux);
+		gObjects.push_back(cono);*/
+
+		Disk* cono = new Disk(5, 5);
+		glm::dmat4 mAux = cono->modelMat();
+		mAux = translate(mAux, dvec3(0, 85, 0));
+		mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
+		cono->setModelMat(mAux);
 		gObjects.push_back(cono);
 
-		gObjects.push_back(new EjesRGB(400.0));
+		//gObjects.push_back(new EjesRGB(400.0));
 	}
 }
 //-------------------------------------------------------------------------
