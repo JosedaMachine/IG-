@@ -152,6 +152,8 @@ void Scene::sceneDirLight(Camera const& cam) const
 
 void Scene::render(Camera const& cam) const
 {
+	sceneDirLight(cam);
+
 	cam.upload(); //viewport proyect
 
 	for (Abs_Entity* el : gObjects) {
