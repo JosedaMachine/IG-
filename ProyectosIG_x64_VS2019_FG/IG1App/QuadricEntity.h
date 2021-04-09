@@ -12,5 +12,9 @@ protected:
 
 class Sphere : public QuadricEntity
 {
-
+public:
+	Sphere(GLdouble rr); // r es el radio de la esfera
+	void render(glm::dmat4 const& modelViewMat) const;
+protected:
+	GLdouble r;
 };

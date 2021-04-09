@@ -2,6 +2,7 @@
 #include "CheckML.h"
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
+#include "QuadricEntity.h"
 
 using namespace glm;
 //-------------------------------------------------------------------------
@@ -94,6 +95,9 @@ void Scene::init()
 	}
 	else if (mid == 2) {
 		gObjects.push_back(new EjesRGB(400.0));
+
+		Sphere* esfera = new Sphere(100.0);
+		gObjects.push_back(esfera);
 	}
 }
 //-------------------------------------------------------------------------
@@ -151,7 +155,7 @@ void Scene::sceneDirLight(Camera const& cam) const
 
 void Scene::render(Camera const& cam) const
 {
-	sceneDirLight(cam);
+	if(mid==2)sceneDirLight(cam);
 
 	cam.upload(); //viewport proyect
 
