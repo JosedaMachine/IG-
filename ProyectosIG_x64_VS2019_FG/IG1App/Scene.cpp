@@ -104,8 +104,12 @@ void Scene::init()
 		cono->setModelMat(mAux);
 		gObjects.push_back(cono);*/
 
-		Disk* noUnConoSiNoUnDisco = new Disk(500, 50);
-		gObjects.push_back(noUnConoSiNoUnDisco);
+		/*Disk* noUnConoSiNoUnDisco = new Disk(500, 50);
+		gObjects.push_back(noUnConoSiNoUnDisco);*/
+
+		PartialDisk* pd = new PartialDisk(500, 50, 63);
+
+		gObjects.push_back(pd);
 
 		gObjects.push_back(new EjesRGB(400.0));
 	}
