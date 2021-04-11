@@ -94,22 +94,48 @@ void Scene::init()
 		gObjects.back()->setTexture(t);
 	}
 	else if (mid == 2) {
+		//El luchador del empate
+		float radioDiscoCono = 100;
 
-		/*Sphere* esfera = new Sphere(100.0);
+		Sphere* esfera = new Sphere(130.0);
 		gObjects.push_back(esfera);
-		Cylinder* cono = new Cylinder(50.0, 0, 100.0);
+
+
+		Cylinder* cono = new Cylinder(radioDiscoCono, radioDiscoCono, 40.0);
 		glm::dmat4 mAux = cono->modelMat();
+		mAux = translate(mAux, dvec3(0, 0, 101));
+		cono->setModelMat(mAux);
+		gObjects.push_back(cono);
+
+		Disk* disco = new Disk(radioDiscoCono, 0);
+		glm::dmat4 mAux2 = disco->modelMat();
+		mAux2 = translate(mAux2, dvec3(0, 0, 141));
+		disco->setModelMat(mAux2);
+
+		gObjects.push_back(disco);
+
+
+		Cylinder* cono1 = new Cylinder(50.0, 50, 100.0);
+		glm::dmat4 mAux3 = cono->modelMat();
+		mAux3 = translate(mAux, dvec3(0, 85, 0));
+		mAux3 = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
+		cono->setModelMat(mAux3);
+		gObjects.push_back(cono);
+
+
+		//Cylinder* cono = new Cylinder(50.0, 0, 100.0);
+		/*glm::dmat4 mAux = cono->modelMat();
 		mAux = translate(mAux, dvec3(0, 85, 0));
 		mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
 		cono->setModelMat(mAux);
 		gObjects.push_back(cono);*/
 
-		/*Disk* noUnConoSiNoUnDisco = new Disk(500, 50);
+		/*Disk* noUnConoSiNoUnDisco = new Disk(100, 0);
 		gObjects.push_back(noUnConoSiNoUnDisco);*/
 
-		PartialDisk* pd = new PartialDisk(500, 50, 63);
+		/*PartialDisk* pd = new PartialDisk(500, 50, 63);
 
-		gObjects.push_back(pd);
+		gObjects.push_back(pd);*/
 
 		gObjects.push_back(new EjesRGB(400.0));
 	}

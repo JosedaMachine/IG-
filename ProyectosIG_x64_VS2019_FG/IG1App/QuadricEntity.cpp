@@ -29,7 +29,7 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) const
 	upload(aMat);
 	// Aquí se puede fijar el color de la esfera así:
 	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(0.27, 0.08, 0.06);
+	glColor3f(0.15, 0.28, 0.59);
 	// Aquí se puede fijar el modo de dibujar la esfera:
 	//gluQuadricDrawStyle(q, GLU_SILHOUETTE);
 	gluCylinder(q, rS, rI, h, 50, 50);
@@ -49,7 +49,7 @@ void Disk::render(glm::dmat4 const& modelViewMat) const
 	upload(aMat);
 	// Aquí se puede fijar el color de la esfera así:
 	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(0.27, 0.08, 0.06);
+	glColor3f(0.15, 0.28, 0.59);
 	// Aquí se puede fijar el modo de dibujar la esfera:
 	//gluQuadricDrawStyle(q, GLU_SILHOUETTE);
 	gluDisk(q,rI,rE,50,360);
@@ -70,7 +70,7 @@ void PartialDisk::render(glm::dmat4 const& modelViewMat) const
 	upload(aMat);
 	// Aquí se puede fijar el color de la esfera así:
 	glEnable(GL_COLOR_MATERIAL);
-	glColor3f(0.27, 0.08, 0.06);
+	glColor3f(0.15, 0.28, 0.59);
 	// Aquí se puede fijar el modo de dibujar la esfera:
 	//gluQuadricDrawStyle(q, GLU_SILHOUETTE);
 	gluPartialDisk(q, rI, rE, 50, 50, 0, ang);
