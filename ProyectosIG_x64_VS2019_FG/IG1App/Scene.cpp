@@ -115,12 +115,20 @@ void Scene::init()
 		gObjects.push_back(disco);
 
 
-		Cylinder* cono1 = new Cylinder(50.0, 50, 100.0);
-		glm::dmat4 mAux3 = cono->modelMat();
-		mAux3 = translate(mAux, dvec3(0, 85, 0));
-		mAux3 = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
-		cono->setModelMat(mAux3);
-		gObjects.push_back(cono);
+		Cylinder* cono1 = new Cylinder(50.0, 50, 200.0);
+		glm::dmat4 mAux3 = cono1->modelMat();
+		mAux3 = rotate(mAux3, radians(90.0), dvec3(0, 1.0, 0));
+		mAux3 = translate(mAux3, dvec3(0, 0, 120));
+		cono1->setModelMat(mAux3);
+		gObjects.push_back(cono1);
+
+
+		Cylinder* cono2 = new Cylinder(50.0, 50, 200.0);
+		glm::dmat4 mAux4 = cono2->modelMat();
+		mAux4 = rotate(mAux4, radians(-90.0), dvec3(0, 1.0, 0));
+		mAux4 = translate(mAux4, dvec3(0, 0, 120));
+		cono2->setModelMat(mAux4);
+		gObjects.push_back(cono2);
 
 
 		//Cylinder* cono = new Cylinder(50.0, 0, 100.0);
