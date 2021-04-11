@@ -32,7 +32,9 @@ void Scene::init()
 	t = new Texture();
 	t->load("../Bmps/windowV.bmp", 255 / 2);
 	gTextures.push_back(t);
-
+	
+	t = new Texture();
+	t->load("../Bmps/noche.bmp",255/2);
 	// allocate memory and load resources
 	// Lights
 	// Textures
@@ -67,7 +69,7 @@ void Scene::init()
 		gObjects.push_back(new EjesRGB(400.0));
 
 		gObjects.push_back(new Suelo(700, 700, 5, 5));
-		gObjects.back()->setTexture(t);
+		gObjects.back()->setTexture(gTextures[0]);
 		gObjects.back()->setModelMat(glm::rotate(dmat4(1), radians(-90.0), dvec3(1, 0, 0)));
 
 		gObjects.push_back(new Estrella3D(50, 10, 100));
@@ -132,21 +134,27 @@ void Scene::init()
 
 
 
-		Disk* ala1 = new Disk(500.0, 0, 6);
+		PoligonoText* ala1 = new PoligonoText(6, 500);
 		glm::dmat4 mAux5 = ala1->modelMat();
 		mAux5 = rotate(mAux5, radians(-90.0), dvec3(0, 1.0, 0));
 		mAux5 = translate(mAux5, dvec3(0, 0, 320));
 		ala1->setModelMat(mAux5);
-		gObjects.push_back(ala1);
+		gObjectsTrans.push_back(ala1);
+
+		gObjectsTrans.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+		gObjectsTrans.back()->setTexture(t);
 
 
-		Disk* ala2 = new Disk(500.0, 0, 6);
+
+		PoligonoText* ala2 = new PoligonoText(6, 500);
 		glm::dmat4 mAux6 = ala2->modelMat();
 		mAux6 = rotate(mAux6, radians(90.0), dvec3(0, 1.0, 0));
 		mAux6 = translate(mAux6, dvec3(0, 0, 320));
 		ala2->setModelMat(mAux6);
-		gObjects.push_back(ala2);
+		gObjectsTrans.push_back(ala2);
 
+		gObjectsTrans.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+		gObjectsTrans.back()->setTexture(t);
 
 		//Cylinder* cono = new Cylinder(50.0, 0, 100.0);
 		/*glm::dmat4 mAux = cono->modelMat();

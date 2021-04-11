@@ -117,6 +117,29 @@ Mesh* Mesh::generaPoligono(GLuint numL, GLdouble rd) {
 	return mesh;
 }
 
+Mesh* Mesh::generaPoligonoTextCord(GLuint numL, GLdouble rd)
+{
+	Mesh* mesh = generaPoligono(numL,rd);
+
+	mesh->mPrimitive = GL_LINE_LOOP;
+
+	mesh->mNumVertices = numL;
+	mesh->vTexCoords.reserve(mesh->mNumVertices);//REservamos vértices
+
+	//mesh->vColors.reserve(mesh->mNumVertices);//Reservamos colores
+
+	float ang = (360.0 / numL) + 90;
+	vec2 c(0, 0);
+
+	for (int i = 0; i < numL; i++) {
+		mesh->vTexCoords.emplace_back(c.x + rd * cos(radians(ang)), c.y + rd * sin(radians(ang)));
+		ang = ang + 360.0 / numL;
+	}
+
+
+	return mesh;
+}
+
 Mesh* Mesh::generaSierpinski(GLdouble rd, GLuint numP) {
 	Mesh* triangulo = generaPoligono(3, rd);
 

@@ -79,6 +79,14 @@ public:
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
+class PoligonoText : public Abs_Entity
+{
+public:
+	explicit PoligonoText(GLuint numL, GLdouble rd);
+	~PoligonoText();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
 class SerPinspi : public Abs_Entity
 {
 public:

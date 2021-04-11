@@ -381,3 +381,40 @@ void Glass::render(glm::dmat4 const& modelViewMat) const {
 void Glass::update()
 {
 }
+
+PoligonoText::PoligonoText(GLuint numL, GLdouble rd)
+{
+	mMesh = Mesh::generaPoligonoTextCord(numL, rd);
+}
+
+PoligonoText::~PoligonoText()
+{
+	delete mMesh; mMesh = nullptr;
+}
+
+void PoligonoText::render(glm::dmat4 const& modelViewMat) const
+{
+	if (mMesh != nullptr) {
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+
+		//Activar modo Blender3D
+		glDepthMask(GL_FALSE);
+		glEnable(GL_BLEND); //Activar blending
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glEnable(GL_CULL_FACE);
+
+		//Hacemos Bind de la texture
+		mTexture->bind(GL_REPLACE);
+		//glCullFace(GL_BACK);
+
+		//Renderizamos
+		mMesh->render();
+		//Quitamos la textura
+		mTexture->unbind();
+
+		//glDisable(GL_CULL_FACE);
+		glDepthMask(GL_TRUE);
+		glDisable(GL_BLEND);
+	}
+}
