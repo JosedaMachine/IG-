@@ -37,10 +37,11 @@ void Cylinder::render(glm::dmat4 const& modelViewMat) const
 	glColor3f(1.0, 1.0, 1.0);
 }
 
-Disk::Disk(GLdouble re, GLdouble ri)
+Disk::Disk(GLdouble re, GLdouble ri, int slice)
 {
 	rE = re;
 	rI = ri;
+	slices = slice;
 }
 
 void Disk::render(glm::dmat4 const& modelViewMat) const
@@ -52,7 +53,7 @@ void Disk::render(glm::dmat4 const& modelViewMat) const
 	glColor3f(0.15, 0.28, 0.59);
 	// Aquí se puede fijar el modo de dibujar la esfera:
 	//gluQuadricDrawStyle(q, GLU_SILHOUETTE);
-	gluDisk(q,rI,rE,50,360);
+	gluDisk(q,rI,rE,slices,50);
 	// Aquí se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
 }

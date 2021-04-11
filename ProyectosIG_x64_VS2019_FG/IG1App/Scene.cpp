@@ -107,7 +107,7 @@ void Scene::init()
 		cono->setModelMat(mAux);
 		gObjects.push_back(cono);
 
-		Disk* disco = new Disk(radioDiscoCono, 0);
+		Disk* disco = new Disk(radioDiscoCono, 0, 360);
 		glm::dmat4 mAux2 = disco->modelMat();
 		mAux2 = translate(mAux2, dvec3(0, 0, 141));
 		disco->setModelMat(mAux2);
@@ -129,6 +129,23 @@ void Scene::init()
 		mAux4 = translate(mAux4, dvec3(0, 0, 120));
 		cono2->setModelMat(mAux4);
 		gObjects.push_back(cono2);
+
+
+
+		Disk* ala1 = new Disk(500.0, 0, 6);
+		glm::dmat4 mAux5 = ala1->modelMat();
+		mAux5 = rotate(mAux5, radians(-90.0), dvec3(0, 1.0, 0));
+		mAux5 = translate(mAux5, dvec3(0, 0, 320));
+		ala1->setModelMat(mAux5);
+		gObjects.push_back(ala1);
+
+
+		Disk* ala2 = new Disk(500.0, 0, 6);
+		glm::dmat4 mAux6 = ala2->modelMat();
+		mAux6 = rotate(mAux6, radians(90.0), dvec3(0, 1.0, 0));
+		mAux6 = translate(mAux6, dvec3(0, 0, 320));
+		ala2->setModelMat(mAux6);
+		gObjects.push_back(ala2);
 
 
 		//Cylinder* cono = new Cylinder(50.0, 0, 100.0);
