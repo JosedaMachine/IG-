@@ -34,7 +34,7 @@ void Scene::init()
 	gTextures.push_back(t);
 	
 	t = new Texture();
-	t->load("../Bmps/noche.bmp",255/2);
+	t->load("../Bmps/noche.bmp");
 	// allocate memory and load resources
 	// Lights
 	// Textures
@@ -154,7 +154,7 @@ void Scene::init()
 		gObjectsTrans.push_back(ala2);
 
 		gObjectsTrans.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-		gObjectsTrans.back()->setTexture(t);
+		//gObjectsTrans.back()->setTexture(t);
 
 		//Cylinder* cono = new Cylinder(50.0, 0, 100.0);
 		/*glm::dmat4 mAux = cono->modelMat();

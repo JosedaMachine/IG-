@@ -121,7 +121,7 @@ Mesh* Mesh::generaPoligonoTextCord(GLuint numL, GLdouble rd)
 {
 	Mesh* mesh = generaPoligono(numL,rd);
 
-	mesh->mPrimitive = GL_LINE_LOOP;
+	mesh->mPrimitive = GL_TRIANGLE_FAN;
 
 	mesh->mNumVertices = numL;
 	mesh->vTexCoords.reserve(mesh->mNumVertices);//REservamos vértices
