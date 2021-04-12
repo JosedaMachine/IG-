@@ -49,11 +49,12 @@ void IG1App::init()
 	mCamera->set2D();
 	mCamera1->set2D();
 
-	mScene->init();
-	
-	mScene1->init();
 	mScene1->setMid(0);
 	mScene->setMid(1);
+
+	mScene->init();
+	mScene1->init();
+	
 
 	GLuintmLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
 }
@@ -125,6 +126,7 @@ void IG1App::display2Scenes() const {
 
 	//Asignamos el tama�o a la camara, segun el VP
 	auxCam.setSize(mViewPort->width(), mViewPort->height());
+	auxCam1.setSize(mViewPort->width(), mViewPort->height());
 
 	//2D
 	mViewPort->setPos(0, 0);
