@@ -29,6 +29,11 @@ public:
 	static Mesh* generaCristalera(GLdouble w, GLdouble h);
 	static Mesh* generaCuboContTextIrregular(GLdouble w, GLdouble h);
 
+	static Mesh* generaPolygon3D(GLdouble re, GLuint np);
+	static Mesh* generaPolygonTexCor(GLdouble re, GLuint np);
+
+
+
 	Mesh() {};
 	virtual ~Mesh() {};
 

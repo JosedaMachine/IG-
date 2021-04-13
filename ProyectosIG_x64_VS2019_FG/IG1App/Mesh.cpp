@@ -364,7 +364,6 @@ Mesh* Mesh::generaCuboContTextIrregular(GLdouble w, GLdouble h)
 	mesh->mNumVertices = 10;
 	mesh->vVertices.reserve(mesh->mNumVertices);//REservamos vértices
 
-
 	mesh->vVertices.emplace_back(-w / 2, h / 2, w / 2); //v0
 	mesh->vVertices.emplace_back(-w / 2, -h / 2, w / 2); //v1
 	mesh->vVertices.emplace_back(w / 2, h / 2, w / 2); //v2
@@ -375,6 +374,58 @@ Mesh* Mesh::generaCuboContTextIrregular(GLdouble w, GLdouble h)
 	mesh->vVertices.emplace_back(-w / 2, -h / 2, -w / 2); //v7
 	mesh->vVertices.emplace_back(-w / 2, h / 2, w / 2); //v8
 	mesh->vVertices.emplace_back(-w / 2, -h / 2, w / 2); //v9
+
+	return mesh;
+}
+
+Mesh* Mesh::generaPolygon3D(GLdouble re, GLuint np)
+{
+	Mesh* mesh = new Mesh();
+	mesh->mPrimitive = GL_TRIANGLE_FAN;
+	//Vertices
+	mesh->mNumVertices = np + 2;
+	//angulo inicial
+	GLdouble ang = 0;
+
+	mesh->vVertices.reserve(mesh->mNumVertices);
+	mesh->vColors.reserve(mesh->mNumVertices);
+	//Primer Vertice
+	mesh->vVertices.emplace_back(0.0, 0.0, 0.0);
+	mesh->vColors.emplace_back(1.0, 1.0, 1.0, 1.0);
+	//El resto
+	for (int i = 0; i < mesh->mNumVertices - 1; i++) {
+		GLdouble x = 0 + re * cos(radians(ang));
+		GLdouble y = 0 + re * sin(radians(ang));
+		ang -= 360.0 / np;
+
+		mesh->vVertices.emplace_back(x, y, 0.0);
+
+		mesh->vColors.emplace_back(1.0, 1.0, 1.0, 1.0);
+	}
+	return mesh;
+}
+
+Mesh* Mesh::generaPolygonTexCor(GLdouble re, GLuint np)
+{
+	Mesh* mesh = generaPolygon3D(re, np);
+
+	mesh->vTexCoords.reserve(mesh->mNumVertices);
+
+	float ang = 0;
+
+	dvec2 center = dvec2(0.5, 0.5);
+
+
+	float radio = 0.5f;
+	mesh->vTexCoords.emplace_back(center);    //Origen de poligono
+
+	for (int i = 0; i < mesh->mNumVertices - 1; i++) { //-1 pq el vertice inicial se declara antes
+		float x = cos(radians(ang)) * radio + center.x;
+		float y = sin(radians(ang)) * radio + center.y;
+		ang -= 360.0 / np;
+
+		mesh->vTexCoords.emplace_back(x, y);
+	}
 
 	return mesh;
 }

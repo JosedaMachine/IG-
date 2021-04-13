@@ -5,7 +5,7 @@ QuadricEntity::QuadricEntity()
 	q = gluNewQuadric();
 }
 
-Sphere::Sphere(GLdouble rr) { r = rr; }
+Sphere::Sphere(GLdouble rr) { r = rr; }	
 
 void Sphere::render(glm::dmat4 const& modelViewMat) const
 {

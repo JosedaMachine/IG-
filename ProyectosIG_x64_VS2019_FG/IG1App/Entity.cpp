@@ -384,7 +384,7 @@ void Glass::update()
 
 PoligonoText::PoligonoText(GLuint numL, GLdouble rd)
 {
-	mMesh = Mesh::generaPoligonoTextCord(numL, rd);
+	mMesh = Mesh::generaPolygonTexCor(rd, numL);
 }
 
 PoligonoText::~PoligonoText()
@@ -402,16 +402,18 @@ void PoligonoText::render(glm::dmat4 const& modelViewMat) const
 		glDepthMask(GL_FALSE);
 		glEnable(GL_BLEND); //Activar blending
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glEnable(GL_CULL_FACE);
 
 		//Hacemos Bind de la texture
-		if(mTexture != nullptr)mTexture->bind(GL_REPLACE);
+		if(mTexture != nullptr) mTexture->bind(GL_REPLACE);
 		//glCullFace(GL_BACK);
 
 		//Renderizamos
 		mMesh->render();
 		//Quitamos la textura
-		if(mTexture != nullptr)mTexture->unbind();
+		if (mTexture != nullptr) mTexture->unbind();
 
+		//glDisable(GL_CULL_FACE);
 		glDepthMask(GL_TRUE);
 		glDisable(GL_BLEND);
 	}

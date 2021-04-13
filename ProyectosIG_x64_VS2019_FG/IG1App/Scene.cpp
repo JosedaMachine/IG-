@@ -12,8 +12,6 @@ void Scene::init()
 	setGL();  // OpenGL settings
 
 	Texture* t = new Texture();
-
-
 	t->load("../Bmps/baldosaC.bmp");
 	gTextures.push_back(t);
 
@@ -34,10 +32,8 @@ void Scene::init()
 	gTextures.push_back(t);
 	
 	t = new Texture();
-	t->load("../Bmps/noche.bmp");
-	// allocate memory and load resources
-	// Lights
-	// Textures
+	t->load("../Bmps/noche.bmp", 255 / 1.5);
+	gTextures.push_back(t);
 
 	// Graphics objects (entities) of the scene
 
@@ -134,16 +130,6 @@ void Scene::init()
 
 
 
-		PoligonoText* ala1 = new PoligonoText(6, 500);
-		glm::dmat4 mAux5 = ala1->modelMat();
-		mAux5 = rotate(mAux5, radians(-90.0), dvec3(0, 1.0, 0));
-		mAux5 = translate(mAux5, dvec3(0, 0, 320));
-		ala1->setModelMat(mAux5);
-		gObjectsTrans.push_back(ala1);
-
-		gObjectsTrans.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-		gObjectsTrans.back()->setTexture(t);
-
 
 
 		PoligonoText* ala2 = new PoligonoText(6, 500);
@@ -154,7 +140,17 @@ void Scene::init()
 		gObjectsTrans.push_back(ala2);
 
 		gObjectsTrans.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-		//gObjectsTrans.back()->setTexture(t);
+		gObjectsTrans.back()->setTexture(t);
+
+		PoligonoText* ala1 = new PoligonoText(6, 500);
+		glm::dmat4 mAux5 = ala1->modelMat();
+		mAux5 = rotate(mAux5, radians(-90.0), dvec3(0, 1.0, 0));
+		mAux5 = translate(mAux5, dvec3(0, 0, 320));
+		ala1->setModelMat(mAux5);
+		gObjectsTrans.push_back(ala1);
+
+		gObjectsTrans.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+		gObjectsTrans.back()->setTexture(t);
 
 		//Cylinder* cono = new Cylinder(50.0, 0, 100.0);
 		/*glm::dmat4 mAux = cono->modelMat();
