@@ -58,9 +58,9 @@ protected:
 	glm::dvec3 mUp = { 0.0, 1.0, 0.0 };     // the up vector
 
 
-	glm::dvec3 mRight = { 0.0, 1.0, 0.0 };     // the up vector 
+	glm::dvec3 mRight = { 0.0, 1.0, 0.0 };     // the right vector 
 	glm::dvec3 mUpward = { 0.0, 1.0, 0.0 };     // the up vector 
-	glm::dvec3 mFront = { 0.0, 1.0, 0.0 };     // the up vector 
+	glm::dvec3 mFront = { 0.0, 1.0, 0.0 };     // the front vector 
 
 
 	glm::dmat4 mViewMat;    // view matrix = inverse of modeling matrix 
@@ -79,7 +79,10 @@ protected:
 
 	Viewport* mViewPort;   // the viewport
 
+	//setea un viewModel determinado
 	void setVM();
+
+	//setea si es ortogonal o no
 	void setPM();
 };
 //-------------------------------------------------------------------------
