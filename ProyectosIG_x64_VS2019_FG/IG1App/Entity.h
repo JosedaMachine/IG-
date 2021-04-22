@@ -6,6 +6,7 @@
 #include <glm.hpp>
 
 #include "Mesh.h"
+#include "IndexMesh.h"
 #include "Texture.h"
 
 class IG1App;
@@ -177,6 +178,15 @@ private:
 
 };
 
+class AnilloCuadrado : public Abs_Entity
+{
+public:
+	explicit AnilloCuadrado();
+	~AnilloCuadrado();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+
+	
+};
 //-------------------------------------------------------------------------
 
 #endif //_H_Entities_H_

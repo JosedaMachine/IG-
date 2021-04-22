@@ -418,3 +418,18 @@ void PoligonoText::render(glm::dmat4 const& modelViewMat) const
 		glDisable(GL_BLEND);
 	}
 }
+
+AnilloCuadrado::AnilloCuadrado()
+{
+	mMesh = IndexMesh::generaAnilloCuadradoIndexado();
+}
+
+AnilloCuadrado::~AnilloCuadrado()
+{
+
+}
+
+void AnilloCuadrado::render(glm::dmat4 const& modelViewMat) const
+{
+
+}
