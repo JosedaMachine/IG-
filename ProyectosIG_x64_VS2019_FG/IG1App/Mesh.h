@@ -55,6 +55,9 @@ protected:
 	std::vector<glm::dvec2> vTexCoords;    // color array
 	virtual void draw() const;
 };
+
+
+
 //-------------------------------------------------------------------------
 
 #endif //_H_Scene_H_
