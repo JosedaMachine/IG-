@@ -53,6 +53,7 @@ protected:
 	std::vector<glm::dvec3> vVertices;  // vertex array
 	std::vector<glm::dvec4> vColors;    // color array
 	std::vector<glm::dvec2> vTexCoords;    // color array
+	std::vector<glm::dvec3> vNormals; //normal array
 	virtual void draw() const;
 };
 

@@ -5,16 +5,17 @@
 class IndexMesh : public Mesh{
 
 public:
-	IndexMesh()
-	{
+	IndexMesh(){
 		mPrimitive = GL_TRIANGLES;
 	}
 
-	~IndexMesh(){
-		delete[] vIndices;
-	}
+	~IndexMesh()K;
 
-	virtual void rendexr() const;
+	virtual void render() const;
+	virtual void draw() const;
+
+
+
 
 protected:
 

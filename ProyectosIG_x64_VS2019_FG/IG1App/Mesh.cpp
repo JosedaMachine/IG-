@@ -24,6 +24,11 @@ void Mesh::render() const
 	  glColorPointer(4, GL_DOUBLE, 0, vColors.data());  // components number (rgba=4), type of each component, stride, pointer  
 	}
 	
+	if (vNormals.size() > 0) { // transfer colors
+	  glEnableClientState(GL_NORMAL_ARRAY);
+	  glNormalPointer(GL_DOUBLE, 0, vNormals.data());  // components number (rgba=4), type of each component, stride, pointer  
+	}
+	
 	if(vTexCoords.size() > 0) { // transfer texture  data
 	  glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	  glTexCoordPointer(2, GL_DOUBLE, 0, vTexCoords.data());  // components number (rgba=4), type of each component, stride, pointer  
@@ -32,6 +37,7 @@ void Mesh::render() const
 	draw();
 
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_VERTEX_ARRAY);
   }
