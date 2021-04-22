@@ -421,7 +421,7 @@ void PoligonoText::render(glm::dmat4 const& modelViewMat) const
 
 AnilloCuadrado::AnilloCuadrado()
 {
-	mMesh = IndexMesh::generaAnilloCuadradoIndexado();
+	mMesh = IndexMesh::generaAnilloCuadradoIndexado(30,30);
 }
 
 AnilloCuadrado::~AnilloCuadrado()
