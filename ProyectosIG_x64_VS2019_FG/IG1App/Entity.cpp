@@ -358,6 +358,7 @@ void Glass::render(glm::dmat4 const& modelViewMat) const {
 		upload(aMat);
 
 		//Activar modo Blender3D
+		//Activamos la máscara: ponerla a false
 		glDepthMask(GL_FALSE);
 		glEnable(GL_BLEND); //Activar blending
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -416,6 +417,37 @@ void PoligonoText::render(glm::dmat4 const& modelViewMat) const
 		//glDisable(GL_CULL_FACE);
 		glDepthMask(GL_TRUE);
 		glDisable(GL_BLEND);
+	}
+}
+
+Planta::Planta(GLdouble w, GLdouble h)
+{
+	mMesh = Mesh::generaRectanguloTexCor(w, h, 1, 1);
+}
+//-------------------------------------------------------------------------
+
+void Planta::render(glm::dmat4 const& modelViewMat) const{
+	if (mMesh != nullptr) {
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0.0);
+
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		mTexture->setWrap(GL_REPEAT);
+		mTexture->bind(GL_REPLACE);
+		mMesh->render();
+
+		aMat = rotate(aMat, radians(60.0), dvec3(0.0, 1.0, 0.0)); // rotamos la matriz
+		upload(aMat);
+		mMesh->render();
+
+		aMat = rotate(aMat, radians(60.0), dvec3(0.0, 1.0, 0.0)); // rotamos la matriz
+		upload(aMat);
+		mMesh->render();
+
+		mTexture->unbind();
+
+		glDisable(GL_ALPHA_TEST);
 	}
 }
 

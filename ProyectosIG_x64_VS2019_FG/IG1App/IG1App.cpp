@@ -89,6 +89,8 @@ void IG1App::iniWinOpenGL()
 	glutMotionFunc(s_motion);
 	glutMouseWheelFunc(s_mouseWheel);
 
+	//glutIdleFunc(s_update);
+
 	cout << glGetString(GL_VERSION) << '\n';
 	cout << glGetString(GL_VENDOR) << '\n';
 }
@@ -283,8 +285,7 @@ void IG1App::key(unsigned char key, int x, int y)
 }
 //-------------------------------------------------------------------------
 
-void IG1App::specialKey(int key, int x, int y) 
-{
+void IG1App::specialKey(int key, int x, int y) {
 	bool need_redisplay = true;
 	int mdf = glutGetModifiers(); // returns the modifiers (Shift, Ctrl, Alt)
 	
@@ -322,8 +323,7 @@ void IG1App::specialKey(int key, int x, int y)
 		glutPostRedisplay(); // marks the window as needing to be redisplayed -> calls to display()
 }
 
-void IG1App::update()
-{
+void IG1App::update() {
 	if (glutGet(GLUT_ELAPSED_TIME) - GLuintmLastUpdateTime >= 60.0) {
 		mScene->update();
 	}
@@ -341,7 +341,6 @@ void IG1App::motion(int x, int y) {
 	mCoord = newP;
 
 	if (mBot == GLUT_RIGHT_BUTTON) {
-
 		if (m2Scenes) {
 			if (mCoord.x >= (mWinW / 2)) {
 				mCamera1->moveLR(displacement.x);

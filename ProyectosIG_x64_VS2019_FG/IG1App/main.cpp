@@ -24,7 +24,7 @@ int ctrl_handler(int event)   // callback
 
 int main(int argc, char *argv[])
 {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); // Check Memory Leaks
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); // Check Memory Leaks	
 	SetConsoleCtrlHandler((PHANDLER_ROUTINE)(ctrl_handler), 1);   // callback registration
 	system("chcp 1252"); // Change Code Page (identifier)  
 	

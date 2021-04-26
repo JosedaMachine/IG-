@@ -32,6 +32,11 @@ void Scene::init()
 	gTextures.push_back(t);
 	
 	t = new Texture();
+	//Si se le aplica el alpha, se ve negro el fondo de la imagen
+	t->load("../Bmps/grass.bmp", u8vec3(0, 0, 0));
+	gTextures.push_back(t);
+
+	t = new Texture();
 	t->load("../Bmps/noche.bmp", 255 / 1.5);
 	gTextures.push_back(t);
 
@@ -82,12 +87,18 @@ void Scene::init()
 		gObjectsTrans.back()->setTexture(gTextures[4]);
 		gObjectsTrans.back()->setModelMat(glm::translate(gObjectsTrans.back()->modelMat(), dvec3(0, 100, 0)));
 
+		// Planta
+		Planta* planta = new Planta(150, 150);
+		gObjects.push_back(planta);
+		planta->setTexture(gTextures[5]);
+		planta->setModelMat(translate(planta->modelMat(), dvec3(150, 75, -150)));
+
+		//Foto
 		int sizePhoto = 100;
 		gObjects.push_back(new Foto(sizePhoto, sizePhoto, GL_FRONT));
 		gObjects.back()->setModelMat(glm::translate(dmat4(1), dvec3(0, 5, 0)));
 		gObjects.back()->setModelMat(glm::rotate(gObjects.back()->modelMat(), radians(-90.0), dvec3(1, 0, 0)));
-
-		t = new Texture();
+		t = new Texture();//TexturaVacia
 		gTextures.push_back(t);
 		gObjects.back()->setTexture(t);
 	}
