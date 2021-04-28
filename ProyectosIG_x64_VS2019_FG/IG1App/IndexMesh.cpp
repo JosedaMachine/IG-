@@ -49,17 +49,17 @@ IndexMesh* IndexMesh::generaAnilloCuadradoIndexado(float outSide, float inSide)
 {
 	IndexMesh* m = new IndexMesh();
 
-	glBegin(GL_TRIANGLE_STRIP);
-	glColor3f(0.0, 0.0, 0.0); glVertex3f(outSide, outSide, 0.0);
-	glColor3f(1.0, 0.0, 0.0); glVertex3f(outSide, outSide, 0.0);
-	glColor3f(0.0, 1.0, 0.0); glVertex3f(outSide, outSide, 0.0);
-	glColor3f(0.0, 0.0, 1.0); glVertex3f(outSide, outSide, 0.0);
-	glColor3f(1.0, 1.0, 0.0); glVertex3f(outSide, outSide, 0.0);
-	glColor3f(1.0, 0.0, 1.0); glVertex3f(inSide, inSide, 0.0);
-	glColor3f(0.0, 1.0, 1.0); glVertex3f(inSide, inSide, 0.0);
-	glColor3f(1.0, 0.0, 0.0); glVertex3f(inSide, inSide, 0.0);
-	glColor3f(0.0, 0.0, 0.0); glVertex3f(inSide, inSide, 0.0);
-	glColor3f(1.0, 0.0, 0.0); glVertex3f(inSide, 10.0, 0.0);
+	glBegin(GL_TRIANGLE_STRIP); 
+	glColor3f(0.0, 0.0, 0.0); glVertex3f(30.0, 30.0, 0.0); 
+	glColor3f(1.0, 0.0, 0.0); glVertex3f(10.0, 10.0, 0.0); 
+	glColor3f(0.0, 1.0, 0.0); glVertex3f(70.0, 30.0, 0.0); 
+	glColor3f(0.0, 0.0, 1.0); glVertex3f(90.0, 10.0, 0.0); 
+	glColor3f(1.0, 1.0, 0.0); glVertex3f(70.0, 70.0, 0.0); 
+	glColor3f(1.0, 0.0, 1.0); glVertex3f(90.0, 90.0, 0.0); 
+	glColor3f(0.0, 1.0, 1.0); glVertex3f(30.0, 70.0, 0.0); 
+	glColor3f(1.0, 0.0, 0.0); glVertex3f(10.0, 90.0, 0.0); 
+	glColor3f(0.0, 0.0, 0.0); glVertex3f(30.0, 30.0, 0.0); 
+	glColor3f(1.0, 0.0, 0.0); glVertex3f(10.0, 10.0, 0.0); 
 	glEnd();
 
 	return m;

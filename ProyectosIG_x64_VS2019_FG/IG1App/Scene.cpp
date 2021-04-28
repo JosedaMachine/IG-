@@ -179,6 +179,10 @@ void Scene::init()
 
 		gObjects.push_back(new EjesRGB(400.0));
 	}
+	else if (mid == 3) {
+		gObjects.push_back(new EjesRGB(400.0));
+		gObjects.push_back(new AnilloCuadrado());
+	}
 }
 //-------------------------------------------------------------------------
 void Scene::free()
