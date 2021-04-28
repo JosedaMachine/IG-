@@ -5,7 +5,6 @@ void IndexMesh::render() const
 	//Comandos OnpenGl para enviar datos de arrays a Gpu
 	//Nuevos comandos para la tabla de índices
 	
-
 	
    // transfer the coordinates of the vertices
 		glEnableClientState(GL_VERTEX_ARRAY);
@@ -27,14 +26,14 @@ void IndexMesh::render() const
 		}
 
 		static float vertices[] = {
-		30.0, 30.0, 0.0,
-		10.0, 10.0, 0.0,
-		70.0, 30.0, 0.0,
-		90.0, 10.0, 0.0,
-		70.0, 70.0, 0.0,
-		90.0, 90.0, 0.0,
-		30.0, 70.0, 0.0,
-		10.0, 90.0, 0.0
+			30.0, 30.0, 0.0,
+			10.0, 10.0, 0.0,
+			70.0, 30.0, 0.0,
+			90.0, 10.0, 0.0,
+			70.0, 70.0, 0.0,
+			90.0, 90.0, 0.0,
+			30.0, 70.0, 0.0,
+			10.0, 90.0, 0.0
 		};
 
 		static float colors[] = {
@@ -75,8 +74,9 @@ void IndexMesh::render() const
 
 void IndexMesh::draw() const 
 {
+	unsigned int stripIndices[] = { 0,1, 2, 3, 4, 5, 6, 7, 0, 1 };
 
-	glDrawElements(mPrimitive, nNumIndices, GL_UNSIGNED_INT, vIndices);
+	glDrawElements(GL_TRIANGLE_STRIP, 10, GL_UNSIGNED_INT, stripIndices);
 
 }
 
@@ -85,6 +85,7 @@ IndexMesh* IndexMesh::generaAnilloCuadradoIndexado(float outSide, float inSide)
 	IndexMesh* m = new IndexMesh();
 
 	glBegin(GL_TRIANGLE_STRIP); 
+
 	glColor3f(0.0, 0.0, 0.0); glVertex3f(30.0, 30.0, 0.0); 
 	glColor3f(1.0, 0.0, 0.0); glVertex3f(10.0, 10.0, 0.0); 
 	glColor3f(0.0, 1.0, 0.0); glVertex3f(70.0, 30.0, 0.0); 
@@ -95,6 +96,7 @@ IndexMesh* IndexMesh::generaAnilloCuadradoIndexado(float outSide, float inSide)
 	glColor3f(1.0, 0.0, 0.0); glVertex3f(10.0, 90.0, 0.0); 
 	glColor3f(0.0, 0.0, 0.0); glVertex3f(30.0, 30.0, 0.0); 
 	glColor3f(1.0, 0.0, 0.0); glVertex3f(10.0, 10.0, 0.0); 
+
 	glEnd();
 
 	return m;
