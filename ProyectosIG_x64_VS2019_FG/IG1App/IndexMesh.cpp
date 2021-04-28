@@ -6,7 +6,7 @@ void IndexMesh::render() const
 	//Nuevos comandos para la tabla de índices
 	
 
-	if (vVertices.size() > 0) {  // transfer data
+	
    // transfer the coordinates of the vertices
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glVertexPointer(3, GL_DOUBLE, 0, vVertices.data());  // number of coordinates per vertex, type of each coordinate, stride, pointer 
@@ -26,7 +26,42 @@ void IndexMesh::render() const
 			glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
 		}
 
+		static float vertices[] = {
+		30.0, 30.0, 0.0,
+		10.0, 10.0, 0.0,
+		70.0, 30.0, 0.0,
+		90.0, 10.0, 0.0,
+		70.0, 70.0, 0.0,
+		90.0, 90.0, 0.0,
+		30.0, 70.0, 0.0,
+		10.0, 90.0, 0.0
+		};
+
+		static float colors[] = {
+			0.0, 0.0, 0.0,
+			1.0, 0.0, 0.0,
+			0.0, 1.0, 0.0,
+			0.0, 0.0, 1.0,
+			1.0, 1.0, 0.0,
+			1.0, 0.0, 1.0,
+			0.0, 1.0, 1.0,
+			1.0, 0.0, 0.0
+		};
+
+		// Activación de los vertex arrays
+		glEnableClientState(GL_VERTEX_ARRAY);
+		glEnableClientState(GL_COLOR_ARRAY);
+
+		// Especificación del lugar y formato de los datos
+		glVertexPointer(3, GL_FLOAT, 0, vertices);
+		glColorPointer(4, GL_FLOAT, 0, colors);
+
+
 		draw();
+
+		// Desactivación de los vertex arrays
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_VERTEX_ARRAY);
 
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
@@ -35,12 +70,12 @@ void IndexMesh::render() const
 		//Comandos OpenGL para deshabilitar datos enviados
 		//Nuevo comando para la tabla de índices
 		glDisableClientState(GL_INDEX_ARRAY);
-	}
 
 }
 
 void IndexMesh::draw() const 
 {
+
 	glDrawElements(mPrimitive, nNumIndices, GL_UNSIGNED_INT, vIndices);
 
 }

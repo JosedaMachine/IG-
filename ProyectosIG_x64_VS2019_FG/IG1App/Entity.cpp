@@ -463,5 +463,5 @@ AnilloCuadrado::~AnilloCuadrado()
 
 void AnilloCuadrado::render(glm::dmat4 const& modelViewMat) const
 {
-
+	mMesh->render();
 }
