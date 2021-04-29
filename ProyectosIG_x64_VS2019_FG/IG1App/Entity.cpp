@@ -484,7 +484,11 @@ void CuboConTapas::render(glm::dmat4 const& modelViewMat) const
 {
 	glEnable(GL_COLOR_MATERIAL);
 
+	glColor3f(0.0, 1.0, 0.0);
+
 	mMesh->render();
+
+	glColor3f(1.0, 1.0, 1.0);
 
 	glDisable(GL_COLOR_MATERIAL);
 }
