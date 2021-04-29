@@ -132,7 +132,7 @@ IndexMesh* IndexMesh::generaCuboConTapadIndexado(GLdouble l)
 	//Indices
 	m->nNumIndices = 36;
 
-	m->vIndices = new GLuint[m->nNumIndices]{ 
+	m->vIndices = new GLuint[m->nNumIndices]{
 		0,1,2,
 		2,1,3,
 		2,3,4,
@@ -152,15 +152,45 @@ IndexMesh* IndexMesh::generaCuboConTapadIndexado(GLdouble l)
 	/*for (int i = 0; i < m->mNumVertices; i++) {
 		m->vNormals.push_back(glm::dvec3(0, 0, 0));
 	}*/
-	   
-	m->vNormals.emplace_back(glm::normalize(glm::dvec3(-1, 1, 1)));
-	m->vNormals.emplace_back(glm::normalize(glm::dvec3(-1, -1, 1)));
-	m->vNormals.emplace_back(glm::normalize(glm::dvec3(1, 1, 1)));
-	m->vNormals.emplace_back(glm::normalize(glm::dvec3(1, -1, 1)));
-	m->vNormals.emplace_back(glm::normalize(glm::dvec3(1, 1, -1)));
-	m->vNormals.emplace_back(glm::normalize(glm::dvec3(1, -1, -1)));
-	m->vNormals.emplace_back(glm::normalize(glm::dvec3(-1, 1, -1)));
-	m->vNormals.emplace_back(glm::normalize(glm::dvec3(-1, -1, -1)));
+
+	//SEGUNDO:
+
+	//m->vNormals.emplace_back(glm::normalize(glm::dvec3(-1, 1, 1)));
+	//m->vNormals.emplace_back(glm::normalize(glm::dvec3(-1, -1, 1)));
+	//m->vNormals.emplace_back(glm::normalize(glm::dvec3(1, 1, 1)));
+	//m->vNormals.emplace_back(glm::normalize(glm::dvec3(1, -1, 1)));
+	//m->vNormals.emplace_back(glm::normalize(glm::dvec3(1, 1, -1)));
+	//m->vNormals.emplace_back(glm::normalize(glm::dvec3(1, -1, -1)));
+	//m->vNormals.emplace_back(glm::normalize(glm::dvec3(-1, 1, -1)));
+	//m->vNormals.emplace_back(glm::normalize(glm::dvec3(-1, -1, -1)));
+
+
+	//UNA PERSONA DESARROLLADA MÁS ALLÁ DEL HOMO ERECTUS
+
+	m->buildNormalVectors();
 
 	return m;
+}
+
+void IndexMesh::buildNormalVectors()
+{
+	vNormals.reserve(mNumVertices);
+	for (int i = 0; i < mNumVertices; i++)
+		vNormals.push_back(glm::dvec3(0, 0, 0));
+
+	for (int i = 0; i < nNumIndices; i += 3) {
+		glm::dvec3 a, b, c;
+		a = vVertices[vIndices[i]];
+		b = vVertices[vIndices[i + 1]];
+		c = vVertices[vIndices[i + 2]];
+
+		glm::dvec3 n = cross((b - a), (c - a));
+
+		vNormals[vIndices[i]] += n;
+		vNormals[vIndices[i + 1]] += n;
+		vNormals[vIndices[i + 2]] += n;
+	}
+
+	for (int i = 0; i < mNumVertices; i++)
+		vNormals[i] = glm::normalize(vNormals[i]);
 }

@@ -123,6 +123,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CheckML.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityWithIndexMesh.h" />
     <ClInclude Include="IG1App.h" />
     <ClInclude Include="IndexMesh.h" />
     <ClInclude Include="Mesh.h" />
@@ -135,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityWithIndexMesh.cpp" />
     <ClCompile Include="IG1App.cpp" />
     <ClCompile Include="IndexMesh.cpp" />
     <ClCompile Include="main.cpp" />

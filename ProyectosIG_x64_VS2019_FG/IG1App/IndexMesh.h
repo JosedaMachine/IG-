@@ -26,5 +26,5 @@ protected:
 	GLuint* vIndices = nullptr;
 	GLuint nNumIndices = 0;
 
-
+	void buildNormalVectors();
 };
