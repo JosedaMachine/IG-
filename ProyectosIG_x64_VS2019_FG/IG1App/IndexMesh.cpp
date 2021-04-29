@@ -139,12 +139,12 @@ IndexMesh* IndexMesh::generaCuboConTapadIndexado(GLdouble l)
 		4,3,5,
 		5,6,4,
 		5,7,6,
-		6,7,0,
-		0,7,1,
+		6,7,1,
+		0,6,1,
 		6,0,4,
 		4,0,2,
-		5,1,3,
-		7,1,5
+		7,1,5,
+		5,1,3
 	};
 
 	m->vNormals.reserve(m->mNumVertices);
