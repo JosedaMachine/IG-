@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CheckML.h" />
+    <ClInclude Include="Entidad.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityWithIndexMesh.h" />
     <ClInclude Include="IG1App.h" />

@@ -16,7 +16,7 @@ class IG1App;
 using namespace glm;
 //-------------------------------------------------------------------------
 
-class Abs_Entity  // abstract class
+class Abs_Entity : public Entidad  // abstract class
 {
 public:
 	Abs_Entity(): mModelMat(1.0) {};  // 4x4 identity matrix

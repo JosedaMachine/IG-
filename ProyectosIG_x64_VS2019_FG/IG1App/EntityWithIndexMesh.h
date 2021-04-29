@@ -6,7 +6,9 @@
 #include "IndexMesh.h"
 #include "Texture.h"
 #include "CheckML.h"
-class EntityWithIndexMesh
+#include "Entidad.h"
+
+class EntityWithIndexMesh : public Entidad
 {
 public:
 	EntityWithIndexMesh() : mModelMat(1.0) {};  // 4x4 identity matrix

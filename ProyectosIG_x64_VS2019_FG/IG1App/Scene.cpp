@@ -193,11 +193,11 @@ void Scene::init()
 void Scene::free()
 { // release memory and resources   
 
-	for (Abs_Entity* el : gObjects){
+	for (Entidad* el : gObjects){
 		delete el;  el = nullptr;
 	}
 
-	for (Abs_Entity* cosa : gObjectsTrans){
+	for (Entidad* cosa : gObjectsTrans){
 		delete cosa;  cosa = nullptr;
 	}
 	
@@ -248,11 +248,11 @@ void Scene::render(Camera const& cam) const
 
 	cam.upload(); //viewport proyect
 
-	for (Abs_Entity* el : gObjects) {
+	for (Entidad* el : gObjects) {
 		el->render(cam.viewMat());	//cada elemento renderiza
 	}
 	
-	for (Abs_Entity* cosa : gObjectsTrans)
+	for (Entidad* cosa : gObjectsTrans)
 	{
 		cosa->render(cam.viewMat());	//cada elemento renderiza
 	}
