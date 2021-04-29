@@ -9,6 +9,7 @@
 #include "IndexMesh.h"
 #include "Texture.h"
 #include "CheckML.h"
+#include "EntityWithIndexMesh.h"
 
 class IG1App;
 
@@ -25,7 +26,9 @@ public:
 	Abs_Entity& operator=(const Abs_Entity& e) = delete;  // no copy assignment
 
 	virtual void render(glm::dmat4 const& modelViewMat) const = 0;  // abstract method
-	void setColor(dvec4 mCol);
+	void setColor(dvec4 mCol) {
+		mColor = mCol;
+	}
 
 	void setTexture(Texture* tex) { mTexture = tex; }
 
@@ -198,7 +201,7 @@ public:
 	
 };
 
-class CuboConTapas : public Abs_Entity
+class CuboConTapas : public EntityWithIndexMesh
 {
 public:
 	explicit CuboConTapas(GLdouble l);

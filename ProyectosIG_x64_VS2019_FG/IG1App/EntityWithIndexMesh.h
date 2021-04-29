@@ -16,7 +16,9 @@ public:
 	EntityWithIndexMesh& operator=(const EntityWithIndexMesh& e) = delete;  // no copy assignment
 
 	virtual void render(glm::dmat4 const& modelViewMat) const = 0;  // abstract method
-	void setColor(glm::dvec4 mCol);
+	void setColor(glm::dvec4 mCol) {
+		mColor = mCol;
+	}
 
 	void setTexture(Texture* tex) { mTexture = tex; }
 
@@ -28,7 +30,7 @@ public:
 	virtual void update() {};
 protected:
 
-	Mesh* mMesh = nullptr;   // the mesh
+	IndexMesh* mMesh = nullptr;   // the mesh
 	glm::dmat4 mModelMat;    // modeling matrix //rotaciones, escalas, etc
 	glm::dvec4 mColor;
 	Texture* mTexture = nullptr;

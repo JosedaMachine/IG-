@@ -8,11 +8,6 @@ using namespace glm;
 
 //-------------------------------------------------------------------------
 
-void Abs_Entity::setColor(dvec4 mCol)
-{
-	mColor = mCol;
-}
-
 void Abs_Entity::upload(dmat4 const& modelViewMat) const
 { 
 	glMatrixMode(GL_MODELVIEW);
