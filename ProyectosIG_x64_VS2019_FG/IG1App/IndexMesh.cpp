@@ -25,42 +25,9 @@ void IndexMesh::render() const
 			glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
 		}
 
-		static float vertices[] = {
-			30.0, 30.0, 0.0,
-			10.0, 10.0, 0.0,
-			70.0, 30.0, 0.0,
-			90.0, 10.0, 0.0,
-			70.0, 70.0, 0.0,
-			90.0, 90.0, 0.0,
-			30.0, 70.0, 0.0,
-			10.0, 90.0, 0.0
-		};
-
-		static float colors[] = {
-			0.0, 0.0, 0.0,
-			1.0, 0.0, 0.0,
-			0.0, 1.0, 0.0,
-			0.0, 0.0, 1.0,
-			1.0, 1.0, 0.0,
-			1.0, 0.0, 1.0,
-			0.0, 1.0, 1.0,
-			1.0, 0.0, 0.0
-		};
-
-		// Activación de los vertex arrays
-		glEnableClientState(GL_VERTEX_ARRAY);
-		glEnableClientState(GL_COLOR_ARRAY);
-
-		// Especificación del lugar y formato de los datos
-		glVertexPointer(3, GL_FLOAT, 0, vertices);
-		glColorPointer(4, GL_FLOAT, 0, colors);
 
 
 		draw();
-
-		// Desactivación de los vertex arrays
-		glDisableClientState(GL_COLOR_ARRAY);
-		glDisableClientState(GL_VERTEX_ARRAY);
 
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
@@ -74,9 +41,8 @@ void IndexMesh::render() const
 
 void IndexMesh::draw() const 
 {
-	unsigned int stripIndices[] = { 0,1, 2, 3, 4, 5, 6, 7, 0, 1 };
-
-	glDrawElements(GL_TRIANGLE_STRIP, 10, GL_UNSIGNED_INT, stripIndices);
+	
+	glDrawElements(mPrimitive, nNumIndices, GL_UNSIGNED_INT, vIndices);
 
 }
 
@@ -84,29 +50,33 @@ IndexMesh* IndexMesh::generaAnilloCuadradoIndexado(float outSide, float inSide)
 {
 	IndexMesh* m = new IndexMesh();
 
+	m->mPrimitive = GL_TRIANGLE_STRIP;
 
-	glBegin(GL_TRIANGLE_STRIP);
-	// Cuando se usa glArrayElement(i);
-	// vertices[i] y colors[i] se recuperan a la vez
-	for (int i = 0; i < 10; ++i) glArrayElement(i % 8);
-	
-	glEnd();
+	m->mNumVertices = 8;
 
+	m->vVertices.reserve(m->mNumVertices);
 
-	//glBegin(GL_TRIANGLE_STRIP); 
+	m->vColors.reserve(m->mNumVertices);
 
-	//glColor3f(0.0, 0.0, 0.0); glVertex3f(30.0, 30.0, 0.0); 
-	//glColor3f(1.0, 0.0, 0.0); glVertex3f(10.0, 10.0, 0.0); 
-	//glColor3f(0.0, 1.0, 0.0); glVertex3f(70.0, 30.0, 0.0); 
-	//glColor3f(0.0, 0.0, 1.0); glVertex3f(90.0, 10.0, 0.0); 
-	//glColor3f(1.0, 1.0, 0.0); glVertex3f(70.0, 70.0, 0.0); 
-	//glColor3f(1.0, 0.0, 1.0); glVertex3f(90.0, 90.0, 0.0); 
-	//glColor3f(0.0, 1.0, 1.0); glVertex3f(30.0, 70.0, 0.0); 
-	//glColor3f(1.0, 0.0, 0.0); glVertex3f(10.0, 90.0, 0.0); 
-	//glColor3f(0.0, 0.0, 0.0); glVertex3f(30.0, 30.0, 0.0); 
-	//glColor3f(1.0, 0.0, 0.0); glVertex3f(10.0, 10.0, 0.0); 
+	//Colores								//Vértices								
+	m->vColors.emplace_back(0.0, 0.0, 0.0, 1.0); m->vVertices.emplace_back(30.0, 30.0, 0.0); 
+	m->vColors.emplace_back(1.0, 0.0, 0.0, 1.0); m->vVertices.emplace_back(10.0, 10.0, 0.0); 
+	m->vColors.emplace_back(0.0, 1.0, 0.0, 1.0); m->vVertices.emplace_back(70.0, 30.0, 0.0); 
+	m->vColors.emplace_back(0.0, 0.0, 1.0, 1.0); m->vVertices.emplace_back(90.0, 10.0, 0.0); 
+	m->vColors.emplace_back(1.0, 1.0, 0.0, 1.0); m->vVertices.emplace_back(70.0, 70.0, 0.0); 
+	m->vColors.emplace_back(1.0, 0.0, 1.0, 1.0); m->vVertices.emplace_back(90.0, 90.0, 0.0); 
+	m->vColors.emplace_back(0.0, 1.0, 1.0, 1.0); m->vVertices.emplace_back(30.0, 70.0, 0.0); 
+	m->vColors.emplace_back(1.0, 0.0, 0.0, 1.0); m->vVertices.emplace_back(10.0, 90.0, 0.0); 
+	m->vColors.emplace_back(0.0, 0.0, 0.0, 1.0); m->vVertices.emplace_back(30.0, 30.0, 0.0); 
+	m->vColors.emplace_back(1.0, 0.0, 0.0, 1.0); m->vVertices.emplace_back(10.0, 10.0, 0.0); 
 
-	//glEnd();
+	m->nNumIndices = 10;
+
+	m->vIndices = new GLuint[m->nNumIndices];
+
+	for (int i = 0; i < m->nNumIndices; i++) {
+		m->vIndices[i] = i % 8;
+	}
 
 	return m;
 }
