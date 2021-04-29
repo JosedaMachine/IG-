@@ -25,7 +25,10 @@ void IndexMesh::render() const
 			glIndexPointer(GL_UNSIGNED_INT, 0, vIndices);
 		}
 
-
+		if (vNormals.size() > 0) {
+			glEnableClientState(GL_NORMAL_ARRAY);
+			glNormalPointer(GL_DOUBLE, 0, vNormals.data());
+		}
 
 		draw();
 
@@ -36,7 +39,7 @@ void IndexMesh::render() const
 		//Comandos OpenGL para deshabilitar datos enviados
 		//Nuevo comando para la tabla de índices
 		glDisableClientState(GL_INDEX_ARRAY);
-
+		glDisableClientState(GL_NORMAL_ARRAY);
 }
 
 void IndexMesh::draw() const 
@@ -70,12 +73,36 @@ IndexMesh* IndexMesh::generaAnilloCuadradoIndexado(float outSide, float inSide)
 	m->vColors.emplace_back(0.0, 0.0, 0.0, 1.0); m->vVertices.emplace_back(30.0, 30.0, 0.0); 
 	m->vColors.emplace_back(1.0, 0.0, 0.0, 1.0); m->vVertices.emplace_back(10.0, 10.0, 0.0); 
 
+	//Indices
 	m->nNumIndices = 10;
 
 	m->vIndices = new GLuint[m->nNumIndices];
 
 	for (int i = 0; i < m->nNumIndices; i++) {
 		m->vIndices[i] = i % 8;
+	}
+
+	//Normales
+
+	m->vNormals.reserve(m->mNumVertices);
+
+	for (int i = 0; i < m->mNumVertices; i++) {
+		m->vNormals.push_back(glm::dvec3(0, 0, 0));
+	}
+
+	//Los tres vértices del triángulo y n la normal
+	glm::dvec3 a, b, c, n;
+
+	a = m->vVertices[m->vIndices[0]];
+	b = m->vVertices[m->vIndices[1]];
+	c = m->vVertices[m->vIndices[2]];
+
+	//Producto vectorial para sacar la perpendicular
+	n = glm::cross((b - a), (c - a));
+
+	//Porque todos los triángulos tienen la misma normal
+	for (int i = 0; i < m->mNumVertices; i++) {
+		m->vNormals[i] = glm::normalize(n);
 	}
 
 	return m;
