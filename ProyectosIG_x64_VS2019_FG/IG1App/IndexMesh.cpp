@@ -107,3 +107,46 @@ IndexMesh* IndexMesh::generaAnilloCuadradoIndexado(float outSide, float inSide)
 
 	return m;
 }
+
+IndexMesh* IndexMesh::generaCuboConTapadIndexado(GLdouble l)
+{
+	IndexMesh* m = new IndexMesh();
+
+	m->mPrimitive = GL_TRIANGLES;
+
+	m->mNumVertices = 8;
+
+	m->vVertices.reserve(m->mNumVertices);
+
+	m->vColors.reserve(m->mNumVertices);
+	//Vertices
+	m->vVertices.emplace_back(-l, l, l);
+	m->vVertices.emplace_back(-l, -l, l);
+	m->vVertices.emplace_back(l, l, l);
+	m->vVertices.emplace_back(l, -l, l);
+	m->vVertices.emplace_back(l, l, -l);
+	m->vVertices.emplace_back(l, -l, -l);
+	m->vVertices.emplace_back(-l, l,- l);
+	m->vVertices.emplace_back(-l, -l, -l);
+	//Colores (Es verde)
+	m->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	m->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	m->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	m->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	m->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	m->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	m->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	m->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+	m->vColors.emplace_back(0.0, 1.0, 0.0, 1.0);
+
+	//Indices
+	m->nNumIndices = 36;
+
+	m->vIndices = new GLuint[m->nNumIndices];
+
+	for (int i = 0; i < m->nNumIndices; i++) {
+		m->vIndices[i] = i % 35;
+	}
+
+	return m;
+}

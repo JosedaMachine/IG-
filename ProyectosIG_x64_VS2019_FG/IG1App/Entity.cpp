@@ -36,11 +36,15 @@ EjesRGB::~EjesRGB()
 void EjesRGB::render(dmat4 const& modelViewMat) const 
 {
 	if (mMesh != nullptr) {
+		glEnable(GL_COLOR_MATERIAL);
+
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
 		upload(aMat);
 		glLineWidth(4);
 		mMesh->render();
 		glLineWidth(1);
+
+		glDisable(GL_COLOR_MATERIAL);
 	}
 }
 
@@ -464,4 +468,23 @@ AnilloCuadrado::~AnilloCuadrado()
 void AnilloCuadrado::render(glm::dmat4 const& modelViewMat) const
 {
 	mMesh->render();
+}
+
+CuboConTapas::CuboConTapas(GLdouble l)
+{
+	mMesh = IndexMesh::generaCuboConTapadIndexado(l);
+}
+
+CuboConTapas::~CuboConTapas()
+{
+
+}
+
+void CuboConTapas::render(glm::dmat4 const& modelViewMat) const
+{
+	glEnable(GL_COLOR_MATERIAL);
+
+	mMesh->render();
+
+	glDisable(GL_COLOR_MATERIAL);
 }

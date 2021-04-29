@@ -197,6 +197,16 @@ public:
 
 	
 };
+
+class CuboConTapas : public Abs_Entity
+{
+public:
+	explicit CuboConTapas(GLdouble l);
+	~CuboConTapas();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+
+
+};
 //-------------------------------------------------------------------------
 
 #endif //_H_Entities_H_

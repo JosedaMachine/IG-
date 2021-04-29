@@ -181,7 +181,12 @@ void Scene::init()
 	}
 	else if (mid == 3) {
 		gObjects.push_back(new EjesRGB(400.0));
-		gObjects.push_back(new AnilloCuadrado());
+
+		//Anillo cuadrado
+
+		//gObjects.push_back(new AnilloCuadrado());
+
+		gObjects.push_back(new CuboConTapas(100));
 	}
 }
 //-------------------------------------------------------------------------
@@ -239,7 +244,7 @@ void Scene::sceneDirLight(Camera const& cam) const
 
 void Scene::render(Camera const& cam) const
 {
-	if(mid==2)sceneDirLight(cam);
+	if(mid == 2 || mid == 3)sceneDirLight(cam);
 
 	cam.upload(); //viewport proyect
 

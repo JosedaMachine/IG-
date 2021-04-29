@@ -19,6 +19,8 @@ public:
 
 	static IndexMesh* generaAnilloCuadradoIndexado(float outSide, float inSide);
 
+	static IndexMesh* generaCuboConTapadIndexado(GLdouble l);
+
 protected:
 
 	GLuint* vIndices = nullptr;
