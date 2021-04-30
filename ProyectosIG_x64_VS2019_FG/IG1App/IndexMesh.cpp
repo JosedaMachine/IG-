@@ -148,13 +148,12 @@ IndexMesh* IndexMesh::generaCuboConTapadIndexado(GLdouble l)
 	};
 
 	m->vNormals.reserve(m->mNumVertices);
-
-	/*for (int i = 0; i < m->mNumVertices; i++) {
+	//Inicializa
+	for (int i = 0; i < m->mNumVertices; i++) {
 		m->vNormals.push_back(glm::dvec3(0, 0, 0));
-	}*/
+	}
 
 	//SEGUNDO:
-
 	//m->vNormals.emplace_back(glm::normalize(glm::dvec3(-1, 1, 1)));
 	//m->vNormals.emplace_back(glm::normalize(glm::dvec3(-1, -1, 1)));
 	//m->vNormals.emplace_back(glm::normalize(glm::dvec3(1, 1, 1)));

@@ -1,4 +1,7 @@
 ﻿#include "Entity.h"
+#include "QuadricEntity.h"
+
+
 
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
@@ -475,8 +478,7 @@ CuboConTapas::~CuboConTapas()
 
 }
 
-void CuboConTapas::render(glm::dmat4 const& modelViewMat) const
-{
+void CuboConTapas::render(glm::dmat4 const& modelViewMat) const{
 	glEnable(GL_COLOR_MATERIAL);
 
 	glColor3f(0.0, 1.0, 0.0);
@@ -486,4 +488,76 @@ void CuboConTapas::render(glm::dmat4 const& modelViewMat) const
 	glColor3f(1.0, 1.0, 1.0);
 
 	glDisable(GL_COLOR_MATERIAL);
+}
+
+void CompoundEntity::addEntity(Entidad* ae){
+	gObjects.push_back(ae);
+}
+
+CompoundEntity::~CompoundEntity(){
+	for (Entidad* ae : gObjects) delete ae;
+	gObjects.clear();
+}
+
+void CompoundEntity::render(glm::dmat4 const& modelViewMat){
+	for (Entidad* ae : gObjects) ae->render(modelViewMat);
+}
+
+//Antoio puto maricon
+TIE::TIE(Texture* t, GLdouble size){
+	float radioDiscoCono = 100 * size;
+	//Cuerpo
+	Sphere* esfera = new Sphere(130.0 * size);
+	gObjects.push_back(esfera);
+	//Front
+	Cylinder* cono = new Cylinder(radioDiscoCono, radioDiscoCono, 40.0);
+	glm::dmat4 mAux = cono->modelMat();
+	mAux = translate(mAux, dvec3(0, 0, 101));
+	cono->setModelMat(mAux);
+	gObjects.push_back(cono);
+	//Front
+	Disk* disco = new Disk(radioDiscoCono, 0, 360);
+	glm::dmat4 mAux2 = disco->modelMat();
+	mAux2 = translate(mAux2, dvec3(0, 0, 141));
+	disco->setModelMat(mAux2);
+	gObjects.push_back(disco);
+
+	//Eje transversal
+	Cylinder* cono1 = new Cylinder(50.0 * size, 50 * size, 200.0);
+	glm::dmat4 mAux3 = cono1->modelMat();
+	mAux3 = rotate(mAux3, radians(90.0), dvec3(0, 1.0, 0));
+	mAux3 = translate(mAux3, dvec3(0, 0, 120));
+	cono1->setModelMat(mAux3);
+	gObjects.push_back(cono1);
+
+	//Eje transversal
+	Cylinder* cono2 = new Cylinder(50.0 * size, 50* size, 200.0);
+	glm::dmat4 mAux4 = cono2->modelMat();
+	mAux4 = rotate(mAux4, radians(-90.0), dvec3(0, 1.0, 0));
+	mAux4 = translate(mAux4, dvec3(0, 0, 120));
+	cono2->setModelMat(mAux4);
+	gObjects.push_back(cono2);
+
+	//Ala1
+	PoligonoText* ala2 = new PoligonoText(6, 500 * size);
+	glm::dmat4 mAux6 = ala2->modelMat();
+	mAux6 = rotate(mAux6, radians(90.0), dvec3(0, 1.0, 0));
+	mAux6 = translate(mAux6, dvec3(0, 0, 320));
+	ala2->setModelMat(mAux6);
+	gObjectsTransexual.push_back(ala2);
+	gObjectsTransexual.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+	gObjectsTransexual.back()->setTexture(t);
+	//Ala2
+	PoligonoText* ala1 = new PoligonoText(6, 500 * size);
+	glm::dmat4 mAux5 = ala1->modelMat();
+	mAux5 = rotate(mAux5, radians(-90.0), dvec3(0, 1.0, 0));
+	mAux5 = translate(mAux5, dvec3(0, 0, 320));
+	ala1->setModelMat(mAux5);
+	gObjectsTransexual.push_back(ala1);
+	gObjectsTransexual.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+	gObjectsTransexual.back()->setTexture(t);
+}
+
+TIE::~TIE()
+{
 }

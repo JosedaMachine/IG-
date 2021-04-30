@@ -21,10 +21,11 @@ public:
 
 	static IndexMesh* generaCuboConTapadIndexado(GLdouble l);
 
+	void buildNormalVectors();
+
 protected:
 
 	GLuint* vIndices = nullptr;
 	GLuint nNumIndices = 0;
 
-	void buildNormalVectors();
 };

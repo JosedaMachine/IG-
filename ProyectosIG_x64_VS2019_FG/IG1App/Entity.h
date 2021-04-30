@@ -47,6 +47,28 @@ protected:
 	
 	// transfers modelViewMat to the GPU
 	virtual void upload(glm::dmat4 const& mModelViewMat) const; 
+};
+//-----------------------------------------------------------
+
+class CompoundEntity : public Abs_Entity {
+public:
+	CompoundEntity() : Abs_Entity() {};
+
+	void addEntity(Entidad* ae);
+	~CompoundEntity();
+
+	virtual void render(glm::dmat4 const& modelViewMat);
+protected:
+	//Vector de entidades Opacas y Translucidas
+	std::vector<Entidad*> gObjects, gObjectsTransexual;
+};
+//-------------------------------------------------------------------------
+class TIE : public CompoundEntity {
+public:
+	TIE(Texture* t, GLdouble size = 1.0);
+	~TIE();
+	
+private:
 
 };
 //-------------------------------------------------------------------------
@@ -207,8 +229,6 @@ public:
 	explicit CuboConTapas(GLdouble l);
 	~CuboConTapas();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
-
-
 };
 //-------------------------------------------------------------------------
 

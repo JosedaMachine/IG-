@@ -105,25 +105,23 @@ void Scene::init()
 	else if (mid == 2) {
 		//El luchador del empate
 		float radioDiscoCono = 100;
-
+		//Cuerpo
 		Sphere* esfera = new Sphere(130.0);
 		gObjects.push_back(esfera);
-
-
+		//Front
 		Cylinder* cono = new Cylinder(radioDiscoCono, radioDiscoCono, 40.0);
 		glm::dmat4 mAux = cono->modelMat();
 		mAux = translate(mAux, dvec3(0, 0, 101));
 		cono->setModelMat(mAux);
 		gObjects.push_back(cono);
-
+		//Front
 		Disk* disco = new Disk(radioDiscoCono, 0, 360);
 		glm::dmat4 mAux2 = disco->modelMat();
 		mAux2 = translate(mAux2, dvec3(0, 0, 141));
 		disco->setModelMat(mAux2);
-
 		gObjects.push_back(disco);
 
-
+		//Eje transversal
 		Cylinder* cono1 = new Cylinder(50.0, 50, 200.0);
 		glm::dmat4 mAux3 = cono1->modelMat();
 		mAux3 = rotate(mAux3, radians(90.0), dvec3(0, 1.0, 0));
@@ -131,7 +129,7 @@ void Scene::init()
 		cono1->setModelMat(mAux3);
 		gObjects.push_back(cono1);
 
-
+		//Eje transversal
 		Cylinder* cono2 = new Cylinder(50.0, 50, 200.0);
 		glm::dmat4 mAux4 = cono2->modelMat();
 		mAux4 = rotate(mAux4, radians(-90.0), dvec3(0, 1.0, 0));
@@ -139,27 +137,22 @@ void Scene::init()
 		cono2->setModelMat(mAux4);
 		gObjects.push_back(cono2);
 
-
-
-
-
+		//Ala1
 		PoligonoText* ala2 = new PoligonoText(6, 500);
 		glm::dmat4 mAux6 = ala2->modelMat();
 		mAux6 = rotate(mAux6, radians(90.0), dvec3(0, 1.0, 0));
 		mAux6 = translate(mAux6, dvec3(0, 0, 320));
 		ala2->setModelMat(mAux6);
 		gObjectsTrans.push_back(ala2);
-
 		gObjectsTrans.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 		gObjectsTrans.back()->setTexture(t);
-
+		//Ala2
 		PoligonoText* ala1 = new PoligonoText(6, 500);
 		glm::dmat4 mAux5 = ala1->modelMat();
 		mAux5 = rotate(mAux5, radians(-90.0), dvec3(0, 1.0, 0));
 		mAux5 = translate(mAux5, dvec3(0, 0, 320));
 		ala1->setModelMat(mAux5);
 		gObjectsTrans.push_back(ala1);
-
 		gObjectsTrans.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 		gObjectsTrans.back()->setTexture(t);
 
