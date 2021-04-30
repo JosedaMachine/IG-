@@ -26,6 +26,7 @@ public:
 	Abs_Entity& operator=(const Abs_Entity& e) = delete;  // no copy assignment
 
 	virtual void render(glm::dmat4 const& modelViewMat) const = 0;  // abstract method
+
 	void setColor(dvec4 mCol) {
 		mColor = mCol;
 	}
@@ -34,6 +35,7 @@ public:
 
 	// modeling matrix
 	glm::dmat4 const& modelMat() const { return mModelMat; };
+
 	void setModelMat(glm::dmat4 const& aMat) { mModelMat = aMat; };
 
 	//M�todo update
@@ -52,21 +54,24 @@ protected:
 
 class CompoundEntity : public Abs_Entity {
 public:
-	CompoundEntity() : Abs_Entity() {};
-
-	void addEntity(Entidad* ae);
+	CompoundEntity(){};
 	~CompoundEntity();
 
-	virtual void render(glm::dmat4 const& modelViewMat);
+	void addEntity(Entidad* ae);
+
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+	virtual void update() {};
 protected:
 	//Vector de entidades Opacas y Translucidas
-	std::vector<Entidad*> gObjects, gObjectsTransexual;
+	std::vector<Entidad*> gObjects, gObjectsTranslucid;
 };
 //-------------------------------------------------------------------------
 class TIE : public CompoundEntity {
 public:
-	TIE(Texture* t, GLdouble size = 1.0);
+	explicit TIE(Texture* t, GLdouble size = 1.0);
 	~TIE();
+
+	virtual void render(glm::dmat4 const& modelViewMat) const;
 	
 private:
 

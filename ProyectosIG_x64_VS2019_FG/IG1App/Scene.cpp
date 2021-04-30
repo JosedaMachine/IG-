@@ -7,10 +7,29 @@
 using namespace glm;
 //-------------------------------------------------------------------------
 
-void Scene::init()
-{
+void Scene::init(){
 	setGL();  // OpenGL settings
+					
+	chargeTextures(); //We charge here the textures
 
+	// Graphics objects (entities) of the scene
+	if (mid == 0) {
+		TIE* tie = new TIE(gTextures.back());
+		gObjects.push_back(tie);
+		gObjects.push_back(new EjesRGB(400.0));
+	}
+	else if (mid == 1) {
+		//Anillo cuadrado
+		gObjects.push_back(new EjesRGB(400.0));
+		gObjects.push_back(new AnilloCuadrado());
+	}
+	else if (mid == 2) {
+		gObjects.push_back(new EjesRGB(400.0));
+		gObjects.push_back(new CuboConTapas(100));
+	}
+}
+
+void Scene::chargeTextures(){
 	Texture* t = new Texture();
 	t->load("../Bmps/baldosaC.bmp");
 	gTextures.push_back(t);
@@ -18,7 +37,7 @@ void Scene::init()
 	t = new Texture();
 	t->load("../Bmps/baldosaP.bmp");
 	gTextures.push_back(t);
-	
+
 	t = new Texture();
 	t->load("../Bmps/container.bmp");
 	gTextures.push_back(t);
@@ -30,7 +49,7 @@ void Scene::init()
 	t = new Texture();
 	t->load("../Bmps/windowV.bmp", 255 / 2);
 	gTextures.push_back(t);
-	
+
 	t = new Texture();
 	//Si se le aplica el alpha, se ve negro el fondo de la imagen
 	t->load("../Bmps/grass.bmp", u8vec3(0, 0, 0));
@@ -39,149 +58,8 @@ void Scene::init()
 	t = new Texture();
 	t->load("../Bmps/noche.bmp", 255 / 1.5);
 	gTextures.push_back(t);
-
-	// Graphics objects (entities) of the scene
-
-	if (mid == 0) {
-
-		//Rect�ngulo
-		gObjects.push_back(new RectanguloRGB(800, 800));
-		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 0, -100)));
-
-		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-		gObjects.push_back(new Poligono(100, 300));
-		gObjects.back()->setColor(dvec4(1.0, 1.0, 0.0, 0.0));
-		gObjects.push_back(new Poligono(360, 200)); //igual hay que meterle 360 lados porque un c�rculo tiene 360 grados //Igual no
-		gObjects.back()->setColor(dvec4(1.0, 0.07, 0.57, 0.0));
-
-
-		//Serpinpi
-		gObjects.push_back(new SerPinspi(200, 10000));
-		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-
-
-		//Tri�ngulo
-		gObjects.push_back(new TrianguloRGB(20, 200));
-		gObjects.back()->setModelMat(translate(gObjects.back()->modelMat(), dvec3(200, 0, 0)));
-
-	}
-	else if (mid == 1) {
-
-		gObjects.push_back(new EjesRGB(400.0));
-
-		gObjects.push_back(new Suelo(700, 700, 5, 5));
-		gObjects.back()->setTexture(gTextures[0]);
-		gObjects.back()->setModelMat(glm::rotate(dmat4(1), radians(-90.0), dvec3(1, 0, 0)));
-
-		gObjects.push_back(new Estrella3D(50, 10, 100));
-		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(-200, 300, - 200)));
-		gObjects.back()->setTexture(gTextures[1]);
-
-		int sideCube = 200.0f;
-		gObjects.push_back(new Caja(sideCube, gTextures[3]));
-		gObjects.back()->setTexture(gTextures[2]);
-		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(-sideCube, sideCube / 2, -sideCube)));
-
-		gObjectsTrans.push_back(new Glass(700.0, 200));
-		gObjectsTrans.back()->setTexture(gTextures[4]);
-		gObjectsTrans.back()->setModelMat(glm::translate(gObjectsTrans.back()->modelMat(), dvec3(0, 100, 0)));
-
-		// Planta
-		Planta* planta = new Planta(150, 150);
-		gObjects.push_back(planta);
-		planta->setTexture(gTextures[5]);
-		planta->setModelMat(translate(planta->modelMat(), dvec3(150, 75, -150)));
-
-		//Foto
-		int sizePhoto = 100;
-		gObjects.push_back(new Foto(sizePhoto, sizePhoto, GL_FRONT));
-		gObjects.back()->setModelMat(glm::translate(dmat4(1), dvec3(0, 5, 0)));
-		gObjects.back()->setModelMat(glm::rotate(gObjects.back()->modelMat(), radians(-90.0), dvec3(1, 0, 0)));
-		t = new Texture();//TexturaVacia
-		gTextures.push_back(t);
-		gObjects.back()->setTexture(t);
-	}
-	else if (mid == 2) {
-		//El luchador del empate
-		float radioDiscoCono = 100;
-		//Cuerpo
-		Sphere* esfera = new Sphere(130.0);
-		gObjects.push_back(esfera);
-		//Front
-		Cylinder* cono = new Cylinder(radioDiscoCono, radioDiscoCono, 40.0);
-		glm::dmat4 mAux = cono->modelMat();
-		mAux = translate(mAux, dvec3(0, 0, 101));
-		cono->setModelMat(mAux);
-		gObjects.push_back(cono);
-		//Front
-		Disk* disco = new Disk(radioDiscoCono, 0, 360);
-		glm::dmat4 mAux2 = disco->modelMat();
-		mAux2 = translate(mAux2, dvec3(0, 0, 141));
-		disco->setModelMat(mAux2);
-		gObjects.push_back(disco);
-
-		//Eje transversal
-		Cylinder* cono1 = new Cylinder(50.0, 50, 200.0);
-		glm::dmat4 mAux3 = cono1->modelMat();
-		mAux3 = rotate(mAux3, radians(90.0), dvec3(0, 1.0, 0));
-		mAux3 = translate(mAux3, dvec3(0, 0, 120));
-		cono1->setModelMat(mAux3);
-		gObjects.push_back(cono1);
-
-		//Eje transversal
-		Cylinder* cono2 = new Cylinder(50.0, 50, 200.0);
-		glm::dmat4 mAux4 = cono2->modelMat();
-		mAux4 = rotate(mAux4, radians(-90.0), dvec3(0, 1.0, 0));
-		mAux4 = translate(mAux4, dvec3(0, 0, 120));
-		cono2->setModelMat(mAux4);
-		gObjects.push_back(cono2);
-
-		//Ala1
-		PoligonoText* ala2 = new PoligonoText(6, 500);
-		glm::dmat4 mAux6 = ala2->modelMat();
-		mAux6 = rotate(mAux6, radians(90.0), dvec3(0, 1.0, 0));
-		mAux6 = translate(mAux6, dvec3(0, 0, 320));
-		ala2->setModelMat(mAux6);
-		gObjectsTrans.push_back(ala2);
-		gObjectsTrans.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-		gObjectsTrans.back()->setTexture(t);
-		//Ala2
-		PoligonoText* ala1 = new PoligonoText(6, 500);
-		glm::dmat4 mAux5 = ala1->modelMat();
-		mAux5 = rotate(mAux5, radians(-90.0), dvec3(0, 1.0, 0));
-		mAux5 = translate(mAux5, dvec3(0, 0, 320));
-		ala1->setModelMat(mAux5);
-		gObjectsTrans.push_back(ala1);
-		gObjectsTrans.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-		gObjectsTrans.back()->setTexture(t);
-
-		//Cylinder* cono = new Cylinder(50.0, 0, 100.0);
-		/*glm::dmat4 mAux = cono->modelMat();
-		mAux = translate(mAux, dvec3(0, 85, 0));
-		mAux = rotate(mAux, radians(-90.0), dvec3(1.0, 0, 0));
-		cono->setModelMat(mAux);
-		gObjects.push_back(cono);*/
-
-		/*Disk* noUnConoSiNoUnDisco = new Disk(100, 0);
-		gObjects.push_back(noUnConoSiNoUnDisco);*/
-
-		/*PartialDisk* pd = new PartialDisk(500, 50, 63);
-
-		gObjects.push_back(pd);*/
-
-		gObjects.push_back(new EjesRGB(400.0));
-	}
-	else if (mid == 3) {
-		gObjects.push_back(new EjesRGB(400.0));
-
-		//Anillo cuadrado
-
-		//gObjects.push_back(new AnilloCuadrado());
-
-		gObjects.push_back(new CuboConTapas(100));
-	}
 }
+
 //-------------------------------------------------------------------------
 void Scene::free()
 { // release memory and resources   
@@ -235,9 +113,8 @@ void Scene::sceneDirLight(Camera const& cam) const
 }
 //-------------------------------------------------------------------------
 
-void Scene::render(Camera const& cam) const
-{
-	if(mid == 2 || mid == 3)sceneDirLight(cam);
+void Scene::render(Camera const& cam) const{
+	sceneDirLight(cam);
 
 	cam.upload(); //viewport proyect
 

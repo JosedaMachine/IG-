@@ -32,6 +32,8 @@ public:
 	void setMid(int scene) { mid = scene; }
 	void set2D(bool dimension) { es2D = dimension; }
 	bool get2D() { return es2D; }
+
+	void chargeTextures();
 	
 protected:
 	void free();

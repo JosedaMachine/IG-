@@ -1,6 +1,5 @@
 #pragma once
-class  Entidad
-{
+class  Entidad {
 public:
 	Entidad() {};
 	virtual ~Entidad() {};

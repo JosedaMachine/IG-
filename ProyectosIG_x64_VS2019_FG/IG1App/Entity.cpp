@@ -465,7 +465,11 @@ AnilloCuadrado::~AnilloCuadrado()
 
 void AnilloCuadrado::render(glm::dmat4 const& modelViewMat) const
 {
+	glEnable(GL_COLOR_MATERIAL);
+	
 	mMesh->render();
+
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 CuboConTapas::CuboConTapas(GLdouble l)
@@ -499,11 +503,12 @@ CompoundEntity::~CompoundEntity(){
 	gObjects.clear();
 }
 
-void CompoundEntity::render(glm::dmat4 const& modelViewMat){
+void CompoundEntity::render(glm::dmat4 const& modelViewMat) const {
 	for (Entidad* ae : gObjects) ae->render(modelViewMat);
+
+	for (Entidad* ae : gObjectsTranslucid) ae->render(modelViewMat);
 }
 
-//Antoio puto maricon
 TIE::TIE(Texture* t, GLdouble size){
 	float radioDiscoCono = 100 * size;
 	//Cuerpo
@@ -514,6 +519,7 @@ TIE::TIE(Texture* t, GLdouble size){
 	glm::dmat4 mAux = cono->modelMat();
 	mAux = translate(mAux, dvec3(0, 0, 101));
 	cono->setModelMat(mAux);
+
 	gObjects.push_back(cono);
 	//Front
 	Disk* disco = new Disk(radioDiscoCono, 0, 360);
@@ -544,20 +550,27 @@ TIE::TIE(Texture* t, GLdouble size){
 	mAux6 = rotate(mAux6, radians(90.0), dvec3(0, 1.0, 0));
 	mAux6 = translate(mAux6, dvec3(0, 0, 320));
 	ala2->setModelMat(mAux6);
-	gObjectsTransexual.push_back(ala2);
-	gObjectsTransexual.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-	gObjectsTransexual.back()->setTexture(t);
+	gObjectsTranslucid.push_back(ala2);
+	gObjectsTranslucid.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+	gObjectsTranslucid.back()->setTexture(t);
 	//Ala2
 	PoligonoText* ala1 = new PoligonoText(6, 500 * size);
 	glm::dmat4 mAux5 = ala1->modelMat();
 	mAux5 = rotate(mAux5, radians(-90.0), dvec3(0, 1.0, 0));
 	mAux5 = translate(mAux5, dvec3(0, 0, 320));
 	ala1->setModelMat(mAux5);
-	gObjectsTransexual.push_back(ala1);
-	gObjectsTransexual.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
-	gObjectsTransexual.back()->setTexture(t);
+	gObjectsTranslucid.push_back(ala1);
+	gObjectsTranslucid.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+	gObjectsTranslucid.back()->setTexture(t);
 }
 
-TIE::~TIE()
-{
+TIE::~TIE(){
+}
+
+void TIE::render(glm::dmat4 const& modelViewMat) const{
+	/*dmat4 aMat = modelViewMat * mModelMat;
+	upload(aMat);*/
+	//CompoundEntity::render(aMat);
+	// 
+	CompoundEntity::render(modelViewMat);
 }
