@@ -63,7 +63,7 @@ void Scene::chargeTextures(){
 //-------------------------------------------------------------------------
 void Scene::free()
 { // release memory and resources   
-
+	
 	for (Entidad* el : gObjects){
 		delete el;  el = nullptr;
 	}

@@ -120,6 +120,17 @@ IndexMesh* IndexMesh::generaCuboConTapadIndexado(GLdouble l)
 
 	m->vColors.reserve(m->mNumVertices);
 	//Vertices
+
+
+	//m->vVertices.emplace_back(-l / 2, l / 2, l / 2);    //V0     
+	//m->vVertices.emplace_back(-l / 2, -l / 2, l / 2);   //V1
+	//m->vVertices.emplace_back(l / 2, l / 2, l / 2);     //v2     
+	//m->vVertices.emplace_back(l / 2, -l / 2, l / 2);    //V3     
+	//m->vVertices.emplace_back(l / 2, l / 2, -l / 2);    //V4
+	//m->vVertices.emplace_back(l / 2, -l / 2, -l / 2);   //v5
+	//m->vVertices.emplace_back(-l / 2, l / 2, -l / 2);   //V6
+	//m->vVertices.emplace_back(-l / 2, -l / 2, -l / 2);  //v7
+
 	m->vVertices.emplace_back(-l / 2, l / 2, l / 2);
 	m->vVertices.emplace_back(-l / 2, -l / 2, l / 2);
 	m->vVertices.emplace_back(l / 2, l / 2, l / 2);
@@ -145,6 +156,18 @@ IndexMesh* IndexMesh::generaCuboConTapadIndexado(GLdouble l)
 		4,0,2,
 		7,1,5,
 		5,1,3
+		 //0,1,2,
+		 //2,1,3,
+		 //2,3,4,
+		 //4,3,5,
+		 //4,5,6,
+		 //6,5,7,
+		 //6,7,0,
+		 //0,7,1,
+		 //0,2,6,
+		 //6,2,4,
+		 //1,3,7,
+		 //7,3,5
 	};
 
 	m->vNormals.reserve(m->mNumVertices);
