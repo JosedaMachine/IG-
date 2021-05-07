@@ -602,13 +602,12 @@ void ConeMbR::render(glm::dmat4 const& modelViewMat) const{
 	glDisable(GL_COLOR_MATERIAL);
 }
 
-Esfera::Esfera(GLdouble r, GLdouble p, GLuint m)
-{
-
+Esfera::Esfera(GLdouble r, GLdouble p, GLuint m){
 	dvec3* perfil = new dvec3[p];
+
 	float angIni = 270.0;
 
-	float angToAdd = (180.0 / p);
+	float angToAdd = (180.0 / (p-1));
 	vec2 c(0, 0);
 
 	for (int i = 0; i < p ; i++) {
