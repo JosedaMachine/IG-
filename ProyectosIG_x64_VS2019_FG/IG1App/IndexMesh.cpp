@@ -202,15 +202,22 @@ void IndexMesh::buildNormalVectors()
 
 	for (int i = 0; i < nNumIndices; i += 3) {
 		glm::dvec3 a, b, c;
-		a = vVertices[vIndices[i]];
-		b = vVertices[vIndices[i + 1]];
-		c = vVertices[vIndices[i + 2]];
+
+		GLuint first, second, third;
+
+		first = vIndices[i];
+		second = vIndices[i + 1];
+		third = vIndices[i + 2];
+
+		a = vVertices[first];
+		b = vVertices[second];
+		c = vVertices[third];
 
 		glm::dvec3 n = cross((b - a), (c - a));
 
-		vNormals[vIndices[i]] += n;
-		vNormals[vIndices[i + 1]] += n;
-		vNormals[vIndices[i + 2]] += n;
+		vNormals[first] += n;
+		vNormals[second] += n;
+		vNormals[third] += n;
 	}
 
 	for (int i = 0; i < mNumVertices; i++)

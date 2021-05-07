@@ -50,11 +50,7 @@ MbR* MbR::generaIndexMeshByRevolution(int mm, int nn, glm::dvec3* perfil){
         }
     }
 
-    mesh->vNormals.reserve(mesh->mNumVertices);
     //Inicializa
-    for (int i = 0; i < mesh->mNumVertices; i++) {
-        mesh->vNormals.push_back(glm::dvec3(0, 0, 0));
-    }
 
     mesh->buildNormalVectors();
     //Angel es un poco imbecil
