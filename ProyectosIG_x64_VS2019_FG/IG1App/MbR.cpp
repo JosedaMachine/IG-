@@ -25,30 +25,56 @@ MbR* MbR::generaIndexMeshByRevolution(int mm, int nn, glm::dvec3* perfil){
     for (size_t i = 0; i < mesh->mNumVertices; i++)
         mesh->vVertices.emplace_back(vertices[i]);
 
-    mesh->nNumIndices = (((mm - 2 - 1) * nn * 2) * 6 + nn * 2 * 3)*2;
+    std::vector<GLuint> vIndexAux;
 
-    mesh->vIndices = new GLuint[mesh->nNumIndices];
-    // El contador i recorre las muestras alrededor del eje Y
-    int indiceMayor = 0;
-    for (int i = 0; i < nn; i++){
+    for (int i = 0; i < nn; i++) {
         // El contador j recorre los vértices del perfil, 
-        // de abajo arriba. Las caras cuadrangulares resultan
-        // al unir la muestra i-ésima con la (i+1)%nn-ésima
-        for (int j = 0; j < mm - 1; j++){
+    //    // de abajo arriba. Las caras cuadrangulares resultan
+    //    // al unir la muestra i-ésima con la (i+1)%nn-ésima
+        for (int j = 0; j < mm - 1; j++) {
             // El contador indice sirve para llevar cuenta 
             // de los índices generados hasta ahora. Se recorre
             // la cara desde la esquina inferior izquierda 
             int indice = i * mm + j;
             //Primer triangulo de la cara
-            mesh->vIndices[indiceMayor++] = indice;
-            mesh->vIndices[indiceMayor++] = (indice + mm) % (nn * mm);
-            mesh->vIndices[indiceMayor++] = (indice + mm + 1) % (nn * mm);
-            //Segundo triangulo de la cara
-            mesh->vIndices[indiceMayor++] = (indice + mm + 1) % (nn * mm);
-            mesh->vIndices[indiceMayor++] = (indice + 1);
-            mesh->vIndices[indiceMayor++] = indice;
+            vIndexAux.push_back(indice);
+            vIndexAux.push_back((indice + mm) % (nn * mm));
+            vIndexAux.push_back((indice + mm + 1) % (nn * mm));
+            
+            vIndexAux.push_back((indice + mm + 1) % (nn * mm));
+            vIndexAux.push_back((indice + 1));
+            vIndexAux.push_back(indice);
         }
     }
+    //mesh->nNumIndices = (((mm - 2 - 1) * nn * 2) * 6 + nn * 2 * 3)*2;
+
+    mesh->nNumIndices = vIndexAux.size();
+    mesh->vIndices = new GLuint[mesh->nNumIndices];
+
+    for (int i = 0; i < mesh->nNumIndices; i++)
+        mesh->vIndices[i] = vIndexAux[i];
+
+    // El contador i recorre las muestras alrededor del eje Y
+    //int indiceMayor = 0;
+    //for (int i = 0; i < nn; i++){
+    //    // El contador j recorre los vértices del perfil, 
+    //    // de abajo arriba. Las caras cuadrangulares resultan
+    //    // al unir la muestra i-ésima con la (i+1)%nn-ésima
+    //    for (int j = 0; j < mm - 1; j++){
+    //        // El contador indice sirve para llevar cuenta 
+    //        // de los índices generados hasta ahora. Se recorre
+    //        // la cara desde la esquina inferior izquierda 
+    //        int indice = i * mm + j;
+    //        //Primer triangulo de la cara
+    //        mesh->vIndices[indiceMayor++] = indice;
+    //        mesh->vIndices[indiceMayor++] = (indice + mm) % (nn * mm);
+    //        mesh->vIndices[indiceMayor++] = (indice + mm + 1) % (nn * mm);
+    //        //Segundo triangulo de la cara
+    //        mesh->vIndices[indiceMayor++] = (indice + mm + 1) % (nn * mm);
+    //        mesh->vIndices[indiceMayor++] = (indice + 1);
+    //        mesh->vIndices[indiceMayor++] = indice;
+    //    }
+    //}
 
     //Inicializa
 
