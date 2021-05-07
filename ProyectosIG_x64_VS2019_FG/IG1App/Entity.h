@@ -10,6 +10,7 @@
 #include "Texture.h"
 #include "CheckML.h"
 #include "EntityWithIndexMesh.h"
+#include "MbR.h"
 
 class IG1App;
 
@@ -233,6 +234,14 @@ class CuboConTapas : public EntityWithIndexMesh
 public:
 	explicit CuboConTapas(GLdouble l);
 	~CuboConTapas();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
+class ConeMbR: public Abs_Entity
+{
+public:
+	explicit ConeMbR(GLdouble h, GLdouble r, GLuint n);
+	~ConeMbR();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 //-------------------------------------------------------------------------

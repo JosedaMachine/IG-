@@ -27,6 +27,10 @@ void Scene::init(){
 		gObjects.push_back(new EjesRGB(400.0));
 		gObjects.push_back(new CuboConTapas(100));
 	}
+	else if (mid == 3) {
+		gObjects.push_back(new EjesRGB(400.0));
+		gObjects.push_back(new ConeMbR(200, 100, 100));
+	}
 }
 
 void Scene::chargeTextures(){

@@ -574,3 +574,30 @@ void TIE::render(glm::dmat4 const& modelViewMat) const{
 	// 
 	CompoundEntity::render(modelViewMat);
 }
+
+ConeMbR::ConeMbR(GLdouble h, GLdouble r, GLuint n){
+	int m = 3;
+	dvec3* perfil = new dvec3[m];
+	perfil[0] = dvec3(0.0, 0.0, 0.0);
+	perfil[1] = dvec3(r, 0.0, 0.0);
+	perfil[2] = dvec3(0.0, h, 0.0);
+
+	//Igual eres un poco PS
+	mMesh = MbR::generaIndexMeshByRevolution(m, n, perfil);
+}
+
+ConeMbR::~ConeMbR()
+{
+}
+
+void ConeMbR::render(glm::dmat4 const& modelViewMat) const{
+	glEnable(GL_COLOR_MATERIAL);
+
+	glColor3f(0.0, 1.0, 0.0);
+
+	mMesh->render();
+
+	glColor3f(1.0, 1.0, 1.0);
+
+	glDisable(GL_COLOR_MATERIAL);
+}
