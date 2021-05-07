@@ -29,7 +29,7 @@ void Scene::init(){
 	}
 	else if (mid == 3) {
 		gObjects.push_back(new EjesRGB(400.0));
-		gObjects.push_back(new ConeMbR(200, 100, 100));
+		gObjects.push_back(new Esfera(100,100,100));
 	}
 }
 

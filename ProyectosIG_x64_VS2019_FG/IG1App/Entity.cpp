@@ -601,3 +601,38 @@ void ConeMbR::render(glm::dmat4 const& modelViewMat) const{
 
 	glDisable(GL_COLOR_MATERIAL);
 }
+
+Esfera::Esfera(GLdouble r, GLdouble p, GLuint m)
+{
+
+	dvec3* perfil = new dvec3[p];
+	float angIni = 270.0;
+
+	float angToAdd = (180.0 / p);
+	vec2 c(0, 0);
+
+	for (int i = 0; i < p ; i++) {
+		perfil[i] = dvec3(c.x + r * cos(radians(angIni)), c.y + r * sin(radians(angIni)), 0);
+		angIni += angToAdd;
+	}
+
+	mMesh = MbR::generaIndexMeshByRevolution(p, m, perfil);
+}
+
+Esfera::~Esfera()
+{
+
+}
+
+void Esfera::render(glm::dmat4 const& modelViewMat) const
+{
+	glEnable(GL_COLOR_MATERIAL);
+
+	glColor3f(0.0, 1.0, 0.0);
+
+	mMesh->render();
+
+	glColor3f(1.0, 1.0, 1.0);
+
+	glDisable(GL_COLOR_MATERIAL);
+}
