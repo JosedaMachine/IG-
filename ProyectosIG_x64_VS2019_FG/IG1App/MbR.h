@@ -17,8 +17,6 @@ public:
 
     static MbR* generaIndexMeshByRevolution(int mm, int nn, glm::dvec3* perfil);
 
-    GLuint getIndexNumberRevolution(int m , int n);
-
 private:
     int samplesNumbers;
     int perfilPoints;

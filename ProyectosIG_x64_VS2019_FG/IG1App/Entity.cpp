@@ -616,6 +616,7 @@ Esfera::Esfera(GLdouble r, GLdouble p, GLuint m){
 	}
 
 	mMesh = MbR::generaIndexMeshByRevolution(p, m, perfil);
+
 }
 
 Esfera::~Esfera()
@@ -627,9 +628,15 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 {
 	glEnable(GL_COLOR_MATERIAL);
 
-	glColor3f(0.0, 1.0, 0.0);
+	glColor3f(0.15, 0.28, 0.59);
 
+	//glLineWidth(4);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	
 	mMesh->render();
+
+	//glLineWidth(1);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glColor3f(1.0, 1.0, 1.0);
 
