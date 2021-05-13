@@ -632,7 +632,8 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 
 	//glLineWidth(4);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	
+	dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+	upload(aMat);
 	mMesh->render();
 
 	//glLineWidth(1);
@@ -658,6 +659,10 @@ void Grid::render(glm::dmat4 const& modelViewMat) const {
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	mTexture->bind(GL_REPLACE);
+	
+	//Añado esto para que se pueda mover y rotar desde fuera
+	dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+	upload(aMat);
 
 	mMesh->render();
 
@@ -676,22 +681,38 @@ GridCube::GridCube(GLdouble r, GLint nDiv, Texture* up, Texture* sides){
 	//top
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(top);
-	//sindrome de down
+	gObjects.back()->setModelMat(translate(gObjects.back()->modelMat(), dvec3(0, r/2, 0)));
+	////sindrome de down
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(top);
-	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 300, 0)));
-	//N
+	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, - r / 2, 0)));
+	////N
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(side);
-	//W
+	//Si lo roto, rotan tambien sus ejes. Por lo tanto, si hago una translacion en Y, se va a aplicar sobre su eje Y , que correspondria a X o Z en funcion de como se haya rotado
+	//Por eso es mejor, primero Translate y luego rotate (usando en la segunda el modelMat);
+	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(r / 2, 0, 0)));
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0,0.0)));
+	//Ahora roto en Z porque ahora la Z es su Y (hemos rotado en X 90 grados, luego el resto de ejes han rotado 90 grados)
+	//Como hacer para que el sistema de coordenadas sea global y no local??????????????
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(0.0, 0.0,1.0)));
+	////W
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(side);
-	//E
+	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 0, r / 2)));
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0,0.0)));
+	//gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0,0.0)));
+	////E
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(side);
-	//S
+	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 0, -r / 2)));
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0, 0.0)));
+	////S
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(side);
+	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(-r / 2, 0, 0)));
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0, 0.0)));
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(0.0, 0.0, 1.0)));
 }
 
 GridCube::~GridCube(){
