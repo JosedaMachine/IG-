@@ -33,16 +33,20 @@ void Scene::init(){
 		float radius = 100.0;
 		Esfera* esfera = new Esfera(radius, 50, 50);
 		gObjects.push_back(new Esfera(radius,50,50));
-		//gObjects.back()->setColor(glm::dvec4(0.15, 0.28, 0.59,1));
-
-		//Cambiar el color
-		//Cambiar la posicion desde fuera
-		//Que no haya dependencia de movimiento
-
+		
 		Sphere* sphere = new Sphere(radius);
 		gObjects.push_back(sphere);
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), glm::dvec3(radius * 2, 0, 0)));
+		gObjects.back()->setColor(glm::dvec4(1.0, 0.28, 0.59,1));
+		
+		//Cambiar el color
+		//Cambiar la posicion desde fuera
+		//Que no haya dependencia de movimiento
+	}
+	else if ( mid == 4){
 
+		Grid* grilla = new Grid(200, 10);
+		gObjects.push_back(grilla);
 	}
 }
 

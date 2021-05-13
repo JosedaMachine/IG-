@@ -7,8 +7,7 @@ QuadricEntity::QuadricEntity()
 
 Sphere::Sphere(GLdouble rr) { r = rr; }	
 
-void Sphere::render(glm::dmat4 const& modelViewMat) const
-{
+void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	dmat4 aMat = modelViewMat * mModelMat;
 	upload(aMat);
 	// Aquí se puede fijar el color de la esfera así:

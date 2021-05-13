@@ -252,6 +252,14 @@ public:
 	~Esfera();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
+
+class Grid : public Abs_Entity
+{
+public:
+	explicit Grid(GLdouble r, GLint nDiv);
+	~Grid();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
 //-------------------------------------------------------------------------
 
 #endif //_H_Entities_H_

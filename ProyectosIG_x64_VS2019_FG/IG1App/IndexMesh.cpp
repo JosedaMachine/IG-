@@ -194,6 +194,13 @@ IndexMesh* IndexMesh::generaCuboConTapadIndexado(GLdouble l)
 	return m;
 }
 
+IndexMesh* IndexMesh::generateGrid(GLdouble lado, GLuint nDiv){
+
+	IndexMesh* m = new IndexMesh();
+
+	return m;
+}
+
 void IndexMesh::buildNormalVectors()
 {
 	vNormals.reserve(mNumVertices);

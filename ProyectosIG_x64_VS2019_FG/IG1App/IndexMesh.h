@@ -21,6 +21,8 @@ public:
 
 	static IndexMesh* generaCuboConTapadIndexado(GLdouble l);
 
+	static IndexMesh* generateGrid(GLdouble lado, GLuint nDiv);
+
 	void buildNormalVectors();
 
 protected:

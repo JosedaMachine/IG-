@@ -642,3 +642,14 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 
 	glDisable(GL_COLOR_MATERIAL);
 }
+
+Grid::Grid(GLdouble r, GLint nDiv) {
+
+	mMesh = IndexMesh::generateGrid(r, nDiv);
+}
+
+Grid::~Grid() {
+}
+
+void Grid::render(glm::dmat4 const& modelViewMat) const {
+}
