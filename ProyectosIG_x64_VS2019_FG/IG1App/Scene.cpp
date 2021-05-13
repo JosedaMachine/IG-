@@ -44,8 +44,9 @@ void Scene::init(){
 		//Que no haya dependencia de movimiento
 	}
 	else if ( mid == 4){
+		gObjects.push_back(new EjesRGB(400.0));
 
-		Grid* grilla = new Grid(200, 10);
+		Grid* grilla = new Grid(200, 20);
 		gObjects.push_back(grilla);
 	}
 }

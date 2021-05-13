@@ -198,7 +198,47 @@ IndexMesh* IndexMesh::generateGrid(GLdouble lado, GLuint nDiv){
 
 	IndexMesh* m = new IndexMesh();
 
+	GLdouble incr = lado / nDiv;  // incremento para la coordenada x, y la c. z
+	GLuint numFC= nDiv + 1;    // número de vértices por filas y columnas
+	// Generación de vértices
+	m->mNumVertices= numFC* numFC;     
+	m->vVertices.reserve(m->mNumVertices);
+
+	GLint x = -lado / 2;
+	GLint z = -lado / 2;
+
+	for (size_t i = 0; i < numFC; i++)
+		for (size_t j = 0; j < numFC; j++)
+			m->vVertices.emplace_back(glm::dvec3(x + j * incr, 0, z + i * incr));
+			//m->vVertices[i * numFC + j] = glm::dvec3(x + j * incr, 0, z + i * incr);
+
+	// Generación de índices
+	m->nNumIndices = nDiv * nDiv * 6;
+	m->vIndices = new GLuint[m->nNumIndices];
+
+	int indiceMayor = 0;
+	for (size_t i = 0; i < nDiv; i++){
+		for (size_t j = 0; j < nDiv; j++){
+			size_t iv = i * numFC + j;
+
+			m->vIndices[indiceMayor++] = iv;
+			m->vIndices[indiceMayor++] = iv + numFC;
+			m->vIndices[indiceMayor++] = iv + 1;
+
+			m->vIndices[indiceMayor++] = iv + 1;
+			m->vIndices[indiceMayor++] = iv + numFC;
+			m->vIndices[indiceMayor++] = iv + numFC + 1;
+		}
+	}
+
+	m->buildNormalVectors();
+
 	return m;
+}
+
+IndexMesh* IndexMesh::generaGridTex(GLdouble lado, GLuint numDiv){
+
+	return nullptr;
 }
 
 void IndexMesh::buildNormalVectors()
