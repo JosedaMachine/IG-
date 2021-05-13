@@ -645,7 +645,7 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 
 Grid::Grid(GLdouble r, GLint nDiv) {
 
-	mMesh = IndexMesh::generateGrid(r, nDiv);
+	mMesh = IndexMesh::generaGridTex(r, nDiv);
 }
 
 Grid::~Grid() {
@@ -653,19 +653,18 @@ Grid::~Grid() {
 
 void Grid::render(glm::dmat4 const& modelViewMat) const {
 
-	glEnable(GL_COLOR_MATERIAL);
+	//glColor3f(0.15, 0.28, 0.59);
 
-	glColor3f(0.15, 0.28, 0.59);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	glLineWidth(4);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	mTexture->bind(GL_REPLACE);
 
 	mMesh->render();
 
-	glLineWidth(1);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	glColor3f(1.0, 1.0, 1.0);
+	//glColor3f(1.0, 1.0, 1.0);
 
-	glDisable(GL_COLOR_MATERIAL);
+	mTexture->unbind();
+
 }

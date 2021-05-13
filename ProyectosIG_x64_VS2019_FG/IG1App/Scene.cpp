@@ -46,8 +46,10 @@ void Scene::init(){
 	else if ( mid == 4){
 		gObjects.push_back(new EjesRGB(400.0));
 
-		Grid* grilla = new Grid(200, 20);
+		Grid* grilla = new Grid(200, 2);
 		gObjects.push_back(grilla);
+
+		gObjects.back()->setTexture(gTextures.back());
 	}
 }
 
@@ -79,6 +81,10 @@ void Scene::chargeTextures(){
 
 	t = new Texture();
 	t->load("../Bmps/noche.bmp", 255 / 1.5);
+	gTextures.push_back(t);
+
+	t = new Texture();
+	t->load("../Bmps/stones.bmp", 255);
 	gTextures.push_back(t);
 }
 

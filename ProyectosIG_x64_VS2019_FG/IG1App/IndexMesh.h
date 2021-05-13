@@ -23,7 +23,7 @@ public:
 
 	static IndexMesh* generateGrid(GLdouble lado, GLuint nDiv);
 
-	IndexMesh* generaGridTex(GLdouble lado, GLuint numDiv);
+	static IndexMesh* generaGridTex(GLdouble lado, GLuint numDiv);
 
 	void buildNormalVectors();
 

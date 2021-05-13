@@ -232,13 +232,30 @@ IndexMesh* IndexMesh::generateGrid(GLdouble lado, GLuint nDiv){
 	}
 
 	m->buildNormalVectors();
-
+	
 	return m;
 }
 
 IndexMesh* IndexMesh::generaGridTex(GLdouble lado, GLuint numDiv){
 
-	return nullptr;
+
+	IndexMesh* m = generateGrid(lado, numDiv);
+
+	GLuint numFC = numDiv + 1;
+
+	m->vTexCoords.reserve(m->mNumVertices);
+
+	int s = 0;
+	int t = 1;
+
+	float incremento =  1.0f / numDiv;
+	for (int f = 0; f < numFC; f++) {
+		for (int c = 0; c < numFC; c++) {
+			m->vTexCoords.emplace_back(s + incremento * c, t - incremento * f);
+		}
+	}
+
+	return m;
 }
 
 void IndexMesh::buildNormalVectors()
