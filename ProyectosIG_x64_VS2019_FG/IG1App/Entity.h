@@ -225,8 +225,6 @@ public:
 	explicit AnilloCuadrado();
 	~AnilloCuadrado();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
-
-	
 };
 
 class CuboConTapas : public EntityWithIndexMesh
@@ -259,6 +257,19 @@ public:
 	explicit Grid(GLdouble r, GLint nDiv);
 	~Grid();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
+
+class GridCube : public CompoundEntity
+{
+public:
+	explicit GridCube(GLdouble r, GLint nDiv, Texture* top_, Texture* side_);
+	~GridCube();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+
+	void setTextures(Texture* top, Texture* side);
+private:
+
+	Texture* top, *side;
 };
 //-------------------------------------------------------------------------
 

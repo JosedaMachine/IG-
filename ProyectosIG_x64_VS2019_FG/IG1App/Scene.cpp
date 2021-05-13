@@ -46,10 +46,13 @@ void Scene::init(){
 	else if ( mid == 4){
 		gObjects.push_back(new EjesRGB(400.0));
 
-		Grid* grilla = new Grid(200, 2);
-		gObjects.push_back(grilla);
+		GridCube* cubito = new GridCube(200.0f, 2, gTextures[7], gTextures.back());
+		gObjects.push_back(cubito);
 
-		gObjects.back()->setTexture(gTextures.back());
+		//Grid* grilla = new Grid(200, 2);
+		//gObjects.push_back(grilla);
+
+		//gObjects.back()->setTexture(gTextures.back());
 	}
 }
 
@@ -83,6 +86,10 @@ void Scene::chargeTextures(){
 	t->load("../Bmps/noche.bmp", 255 / 1.5);
 	gTextures.push_back(t);
 
+	t = new Texture();
+	t->load("../Bmps/checker.bmp", 255);
+	gTextures.push_back(t);
+	
 	t = new Texture();
 	t->load("../Bmps/stones.bmp", 255);
 	gTextures.push_back(t);

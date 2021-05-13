@@ -668,3 +668,40 @@ void Grid::render(glm::dmat4 const& modelViewMat) const {
 	mTexture->unbind();
 
 }
+
+GridCube::GridCube(GLdouble r, GLint nDiv, Texture* up, Texture* sides){
+	top = up;
+	side = sides;
+
+	//top
+	gObjects.push_back(new Grid(r, nDiv));
+	gObjects.back()->setTexture(top);
+	//sindrome de down
+	gObjects.push_back(new Grid(r, nDiv));
+	gObjects.back()->setTexture(top);
+	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 300, 0)));
+	//N
+	gObjects.push_back(new Grid(r, nDiv));
+	gObjects.back()->setTexture(side);
+	//W
+	gObjects.push_back(new Grid(r, nDiv));
+	gObjects.back()->setTexture(side);
+	//E
+	gObjects.push_back(new Grid(r, nDiv));
+	gObjects.back()->setTexture(side);
+	//S
+	gObjects.push_back(new Grid(r, nDiv));
+	gObjects.back()->setTexture(side);
+}
+
+GridCube::~GridCube(){
+}
+
+void GridCube::render(glm::dmat4 const& modelViewMat) const{
+	CompoundEntity::render(modelViewMat);
+}
+
+void GridCube::setTextures(Texture* top_, Texture* side_){
+	top = top_;
+	side = side_;
+}
