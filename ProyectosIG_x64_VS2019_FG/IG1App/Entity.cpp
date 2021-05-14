@@ -628,7 +628,7 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 {
 	glEnable(GL_COLOR_MATERIAL);
 
-	glColor3f(0.15, 0.28, 0.59);
+	glColor3f(0, 0.217, 0.352);
 
 	//glLineWidth(4);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -701,7 +701,6 @@ GridCube::GridCube(GLdouble r, GLint nDiv, Texture* up, Texture* sides){
 	gObjects.back()->setTexture(side);
 	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 0, r / 2)));
 	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0,0.0)));
-	//gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0,0.0)));
 	////E
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(side);
