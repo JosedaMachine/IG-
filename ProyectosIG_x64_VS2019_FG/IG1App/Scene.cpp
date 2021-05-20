@@ -54,7 +54,16 @@ void Scene::init(){
 		//gObjects.back()->setTexture(gTextures.back());
 	}
 	else if (mid == 5) {
+		int numTies = 3;
 
+		std::vector<TIE*> ties;
+
+		for (int i = 0; i < numTies; i++) {
+			TIE* t = new TIE(gTextures[6]);
+
+			gObjects.push_back(t);
+			ties.push_back(t);
+		}
 	}
 }
 
