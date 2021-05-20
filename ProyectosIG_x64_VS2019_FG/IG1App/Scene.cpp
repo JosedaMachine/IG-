@@ -14,7 +14,7 @@ void Scene::init(){
 
 	// Graphics objects (entities) of the scene
 	if (mid == 0) {
-		TIE* tie = new TIE(gTextures.back());
+		TIE* tie = new TIE(gTextures[6]);
 		gObjects.push_back(tie);
 		gObjects.push_back(new EjesRGB(400.0));
 	}
