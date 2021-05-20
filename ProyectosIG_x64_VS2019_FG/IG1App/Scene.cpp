@@ -53,6 +53,9 @@ void Scene::init(){
 
 		//gObjects.back()->setTexture(gTextures.back());
 	}
+	else if (mid == 5) {
+
+	}
 }
 
 void Scene::chargeTextures(){
