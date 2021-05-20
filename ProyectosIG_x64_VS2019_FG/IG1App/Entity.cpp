@@ -1,8 +1,6 @@
 ﻿#include "Entity.h"
 #include "QuadricEntity.h"
 
-
-
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
 #include "IG1App.h"
