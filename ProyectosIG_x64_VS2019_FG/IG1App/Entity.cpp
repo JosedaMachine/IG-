@@ -4,6 +4,7 @@
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
 #include "IG1App.h"
+#include "Material.h"
 
 using namespace glm;
 
@@ -15,6 +16,14 @@ void Abs_Entity::upload(dmat4 const& modelViewMat) const
 	glLoadMatrixd(value_ptr(modelViewMat));  // transfers modelView matrix to the GPU
 }
 //-------------------------------------------------------------------------
+class EntityWithMaterial : public Abs_Entity {
+public:
+	EntityWithMaterial() : Abs_Entity() { };
+	virtual ~EntityWithMaterial() { };
+	void setMaterial(Material* matl) { material = matl; };
+protected:
+	Material* material = nullptr;
+};
 //-------------------------------------------------------------------------
 
 EjesRGB::EjesRGB(GLdouble l): Abs_Entity()
@@ -186,8 +195,7 @@ Estrella3D::Estrella3D(GLdouble re, GLuint np, GLdouble h) {
 	angY = 0;
 }
 
-Estrella3D::~Estrella3D()
-{
+Estrella3D::~Estrella3D() {
 	delete mMesh; mMesh = nullptr;
 }
 
@@ -350,6 +358,7 @@ Glass::Glass(GLdouble w, GLdouble h){
 
 Glass::~Glass()
 {
+	delete mMesh; mMesh = nullptr;
 }
 
 void Glass::render(glm::dmat4 const& modelViewMat) const {
@@ -458,7 +467,7 @@ AnilloCuadrado::AnilloCuadrado()
 
 AnilloCuadrado::~AnilloCuadrado()
 {
-
+	delete mMesh; mMesh = nullptr;
 }
 
 void AnilloCuadrado::render(glm::dmat4 const& modelViewMat) const
@@ -477,7 +486,7 @@ CuboConTapas::CuboConTapas(GLdouble l)
 
 CuboConTapas::~CuboConTapas()
 {
-
+	delete mMesh; mMesh = nullptr;
 }
 
 void CuboConTapas::render(glm::dmat4 const& modelViewMat) const{
@@ -498,7 +507,9 @@ void CompoundEntity::addEntity(Entidad* ae){
 
 CompoundEntity::~CompoundEntity(){
 	for (Entidad* ae : gObjects) delete ae;
+	for (Entidad* ae : gObjectsTranslucid) delete ae;
 	gObjects.clear();
+	gObjectsTranslucid.clear();
 }
 
 void CompoundEntity::render(glm::dmat4 const& modelViewMat) const {
@@ -563,6 +574,7 @@ TIE::TIE(Texture* t, GLdouble size){
 }
 
 TIE::~TIE(){
+	int n = 0;
 }
 
 void TIE::render(glm::dmat4 const& modelViewMat) const{
@@ -586,6 +598,7 @@ ConeMbR::ConeMbR(GLdouble h, GLdouble r, GLuint n){
 
 ConeMbR::~ConeMbR()
 {
+	delete mMesh; mMesh = nullptr;
 }
 
 void ConeMbR::render(glm::dmat4 const& modelViewMat) const{
@@ -618,7 +631,7 @@ Esfera::Esfera(GLdouble r, GLdouble p, GLuint m){
 
 Esfera::~Esfera()
 {
-
+	delete mMesh; mMesh = nullptr;
 }
 
 void Esfera::render(glm::dmat4 const& modelViewMat) const
@@ -647,6 +660,7 @@ Grid::Grid(GLdouble r, GLint nDiv) {
 }
 
 Grid::~Grid() {
+	delete mMesh; mMesh = nullptr;
 }
 
 void Grid::render(glm::dmat4 const& modelViewMat) const {
@@ -723,6 +737,7 @@ GridCube::GridCube(GLdouble r, GLint nDiv, Texture* up, Texture* sides){
 }
 
 GridCube::~GridCube(){
+	delete mMesh; mMesh = nullptr;
 }
 
 void GridCube::render(glm::dmat4 const& modelViewMat) const{

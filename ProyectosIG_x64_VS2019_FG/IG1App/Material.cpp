@@ -1,8 +1,6 @@
 #include "Material.h"
 
-
-void Material::upload()
-{
+ void Material::upload() {
 	glMaterialfv(face, GL_AMBIENT, value_ptr(ambient));
 	glMaterialfv(face, GL_DIFFUSE, value_ptr(diffuse));
 	glMaterialfv(face, GL_SPECULAR, value_ptr(specular));
