@@ -265,6 +265,9 @@ void IG1App::key(unsigned char key, int x, int y)
 	case '4':
 		mScene->changeScene(4);
 		break;
+	case '5':
+		mScene->changeScene(5);
+		break;
 	case 'p':
 		if (m2Scenes) {
 			if (mCoord.x >= (mWinW / 2)) {

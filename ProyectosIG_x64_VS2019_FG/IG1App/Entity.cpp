@@ -502,9 +502,9 @@ CompoundEntity::~CompoundEntity(){
 }
 
 void CompoundEntity::render(glm::dmat4 const& modelViewMat) const {
-	for (Entidad* ae : gObjects) ae->render(modelViewMat);
+	for (Entidad* ae : gObjects) ae->render(modelViewMat * modelMat());
 
-	for (Entidad* ae : gObjectsTranslucid) ae->render(modelViewMat);
+	for (Entidad* ae : gObjectsTranslucid) ae->render(modelViewMat * modelMat());
 }
 
 TIE::TIE(Texture* t, GLdouble size){
@@ -625,7 +625,7 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 {
 	glEnable(GL_COLOR_MATERIAL);
 
-	glColor3f(0.15, 0.28, 0.59);
+	glColor3f(mColor.r, mColor.g, mColor.b);
 
 	//glLineWidth(4);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
