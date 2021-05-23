@@ -32,12 +32,17 @@ void Scene::init(){
 
 		float radius = 100.0;
 		Esfera* esfera = new Esfera(radius, 50, 50);
-		gObjects.push_back(new Esfera(radius,50,50));
+		Material* m = new Material();
+		m->setCopper();
+		esfera->setMaterial(m);
+		gObjects.push_back(esfera);
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), glm::dvec3(0, 0, radius * 2)));
+		
 		
 		Sphere* sphere = new Sphere(radius);
 		gObjects.push_back(sphere);
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), glm::dvec3(radius * 2, 0, 0)));
+
 		//Cambiar el color
 		//Cambiar la posicion desde fuera
 		//Que no haya dependencia de movimiento

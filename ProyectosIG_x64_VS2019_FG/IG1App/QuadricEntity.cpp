@@ -19,6 +19,7 @@ void Sphere::render(glm::dmat4 const& modelViewMat) const {
 	gluSphere(q, r, 50, 50);
 	// Aquí se debe recuperar el color:
 	glColor3f(1.0, 1.0, 1.0);
+	glDisable(GL_COLOR_MATERIAL);
 }
 
 Cylinder::Cylinder(GLdouble rs, GLdouble ri, GLdouble hei) { rS = rs; rI = ri; h = hei; }

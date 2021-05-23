@@ -629,8 +629,12 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 {
 	if (material != nullptr) {
 		
-		//material->upload();
-
+		glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT, GL_AMBIENT);
+		material->upload();
+		mMesh->render();
+		glDisable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 	}
 	else {
 		glEnable(GL_COLOR_MATERIAL);
@@ -746,3 +750,4 @@ void GridCube::setTextures(Texture* top_, Texture* side_){
 	top = top_;
 	side = side_;
 }
+
