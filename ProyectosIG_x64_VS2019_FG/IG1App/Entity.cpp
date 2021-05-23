@@ -16,15 +16,6 @@ void Abs_Entity::upload(dmat4 const& modelViewMat) const
 	glLoadMatrixd(value_ptr(modelViewMat));  // transfers modelView matrix to the GPU
 }
 //-------------------------------------------------------------------------
-class EntityWithMaterial : public Abs_Entity {
-public:
-	EntityWithMaterial() : Abs_Entity() { };
-	virtual ~EntityWithMaterial() { };
-	void setMaterial(Material* matl) { material = matl; };
-protected:
-	Material* material = nullptr;
-};
-//-------------------------------------------------------------------------
 
 EjesRGB::EjesRGB(GLdouble l): Abs_Entity()
 {
@@ -638,6 +629,8 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const
 {
 	if (material != nullptr) {
 		
+		//material->upload();
+
 	}
 	else {
 		glEnable(GL_COLOR_MATERIAL);

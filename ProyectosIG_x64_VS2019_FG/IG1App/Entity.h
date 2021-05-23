@@ -9,6 +9,7 @@
 #include "IndexMesh.h"
 #include "Texture.h"
 #include "CheckML.h"
+#include "Material.h"
 #include "EntityWithIndexMesh.h"
 #include "MbR.h"
 
