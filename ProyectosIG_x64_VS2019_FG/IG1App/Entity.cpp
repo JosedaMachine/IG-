@@ -636,22 +636,27 @@ Esfera::~Esfera()
 
 void Esfera::render(glm::dmat4 const& modelViewMat) const
 {
-	glEnable(GL_COLOR_MATERIAL);
+	if (material != nullptr) {
+		
+	}
+	else {
+		glEnable(GL_COLOR_MATERIAL);
 
-	glColor3f(mColor.r, mColor.g, mColor.b);
+		glColor3f(mColor.r, mColor.g, mColor.b);
 
-	//glLineWidth(4);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
-	upload(aMat);
-	mMesh->render();
+		//glLineWidth(4);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		mMesh->render();
 
-	//glLineWidth(1);
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		//glLineWidth(1);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	glColor3f(1.0, 1.0, 1.0);
+		glColor3f(1.0, 1.0, 1.0);
 
-	glDisable(GL_COLOR_MATERIAL);
+		glDisable(GL_COLOR_MATERIAL);
+	}
 }
 
 Grid::Grid(GLdouble r, GLint nDiv) {

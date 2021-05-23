@@ -20,7 +20,7 @@ using namespace glm;
 class Abs_Entity : public Entidad  // abstract class
 {
 public:
-	Abs_Entity(): mModelMat(1.0) {};  // 4x4 identity matrix
+	Abs_Entity() : mModelMat(1.0) {};  // 4x4 identity matrix
 	virtual ~Abs_Entity() {};
 
 	Abs_Entity(const Abs_Entity& e) = delete;  // no copy constructor
@@ -47,15 +47,23 @@ protected:
 	glm::dmat4 mModelMat;    // modeling matrix //rotaciones, escalas, etc
 	glm::dvec4 mColor;
 	Texture* mTexture = nullptr;
-	
+
 	// transfers modelViewMat to the GPU
-	virtual void upload(glm::dmat4 const& mModelViewMat) const; 
+	virtual void upload(glm::dmat4 const& mModelViewMat) const;
 };
 //-----------------------------------------------------------
-
+class EntityWithMaterial : public Abs_Entity {
+public:
+	EntityWithMaterial() : Abs_Entity() { };
+	virtual ~EntityWithMaterial() { };
+	void setMaterial(Material* matl) { material = matl; };
+protected:
+	Material* material = nullptr;
+};
+//-----------------------------------------------------------
 class CompoundEntity : public Abs_Entity {
 public:
-	CompoundEntity(){};
+	CompoundEntity() {};
 	~CompoundEntity();
 
 	void addEntity(Entidad* ae);
@@ -73,13 +81,13 @@ public:
 	~TIE();
 
 	virtual void render(glm::dmat4 const& modelViewMat) const;
-	
+
 private:
 
 };
 //-------------------------------------------------------------------------
 
-class EjesRGB : public Abs_Entity 
+class EjesRGB : public Abs_Entity
 {
 public:
 	explicit EjesRGB(GLdouble l);
@@ -181,7 +189,7 @@ public:
 	virtual void update();
 
 private:
-	
+
 };
 
 class Foto : public Abs_Entity
@@ -235,7 +243,7 @@ public:
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
-class ConeMbR: public Abs_Entity
+class ConeMbR : public Abs_Entity
 {
 public:
 	explicit ConeMbR(GLdouble h, GLdouble r, GLuint n);
@@ -243,7 +251,7 @@ public:
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
-class Esfera : public Abs_Entity
+class Esfera : public EntityWithMaterial
 {
 public:
 	explicit Esfera(GLdouble r, GLdouble p, GLuint m);
@@ -269,7 +277,7 @@ public:
 	void setTextures(Texture* top, Texture* side);
 private:
 
-	Texture* top, *side;
+	Texture* top, * side;
 };
 //-------------------------------------------------------------------------
 
