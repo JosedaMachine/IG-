@@ -27,6 +27,7 @@ void IG1App::run()   // enters the main event processing loop
 	if (mWinId == 0) { // if not initialized
 		init();       // initialize the application 
 		glutMainLoop();      // enters the main event processing loop 
+		return;
 		mStop = true;  // main loop has stopped  
 	}
 }
@@ -49,12 +50,11 @@ void IG1App::init()
 	mCamera->set2D();
 	mCamera1->set2D();
 
-	mScene1->setMid(1);
+	mScene1->setMid(0);
 	mScene->setMid(0);
 
 	mScene->init();
 	mScene1->init();
-	
 
 	GLuintmLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
 }
@@ -264,6 +264,9 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case '4':
 		mScene->changeScene(4);
+		break;
+	case '5':
+		mScene->changeScene(5);
 		break;
 	case 'p':
 		if (m2Scenes) {

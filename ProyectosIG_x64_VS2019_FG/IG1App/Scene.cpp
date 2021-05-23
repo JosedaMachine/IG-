@@ -14,7 +14,7 @@ void Scene::init(){
 
 	// Graphics objects (entities) of the scene
 	if (mid == 0) {
-		TIE* tie = new TIE(gTextures.back());
+		TIE* tie = new TIE(gTextures[6]);
 		gObjects.push_back(tie);
 		gObjects.push_back(new EjesRGB(400.0));
 	}
@@ -63,6 +63,27 @@ void Scene::init(){
 
 		//gObjects.back()->setTexture(gTextures.back());
 	}
+	else if (mid == 5) {
+		gObjects.push_back(new Esfera(10000, 50, 50));
+		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, -10500, 0)));
+		gObjects.back()->setColor(dvec4(0.20, 1, 0.92, 1));
+
+		int numTies = 3;
+		std::vector<TIE*> ties;
+
+		for (int i = 0; i < numTies; i++) {
+			TIE* t = new TIE(gTextures[6]);
+
+			gObjects.push_back(t);
+			ties.push_back(t);
+		}
+		ties[0]->setModelMat(translate(dmat4(1), dvec3(1250, 500, 0)));
+		ties[0]->setModelMat(rotate(ties[0]->modelMat(), radians(300.0), dvec3(0.0, 1.0, 0.0)));
+
+		ties[2]->setModelMat(translate(dmat4(1), dvec3(0, 500, 1250)));
+
+
+	}
 }
 
 void Scene::chargeTextures(){
@@ -92,7 +113,7 @@ void Scene::chargeTextures(){
 	gTextures.push_back(t);
 
 	t = new Texture();
-	t->load("../Bmps/noche.bmp", 255 / 1.5);
+	t->load("../Bmps/noche.bmp", 255 / 1.2);
 	gTextures.push_back(t);
 
 

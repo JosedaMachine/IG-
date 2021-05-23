@@ -1,11 +1,10 @@
 ﻿#include "Entity.h"
 #include "QuadricEntity.h"
 
-
-
 #include <gtc/matrix_transform.hpp>  
 #include <gtc/type_ptr.hpp>
 #include "IG1App.h"
+#include "Material.h"
 
 using namespace glm;
 
@@ -17,6 +16,14 @@ void Abs_Entity::upload(dmat4 const& modelViewMat) const
 	glLoadMatrixd(value_ptr(modelViewMat));  // transfers modelView matrix to the GPU
 }
 //-------------------------------------------------------------------------
+class EntityWithMaterial : public Abs_Entity {
+public:
+	EntityWithMaterial() : Abs_Entity() { };
+	virtual ~EntityWithMaterial() { };
+	void setMaterial(Material* matl) { material = matl; };
+protected:
+	Material* material = nullptr;
+};
 //-------------------------------------------------------------------------
 
 EjesRGB::EjesRGB(GLdouble l): Abs_Entity()
@@ -188,8 +195,7 @@ Estrella3D::Estrella3D(GLdouble re, GLuint np, GLdouble h) {
 	angY = 0;
 }
 
-Estrella3D::~Estrella3D()
-{
+Estrella3D::~Estrella3D() {
 	delete mMesh; mMesh = nullptr;
 }
 
@@ -352,6 +358,7 @@ Glass::Glass(GLdouble w, GLdouble h){
 
 Glass::~Glass()
 {
+	delete mMesh; mMesh = nullptr;
 }
 
 void Glass::render(glm::dmat4 const& modelViewMat) const {
@@ -460,7 +467,7 @@ AnilloCuadrado::AnilloCuadrado()
 
 AnilloCuadrado::~AnilloCuadrado()
 {
-
+	delete mMesh; mMesh = nullptr;
 }
 
 void AnilloCuadrado::render(glm::dmat4 const& modelViewMat) const
@@ -479,7 +486,7 @@ CuboConTapas::CuboConTapas(GLdouble l)
 
 CuboConTapas::~CuboConTapas()
 {
-
+	delete mMesh; mMesh = nullptr;
 }
 
 void CuboConTapas::render(glm::dmat4 const& modelViewMat) const{
@@ -500,13 +507,15 @@ void CompoundEntity::addEntity(Entidad* ae){
 
 CompoundEntity::~CompoundEntity(){
 	for (Entidad* ae : gObjects) delete ae;
+	for (Entidad* ae : gObjectsTranslucid) delete ae;
 	gObjects.clear();
+	gObjectsTranslucid.clear();
 }
 
 void CompoundEntity::render(glm::dmat4 const& modelViewMat) const {
-	for (Entidad* ae : gObjects) ae->render(modelViewMat);
+	for (Entidad* ae : gObjects) ae->render(modelViewMat * modelMat());
 
-	for (Entidad* ae : gObjectsTranslucid) ae->render(modelViewMat);
+	for (Entidad* ae : gObjectsTranslucid) ae->render(modelViewMat * modelMat());
 }
 
 TIE::TIE(Texture* t, GLdouble size){
@@ -565,6 +574,7 @@ TIE::TIE(Texture* t, GLdouble size){
 }
 
 TIE::~TIE(){
+	int n = 0;
 }
 
 void TIE::render(glm::dmat4 const& modelViewMat) const{
@@ -588,6 +598,7 @@ ConeMbR::ConeMbR(GLdouble h, GLdouble r, GLuint n){
 
 ConeMbR::~ConeMbR()
 {
+	delete mMesh; mMesh = nullptr;
 }
 
 void ConeMbR::render(glm::dmat4 const& modelViewMat) const{
@@ -616,19 +627,18 @@ Esfera::Esfera(GLdouble r, GLdouble p, GLuint m){
 	}
 
 	mMesh = MbR::generaIndexMeshByRevolution(p, m, perfil);
-
 }
 
 Esfera::~Esfera()
 {
-
+	delete mMesh; mMesh = nullptr;
 }
 
 void Esfera::render(glm::dmat4 const& modelViewMat) const
 {
 	glEnable(GL_COLOR_MATERIAL);
 
-	glColor3f(0.15, 0.28, 0.59);
+	glColor3f(mColor.r, mColor.g, mColor.b);
 
 	//glLineWidth(4);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -650,6 +660,7 @@ Grid::Grid(GLdouble r, GLint nDiv) {
 }
 
 Grid::~Grid() {
+	delete mMesh; mMesh = nullptr;
 }
 
 void Grid::render(glm::dmat4 const& modelViewMat) const {
@@ -681,41 +692,52 @@ GridCube::GridCube(GLdouble r, GLint nDiv, Texture* up, Texture* sides){
 	//top
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(top);
-	gObjects.back()->setModelMat(translate(gObjects.back()->modelMat(), dvec3(0, r/2, 0)));
-	////sindrome de down
+	gObjects.back()->setModelMat(translate(gObjects.back()->modelMat(), dvec3(0, r / 2, 0)));
+	//Down
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(top);
-	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, - r / 2, 0)));
+	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, -r / 2, 0)));
 	////N
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(side);
 	//Si lo roto, rotan tambien sus ejes. Por lo tanto, si hago una translacion en Y, se va a aplicar sobre su eje Y , que correspondria a X o Z en funcion de como se haya rotado
 	//Por eso es mejor, primero Translate y luego rotate (usando en la segunda el modelMat);
 	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(r / 2, 0, 0)));
-	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0,0.0)));
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0, 0.0)));
 	//Ahora roto en Z porque ahora la Z es su Y (hemos rotado en X 90 grados, luego el resto de ejes han rotado 90 grados)
 	//Como hacer para que el sistema de coordenadas sea global y no local??????????????
-	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(0.0, 0.0,1.0)));
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(0.0, 0.0, 1.0)));
+	//Para que las piedras vayan hacia abajo
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(0.0, 1.0, 0.0)));
+
 	////W
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(side);
 	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 0, r / 2)));
-	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0,0.0)));
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0, 0.0)));
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(0.0, 1.0, 0.0)));
 	//gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0,0.0)));
+	// 
+
 	////E
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(side);
 	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 0, -r / 2)));
 	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0, 0.0)));
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(0.0, 1.0, 0.0)));
+
+
 	////S
 	gObjects.push_back(new Grid(r, nDiv));
 	gObjects.back()->setTexture(side);
 	gObjects.back()->setModelMat(translate(dmat4(1), dvec3(-r / 2, 0, 0)));
 	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(1.0, 0.0, 0.0)));
 	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(0.0, 0.0, 1.0)));
+	gObjects.back()->setModelMat(rotate(gObjects.back()->modelMat(), radians(90.0), dvec3(0.0, 1.0, 0.0)));
 }
 
 GridCube::~GridCube(){
+	delete mMesh; mMesh = nullptr;
 }
 
 void GridCube::render(glm::dmat4 const& modelViewMat) const{
