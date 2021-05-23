@@ -231,24 +231,29 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'j':
 		m2Vistas = !m2Vistas;
-
 		if (m2Scenes)m2Scenes = false;
 		break;
-	case 's':
+	case 'x':
 		//Rotar en el eje vertical
 		mCamera->orbit(0,-40);
 		break;
-	case 'w':
+	case 's':
 		//Rotar en el eje vertical
 		mCamera->orbit(0,40);
 		break;
-	case 'd':
+	case 'c':
 		//Rotar en el eje hortizontal
 		mCamera->orbit(1,0);
 		break;
-	case 'a':
+	case 'z':
 		//Rotar en el eje hortizontal
 		mCamera->orbit(-1,0);
+		break;
+	case 'q':
+		mScene->enableDirLight();
+		break;
+	case 'w':
+		mScene->disableDirLight();
 		break;
 	case '0':
 		mScene->changeScene(0);

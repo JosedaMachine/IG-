@@ -6,7 +6,6 @@
 
 using namespace glm;
 //-------------------------------------------------------------------------
-
 void Scene::init(){
 	setGL();  // OpenGL settings
 					
@@ -91,6 +90,13 @@ void Scene::init(){
 	}
 }
 
+void Scene::enableDirLight(){
+	dirLight->enable();
+}
+void Scene::disableDirLight(){
+	dirLight->disable();
+}
+//-------------------------------------------------------------------------
 void Scene::chargeTextures(){
 	Texture* t = new Texture();
 	t->load("../Bmps/baldosaC.bmp");
@@ -125,7 +131,6 @@ void Scene::chargeTextures(){
 	
 
 }
-
 //-------------------------------------------------------------------------
 void Scene::free()
 { // release memory and resources   
@@ -141,7 +146,7 @@ void Scene::free()
 	for (Texture* el : gTextures){
 		delete el;  el = nullptr;
 	}
-
+	delete dirLight;
 	gTextures.clear();
 	gObjects.clear();
 	gObjectsTrans.clear();
@@ -154,6 +159,8 @@ void Scene::setGL()
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D);
 
+	dirLight = new DirLight();
+
 }
 //-------------------------------------------------------------------------
 void Scene::resetGL()
@@ -162,7 +169,7 @@ void Scene::resetGL()
 	glDisable(GL_DEPTH_TEST);  // disable Depth test 	
 	glDisable(GL_TEXTURE_2D);
 }
-
+//-------------------------------------------------------------------------
 void Scene::sceneDirLight(Camera const& cam) const
 {
 	glEnable(GL_LIGHTING);
@@ -179,9 +186,11 @@ void Scene::sceneDirLight(Camera const& cam) const
 	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
 }
 //-------------------------------------------------------------------------
-
 void Scene::render(Camera const& cam) const{
+	//Ya no se renderiza la escena así. Sino con el atributo dirLight, bastante intuitivo eh Segundo
+
 	sceneDirLight(cam);
+	dirLight->upload(cam.viewMat());
 
 	cam.upload(); //viewport proyect
 
@@ -189,18 +198,17 @@ void Scene::render(Camera const& cam) const{
 		el->render(cam.viewMat());	//cada elemento renderiza
 	}
 	
-	for (Entidad* cosa : gObjectsTrans)
-	{
+	for (Entidad* cosa : gObjectsTrans){
 		cosa->render(cam.viewMat());	//cada elemento renderiza
 	}
 }
-
+//-------------------------------------------------------------------------
 void Scene::update() {
 	for (auto& o : gObjects) {
 		o->update();
 	}
 }
-
+//-------------------------------------------------------------------------
 void Scene::changeScene(int id) {
 	resetGL();
 	free();

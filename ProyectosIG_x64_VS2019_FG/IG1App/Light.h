@@ -25,14 +25,16 @@ public:
 	void setDiff(glm::fvec4 amb);
 	void setSpec(glm::fvec4 amb);
 	// Método abstracto
-	virtual void upload(glm::dmat4 const& modelViewMat) const = 0;
+	virtual void upload(glm::dmat4 const& modelViewMat) = 0;
+	//virtual void upload(glm::dmat4 const& modelViewMat) const = 0;
 };
 
 //-------------------------------------------------------------
 
 class DirLight : public Light {
 public:
-	virtual void upload(glm::dmat4 const& modelViewMat) const ;
+	//virtual void upload(glm::dmat4 const& modelViewMat) const ;
+	virtual void upload(glm::dmat4 const& modelViewMat) ;
 	void setPosDir(glm::fvec3 dir);
 };
 
@@ -42,7 +44,8 @@ protected:
 	// Factores de atenuación 
 	GLfloat kc = 1, kl = 0, kq = 0;
 public:
-	virtual void upload(glm::dmat4 const& modelViewMat) const;
+	virtual void upload(glm::dmat4 const& modelViewMat);
+	//virtual void upload(glm::dmat4 const& modelViewMat) const;
 	void setPosDir(glm::fvec3 dir);
 	void setAtte(GLfloat kc, GLfloat kl, GLfloat kq);
 };
@@ -58,7 +61,8 @@ public:
 		: PosLight() {
 		posDir = glm::fvec4(pos, 1.0);
 	};
-	virtual void upload(glm::dmat4 const& modelViewMat) const;
+	virtual void upload(glm::dmat4 const& modelViewMat);
+	//virtual void upload(glm::dmat4 const& modelViewMat) const;
 	void setSpot(glm::fvec3 dir, GLfloat cf, GLfloat e);
 };
 

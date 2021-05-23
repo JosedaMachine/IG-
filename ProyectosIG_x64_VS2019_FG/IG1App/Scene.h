@@ -34,6 +34,10 @@ public:
 	void set2D(bool dimension) { es2D = dimension; }
 	bool get2D() { return es2D; }
 
+	void enableDirLight();
+
+	void disableDirLight();
+
 	void chargeTextures();
 	
 protected:

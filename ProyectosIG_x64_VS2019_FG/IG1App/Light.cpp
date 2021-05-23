@@ -46,12 +46,12 @@ void Light::setSpec(glm::fvec4 amb)
 
 //----------------------------------------------
 
-void DirLight::upload(glm::dmat4 const& modelViewMat) const
+void DirLight::upload(glm::dmat4 const& modelViewMat)
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(modelViewMat));
 	glLightfv(id, GL_POSITION, value_ptr(posDir));
-	//uploadL();
+	uploadL();
 }
 
 void DirLight::setPosDir(glm::fvec3 dir) {
@@ -59,7 +59,7 @@ void DirLight::setPosDir(glm::fvec3 dir) {
 }
 
 //----------------------------------------------
-void PosLight::upload(glm::dmat4 const& modelViewMat) const
+void PosLight::upload(glm::dmat4 const& modelViewMat)
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(modelViewMat));
@@ -67,7 +67,7 @@ void PosLight::upload(glm::dmat4 const& modelViewMat) const
 	glLightf(id, GL_CONSTANT_ATTENUATION, kc);
 	glLightf(id, GL_LINEAR_ATTENUATION, kl);
 	glLightf(id, GL_QUADRATIC_ATTENUATION, kq);
-	//uploadL();
+	uploadL();
 }
 
 void PosLight::setPosDir(glm::fvec3 dir)
@@ -84,12 +84,16 @@ void PosLight::setAtte(GLfloat kc_, GLfloat kl_, GLfloat kq_)
 
 //----------------------------------------------
 
-void SpotLight::upload(glm::dmat4 const& modelViewMat) const
+void SpotLight::upload(glm::dmat4 const& modelViewMat)
 {
 	PosLight::upload(modelViewMat);
 	glLightfv(id, GL_SPOT_DIRECTION, value_ptr(direction));
 	glLightf(id, GL_SPOT_CUTOFF, cutoff);
 	glLightf(id, GL_SPOT_EXPONENT, exp);
+
+
+	//Por qué no se hace upload??????
+	//uploadL();
 }
 
 // Ojo al 0.0: la dirección de emisión del foco es vector
