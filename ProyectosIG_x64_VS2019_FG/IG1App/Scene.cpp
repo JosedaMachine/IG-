@@ -43,6 +43,16 @@ void Scene::init(){
 		//Que no haya dependencia de movimiento
 	}
 	else if ( mid == 4){
+		Texture* t = new Texture();
+		t->load("../Bmps/checker.bmp", 255);
+		gTextures.push_back(t);
+
+
+		t = new Texture();
+		t->load("../Bmps/stones.bmp", 255);
+		gTextures.push_back(t);
+
+
 		gObjects.push_back(new EjesRGB(400.0));
 
 		GridCube* cubito = new GridCube(200.0f, 2, gTextures[7], gTextures.back());
@@ -85,13 +95,9 @@ void Scene::chargeTextures(){
 	t->load("../Bmps/noche.bmp", 255 / 1.5);
 	gTextures.push_back(t);
 
-	t = new Texture();
-	t->load("../Bmps/checker.bmp", 255);
-	gTextures.push_back(t);
+
 	
-	t = new Texture();
-	t->load("../Bmps/stones.bmp", 255);
-	gTextures.push_back(t);
+
 }
 
 //-------------------------------------------------------------------------
