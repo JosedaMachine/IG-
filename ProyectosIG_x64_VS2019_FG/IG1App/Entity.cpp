@@ -625,16 +625,14 @@ Esfera::~Esfera()
 	delete mMesh; mMesh = nullptr;
 }
 
-void Esfera::render(glm::dmat4 const& modelViewMat) const
-{
+void Esfera::render(glm::dmat4 const& modelViewMat) const {
 	if (material != nullptr) {
-		
 		glEnable(GL_COLOR_MATERIAL);
-		glColorMaterial(GL_FRONT, GL_AMBIENT);
+		glColorMaterial(GL_FRONT, GL_SPECULAR);
 		material->upload();
 		mMesh->render();
-		glDisable(GL_COLOR_MATERIAL);
 		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+		glDisable(GL_COLOR_MATERIAL);
 	}
 	else {
 		glEnable(GL_COLOR_MATERIAL);

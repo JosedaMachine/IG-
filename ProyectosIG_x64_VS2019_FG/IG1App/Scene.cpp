@@ -162,6 +162,7 @@ void Scene::resetGL()
 	glDisable(GL_DEPTH_TEST);  // disable Depth test 	
 	glDisable(GL_TEXTURE_2D);
 }
+
 void Scene::sceneDirLight(Camera const& cam) const
 {
 	glEnable(GL_LIGHTING);

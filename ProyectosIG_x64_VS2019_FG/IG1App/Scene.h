@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Entity.h"
 #include "Texture.h"
+#include "Light.h"
 
 #include <vector>
 
@@ -47,6 +48,7 @@ protected:
 	std::vector<Texture*> gTextures;
 
 	int mid = 0;
+	DirLight* dirLight;
 	bool es2D = true;
 };
 //-------------------------------------------------------------------------
