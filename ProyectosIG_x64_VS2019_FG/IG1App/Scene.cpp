@@ -27,7 +27,7 @@ void Scene::init(){
 		gObjects.push_back(new CuboConTapas(100));
 	}
 	else if (mid == 3) {
-		gObjects.push_back(new EjesRGB(400.0));
+		//gObjects.push_back(new EjesRGB(400.0));
 
 		float radius = 100.0;
 		Esfera* esfera = new Esfera(radius, 50, 50);
