@@ -41,10 +41,13 @@ public:
 
 	void disableDirLight();
 
+	void disablePosLight();
+
+	void enablePosLight();
+
 	void chargeTextures();
 
 	void brightScene();
-
 
 	void darkScene();
 

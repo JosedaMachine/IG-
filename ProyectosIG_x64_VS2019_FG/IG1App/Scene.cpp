@@ -97,6 +97,15 @@ void Scene::enableDirLight() {
 void Scene::disableDirLight() {
 	dirLight->disable();
 }
+
+void Scene::disablePosLight()
+{
+	posLight->disable();
+}
+void Scene::enablePosLight()
+{
+	posLight->enable();
+}
 //-------------------------------------------------------------------------
 void Scene::chargeTextures() {
 	Texture* t = new Texture();
