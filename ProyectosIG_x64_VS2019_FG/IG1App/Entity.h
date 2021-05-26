@@ -12,6 +12,7 @@
 #include "Material.h"
 #include "EntityWithIndexMesh.h"
 #include "MbR.h"
+#include "Light.h"
 
 class IG1App;
 
@@ -66,7 +67,7 @@ protected:
 class CompoundEntity : public Abs_Entity {
 public:
 	CompoundEntity() {};
-	~CompoundEntity();
+	virtual ~CompoundEntity();
 
 	void addEntity(Entidad* ae);
 
@@ -79,20 +80,20 @@ protected:
 //-------------------------------------------------------------------------
 class TIE : public CompoundEntity {
 public:
-	explicit TIE(Texture* t, GLdouble size = 1.0);
-	~TIE();
-
+	explicit TIE(Texture* t, GLdouble size = 1.0, bool hasLight = false);
+	virtual ~TIE();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
+	void turnLight(bool turn);
 
+	SpotLight* getSpotLight() { return light; }
 private:
-
+	SpotLight* light = nullptr;
 };
 //-------------------------------------------------------------------------
 class TIE_FORMATION : public CompoundEntity {
 public:
-	explicit TIE_FORMATION(glm::dvec3 pos, glm::dvec3 rotation, Texture* t, GLdouble size = 1.0);
-	~TIE_FORMATION();
-
+	explicit TIE_FORMATION(Texture* t, GLdouble size = 1.0);
+	virtual ~TIE_FORMATION();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 
 private:
@@ -104,7 +105,7 @@ class EjesRGB : public Abs_Entity
 {
 public:
 	explicit EjesRGB(GLdouble l);
-	~EjesRGB();
+	virtual ~EjesRGB();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
@@ -113,7 +114,7 @@ class TrianguloRGB : public Abs_Entity
 {
 public:
 	explicit TrianguloRGB(GLdouble rd, float radius);
-	~TrianguloRGB();
+	virtual ~TrianguloRGB();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 
 	void update();
@@ -129,7 +130,7 @@ class Poligono : public Abs_Entity
 {
 public:
 	explicit Poligono(GLuint numL, GLdouble rd);
-	~Poligono();
+	virtual ~Poligono();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
@@ -137,7 +138,7 @@ class PoligonoText : public Abs_Entity
 {
 public:
 	explicit PoligonoText(GLuint numL, GLdouble rd);
-	~PoligonoText();
+	virtual ~PoligonoText();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
@@ -145,7 +146,7 @@ class SerPinspi : public Abs_Entity
 {
 public:
 	explicit SerPinspi(GLuint rd, GLdouble numP);
-	~SerPinspi();
+	virtual ~SerPinspi();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
@@ -153,7 +154,7 @@ class Rectangulo : public Abs_Entity
 {
 public:
 	explicit Rectangulo(GLdouble w, GLdouble h);
-	~Rectangulo();
+	virtual ~Rectangulo();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
@@ -161,7 +162,7 @@ class RectanguloRGB : public Abs_Entity
 {
 public:
 	explicit RectanguloRGB(GLdouble w, GLdouble h);
-	~RectanguloRGB();
+	virtual ~RectanguloRGB();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
@@ -169,7 +170,7 @@ class Estrella3D : public Abs_Entity
 {
 public:
 	explicit Estrella3D(GLdouble re, GLuint np, GLdouble h);
-	~Estrella3D();
+	virtual ~Estrella3D();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 
 	virtual void update();
@@ -183,7 +184,7 @@ class Caja : public Abs_Entity
 {
 public:
 	explicit Caja(GLdouble ld, Texture* interi);
-	~Caja();
+	virtual ~Caja();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 
 	virtual void update();
@@ -196,7 +197,7 @@ class Suelo : public Abs_Entity
 {
 public:
 	explicit Suelo(GLdouble w, GLdouble h, GLuint rw, GLuint  rh);
-	~Suelo();
+	virtual ~Suelo();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 
 	virtual void update();
@@ -209,7 +210,7 @@ class Foto : public Abs_Entity
 {
 public:
 	explicit Foto(GLsizei width, GLsizei height, GLuint buffer);
-	~Foto();
+	virtual ~Foto();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 
 	virtual void update();
@@ -222,9 +223,8 @@ class Glass : public Abs_Entity
 {
 public:
 	explicit Glass(GLdouble w, GLdouble h);
-	~Glass();
+	virtual ~Glass();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
-
 	virtual void update();
 
 private:
@@ -244,7 +244,7 @@ class AnilloCuadrado : public Abs_Entity
 {
 public:
 	explicit AnilloCuadrado();
-	~AnilloCuadrado();
+	virtual ~AnilloCuadrado();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
@@ -252,7 +252,7 @@ class CuboConTapas : public EntityWithIndexMesh
 {
 public:
 	explicit CuboConTapas(GLdouble l);
-	~CuboConTapas();
+	virtual ~CuboConTapas();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
@@ -260,7 +260,7 @@ class ConeMbR : public Abs_Entity
 {
 public:
 	explicit ConeMbR(GLdouble h, GLdouble r, GLuint n);
-	~ConeMbR();
+	virtual ~ConeMbR();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
@@ -268,7 +268,7 @@ class Esfera : public EntityWithMaterial
 {
 public:
 	explicit Esfera(GLdouble r, GLdouble p, GLuint m);
-	~Esfera();
+	virtual ~Esfera();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
@@ -276,7 +276,7 @@ class Grid : public Abs_Entity
 {
 public:
 	explicit Grid(GLdouble r, GLint nDiv);
-	~Grid();
+	virtual ~Grid();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
 
@@ -284,12 +284,11 @@ class GridCube : public CompoundEntity
 {
 public:
 	explicit GridCube(GLdouble r, GLint nDiv, Texture* top_, Texture* side_);
-	~GridCube();
+	virtual ~GridCube();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 
 	void setTextures(Texture* top, Texture* side);
 private:
-
 	Texture* top, * side;
 };
 //-------------------------------------------------------------------------

@@ -31,10 +31,11 @@ void Scene::createLights() {
 	posLight->setAmb({ 0.2, 0.2, 0, 1 });
 	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
 	posLight->setPosDir({ 115, 115, 0 });
-
 	posLight->disable();
 
+
 	spotLight = new SpotLight();
+	spotLight->disable();
 }
 //-------------------------------------------------------------------------
 Scene::~Scene() {
@@ -114,7 +115,7 @@ void Scene::init() {
 	else if (mid == 5) {
 		gObjects.push_back(new EjesRGB(400.0));
 
-		float radius = 1000;
+		float radius = 2500;
 
 		if (posLight)
 			posLight->setPosDir({ radius + 30, radius + 30, 0 });
@@ -132,11 +133,11 @@ void Scene::init() {
 		m->setGold();
 		esf->setMaterial(m);
 		gObjects.push_back(esf);										
-		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(-radius, -radius, -radius))); /*Y = -10500*/
+		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, -radius, 0))); /*Y = -10500*/
 		gObjects.back()->setColor(dvec4(0.20, 1, 0.92, 1));
 		
-	/*	TIE_FORMATION* tieFor = new TIE_FORMATION(glm::dvec3(-radius,0, -radius), glm::dvec3(0, 0, 0), gTextures[6]);
-		gObjects.push_back(tieFor);*/
+		TIE_FORMATION* tieFor = new TIE_FORMATION(gTextures[6], 1);
+		gObjects.push_back(tieFor);
 	}
 }
 //-------------------------------------------------------------------------

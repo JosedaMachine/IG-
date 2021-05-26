@@ -495,12 +495,22 @@ void CompoundEntity::render(glm::dmat4 const& modelViewMat) const {
 	for (Entidad* ae : gObjectsTranslucid) ae->render(modelViewMat * modelMat());
 }
 //-------------------------------------------------------------------------
-TIE::TIE(Texture* t, GLdouble size){
+TIE::TIE(Texture* t, GLdouble size, bool hasLight){
+
 	float radioDiscoCono = 100 * size;
 	//Cuerpo
 	Sphere* esfera = new Sphere(130.0 * size);
 	esfera->setColor({ 0.15, 0.28, 0.59 ,1});
 	gObjects.push_back(esfera);
+
+	if (hasLight) {
+		light = new SpotLight();
+		//light->setDiff({ 0.01, 0.01, 0.01, 1 });
+		//light->setAmb({ 0, 0, 0, 1 });
+		//light->setSpec({ 0.01, 0.01, 0.01, 1 });
+		light->setPosDir({ 0, 0, 0 });
+		light->setSpot(glm::fvec3(0.0, -1.0, 0.0), 10, 80);
+	}
 	//Front
 	Cylinder* cono = new Cylinder(radioDiscoCono, radioDiscoCono, 40.0);
 	glm::dmat4 mAux = cono->modelMat();
@@ -556,11 +566,19 @@ TIE::~TIE(){
 }
 
 void TIE::render(glm::dmat4 const& modelViewMat) const{
-	/*dmat4 aMat = modelViewMat * mModelMat;
-	upload(aMat);*/
-	//CompoundEntity::render(aMat);
-	// 
+	//Aqui pillamos la matriz de escala/posicion/rotacion y actualizamos la pos de luz
+	dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+	upload(aMat);
+	if (light) light->upload(aMat);
 	CompoundEntity::render(modelViewMat);
+}
+void TIE::turnLight(bool turn){
+	if (turn){
+		if (light) light->enable();
+	}
+	else{
+		if (light) light->disable();
+	}
 }
 //-------------------------------------------------------------------------
 ConeMbR::ConeMbR(GLdouble h, GLdouble r, GLuint n){
@@ -738,11 +756,11 @@ void GridCube::setTextures(Texture* top_, Texture* side_){
 	side = side_;
 }
 //-------------------------------------------------------------------------
-TIE_FORMATION::TIE_FORMATION(glm::dvec3 pos, glm::dvec3 rotation, Texture* te,  GLdouble size){
+TIE_FORMATION::TIE_FORMATION(Texture* te,  GLdouble size){
 
 	int numTies = 3;
 	for (int i = 0; i < numTies; i++) {
-		TIE* t = new TIE(te);
+		TIE* t = new TIE(te, size, true);
 		gObjects.push_back(t);
 	}
 
@@ -758,5 +776,8 @@ TIE_FORMATION::~TIE_FORMATION(){
 }
 
 void TIE_FORMATION::render(glm::dmat4 const& modelViewMat) const{
+	//dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+	//upload(aMat);
+
 	CompoundEntity::render(modelViewMat);
 }
