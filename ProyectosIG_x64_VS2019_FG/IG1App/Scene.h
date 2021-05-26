@@ -74,6 +74,7 @@ protected:
 	int mid = 0;
 	DirLight* dirLight;
 	PosLight* posLight;
+	SpotLight* spotLight;
 	bool es2D = true;
 };
 //-------------------------------------------------------------------------

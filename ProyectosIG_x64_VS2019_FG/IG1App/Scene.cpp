@@ -12,6 +12,7 @@ Scene::Scene() {
 
 	dirLight = nullptr;
 	posLight = nullptr;
+	spotLight = nullptr;
 
 	if(!lightOn)
 	 createLights();
@@ -23,20 +24,27 @@ void Scene::createLights() {
 
 	dirLight = new DirLight();
 	dirLight->setPosDir({ 0, 0, -1 });
+	dirLight->disable();
 
 	posLight = new PosLight();
 	posLight->setDiff({ 1, 1, 0, 1 });
 	posLight->setAmb({ 0.2, 0.2, 0, 1 });
 	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
 	posLight->setPosDir({ 115, 115, 0 });
+
+	posLight->disable();
+
+	spotLight = new SpotLight();
 }
 //-------------------------------------------------------------------------
-Scene::~Scene(){
+Scene::~Scene() {
 	free(); resetGL();
 	if (dirLight)
 		delete dirLight;
 	if (posLight)
 		delete posLight;
+	if (spotLight)
+		delete spotLight;
 }
 //-------------------------------------------------------------------------
 void Scene::init() {
@@ -91,8 +99,12 @@ void Scene::init() {
 
 		gObjects.push_back(new EjesRGB(400.0));
 
-		GridCube* cubito = new GridCube(200.0f, 2, gTextures[7], gTextures.back());
+		GridCube* cubito = new GridCube(200.0f, 100, gTextures[7], gTextures.back());
 		gObjects.push_back(cubito);
+		if (spotLight) {
+			spotLight->setPosDir({ 0, 0, -50 });
+			spotLight->setSpot(glm::fvec3(0.0, 0.0, 1.0), 20, 0);
+		}
 
 		//Grid* grilla = new Grid(200, 2);
 		//gObjects.push_back(grilla);
@@ -110,7 +122,12 @@ void Scene::init() {
 		if(dirLight)
 			dirLight->setPosDir({0, 1, 0});
 
-		Esfera* esf = new Esfera(radius, 50, 50);
+		if (spotLight) {
+			spotLight->setPosDir({ -radius, -radius, 50 });
+			spotLight->setSpot(glm::fvec3(0.0, 0.0, -1.0), 75, 0);
+		}
+
+		Esfera* esf = new Esfera(radius, 300, 300);
 		Material* m = new Material();
 		m->setGold();
 		esf->setMaterial(m);
@@ -118,8 +135,8 @@ void Scene::init() {
 		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(-radius, -radius, -radius))); /*Y = -10500*/
 		gObjects.back()->setColor(dvec4(0.20, 1, 0.92, 1));
 		
-		TIE_FORMATION* tieFor = new TIE_FORMATION(glm::dvec3(-radius,0, -radius), glm::dvec3(0, 0, 0), gTextures[6]);
-		gObjects.push_back(tieFor);
+	/*	TIE_FORMATION* tieFor = new TIE_FORMATION(glm::dvec3(-radius,0, -radius), glm::dvec3(0, 0, 0), gTextures[6]);
+		gObjects.push_back(tieFor);*/
 	}
 }
 //-------------------------------------------------------------------------
@@ -146,13 +163,13 @@ void Scene::enablePosLight()
 }
 //-------------------------------------------------------------------------
 void Scene::disableSpotLight() {
-	if (posLight)
-		posLight->disable();
+	if (spotLight)
+		spotLight->disable();
 }
 //-------------------------------------------------------------------------
 void Scene::enableSpotLight() {
-	if (posLight)
-		posLight->enable();
+	if (spotLight)
+		spotLight->enable();
 }
 //-------------------------------------------------------------------------
 void Scene::chargeTextures() {
@@ -266,7 +283,8 @@ void Scene::render(Camera const& cam) const {
 		dirLight->upload(cam.viewMat());
 	if (posLight)
 		posLight->upload(cam.viewMat());
-
+	if (spotLight)
+		spotLight->upload(cam.viewMat());
 	cam.upload(); //viewport proyect
 
 	for (Entidad* el : gObjects) {
