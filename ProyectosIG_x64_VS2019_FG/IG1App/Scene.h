@@ -46,6 +46,10 @@ public:
 
 	void disablePosLight();
 
+	void disableSpotLight();
+
+	void enableSpotLight();
+
 	void enablePosLight();
 
 	void chargeTextures();

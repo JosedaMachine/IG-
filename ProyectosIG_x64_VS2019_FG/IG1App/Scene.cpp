@@ -145,6 +145,16 @@ void Scene::enablePosLight()
 		posLight->enable();
 }
 //-------------------------------------------------------------------------
+void Scene::disableSpotLight() {
+	if (posLight)
+		posLight->disable();
+}
+//-------------------------------------------------------------------------
+void Scene::enableSpotLight() {
+	if (posLight)
+		posLight->enable();
+}
+//-------------------------------------------------------------------------
 void Scene::chargeTextures() {
 	Texture* t = new Texture();
 	t->load("../Bmps/baldosaC.bmp");
