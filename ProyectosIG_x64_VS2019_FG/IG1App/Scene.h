@@ -62,6 +62,7 @@ protected:
 
 	int mid = 0;
 	DirLight* dirLight;
+	PosLight* posLight;
 	bool es2D = true;
 };
 //-------------------------------------------------------------------------

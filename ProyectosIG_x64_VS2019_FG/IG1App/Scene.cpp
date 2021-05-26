@@ -174,7 +174,7 @@ void Scene::setGL()
 	glEnable(GL_TEXTURE_2D);
 
 	dirLight = new DirLight();
-
+	posLight = new PosLight();
 }
 //-------------------------------------------------------------------------
 void Scene::resetGL()
