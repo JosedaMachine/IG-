@@ -254,6 +254,12 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'w':
 		mScene->disableDirLight();
+		break;	
+	case 'e':
+		mScene->darkScene();
+		break;
+	case 'r':
+		mScene->brightScene();
 		break;
 	case '0':
 		mScene->changeScene(0);

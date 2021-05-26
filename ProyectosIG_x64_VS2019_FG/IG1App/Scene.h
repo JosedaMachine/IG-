@@ -17,7 +17,7 @@
 class Scene	
 { 
 public:
-	Scene() {};
+	Scene();
 	~Scene() { free(); resetGL(); };
 
 	Scene(const Scene& s) = delete;  // no copy constructor
@@ -30,8 +30,11 @@ public:
 	void update();
 
 	void changeScene(int id);
+
 	void setMid(int scene) { mid = scene; }
+
 	void set2D(bool dimension) { es2D = dimension; }
+
 	bool get2D() { return es2D; }
 
 	void enableDirLight();
@@ -39,6 +42,12 @@ public:
 	void disableDirLight();
 
 	void chargeTextures();
+
+	void brightScene();
+
+
+	void darkScene();
+
 	
 protected:
 	void free();

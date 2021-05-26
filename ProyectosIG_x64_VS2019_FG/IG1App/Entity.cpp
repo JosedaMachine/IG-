@@ -406,7 +406,7 @@ void PoligonoText::render(glm::dmat4 const& modelViewMat) const
 		//glEnable(GL_CULL_FACE);
 
 		//Hacemos Bind de la texture
-		if(mTexture != nullptr) mTexture->bind(GL_REPLACE);
+		if(mTexture != nullptr) mTexture->bind(GL_MODULATE);
 		//glCullFace(GL_BACK);
 
 		//Renderizamos
@@ -627,12 +627,12 @@ Esfera::~Esfera()
 
 void Esfera::render(glm::dmat4 const& modelViewMat) const {
 	if (material != nullptr) {
-		glEnable(GL_COLOR_MATERIAL);
-		glColorMaterial(GL_FRONT, GL_SPECULAR);
+		//glEnable(GL_COLOR_MATERIAL);
+		//glColorMaterial(GL_FRONT, GL_SPECULAR);
 		material->upload();
 		mMesh->render();
-		glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-		glDisable(GL_COLOR_MATERIAL);
+		//glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+		//glDisable(GL_COLOR_MATERIAL);
 	}
 	else {
 		glEnable(GL_COLOR_MATERIAL);

@@ -5,10 +5,13 @@
 #include "QuadricEntity.h"
 
 using namespace glm;
+Scene::Scene() {
+	glEnable(GL_LIGHTING);
+}
 //-------------------------------------------------------------------------
-void Scene::init(){
+void Scene::init() {
 	setGL();  // OpenGL settings
-					
+
 	chargeTextures(); //We charge here the textures
 
 	// Graphics objects (entities) of the scene
@@ -36,8 +39,8 @@ void Scene::init(){
 		esfera->setMaterial(m);
 		gObjects.push_back(esfera);
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), glm::dvec3(0, 0, radius * 2)));
-		
-		
+
+
 		Sphere* sphere = new Sphere(radius);
 		gObjects.push_back(sphere);
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), glm::dvec3(radius * 2, 0, 0)));
@@ -46,7 +49,7 @@ void Scene::init(){
 		//Cambiar la posicion desde fuera
 		//Que no haya dependencia de movimiento
 	}
-	else if ( mid == 4){
+	else if (mid == 4) {
 		Texture* t = new Texture();
 		t->load("../Bmps/checker.bmp", 255);
 		gTextures.push_back(t);
@@ -85,19 +88,17 @@ void Scene::init(){
 		ties[0]->setModelMat(rotate(ties[0]->modelMat(), radians(300.0), dvec3(0.0, 1.0, 0.0)));
 
 		ties[2]->setModelMat(translate(dmat4(1), dvec3(0, 500, 1250)));
-
-
 	}
 }
 
-void Scene::enableDirLight(){
+void Scene::enableDirLight() {
 	dirLight->enable();
 }
-void Scene::disableDirLight(){
+void Scene::disableDirLight() {
 	dirLight->disable();
 }
 //-------------------------------------------------------------------------
-void Scene::chargeTextures(){
+void Scene::chargeTextures() {
 	Texture* t = new Texture();
 	t->load("../Bmps/baldosaC.bmp");
 	gTextures.push_back(t);
@@ -128,22 +129,35 @@ void Scene::chargeTextures(){
 	gTextures.push_back(t);
 
 
-	
 
+
+}
+
+void Scene::brightScene() {
+	dirLight->enable();
+	GLfloat amb[] = { 0.25,0.25,0.25, 1.0 };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+}
+
+void Scene::darkScene() {
+	//glDisable(GL_LIGHTING);
+	dirLight->disable();
+	GLfloat amb[] = { 0,0,0, 1.0 };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 }
 //-------------------------------------------------------------------------
 void Scene::free()
 { // release memory and resources   
-	
-	for (Entidad* el : gObjects){
+
+	for (Entidad* el : gObjects) {
 		delete el;  el = nullptr;
 	}
 
-	for (Entidad* cosa : gObjectsTrans){
+	for (Entidad* cosa : gObjectsTrans) {
 		delete cosa;  cosa = nullptr;
 	}
-	
-	for (Texture* el : gTextures){
+
+	for (Texture* el : gTextures) {
 		delete el;  el = nullptr;
 	}
 	delete dirLight;
@@ -170,8 +184,7 @@ void Scene::resetGL()
 	glDisable(GL_TEXTURE_2D);
 }
 //-------------------------------------------------------------------------
-void Scene::sceneDirLight(Camera const& cam) const
-{
+void Scene::sceneDirLight(Camera const& cam) const {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glm::fvec4 posDir = { 1, 1, 1, 0 };
@@ -186,10 +199,10 @@ void Scene::sceneDirLight(Camera const& cam) const
 	glLightfv(GL_LIGHT0, GL_SPECULAR, value_ptr(specular));
 }
 //-------------------------------------------------------------------------
-void Scene::render(Camera const& cam) const{
+void Scene::render(Camera const& cam) const {
 	//Ya no se renderiza la escena así. Sino con el atributo dirLight, bastante intuitivo eh Segundo
 
-	sceneDirLight(cam);
+	//sceneDirLight(cam);
 	dirLight->upload(cam.viewMat());
 
 	cam.upload(); //viewport proyect
@@ -197,8 +210,8 @@ void Scene::render(Camera const& cam) const{
 	for (Entidad* el : gObjects) {
 		el->render(cam.viewMat());	//cada elemento renderiza
 	}
-	
-	for (Entidad* cosa : gObjectsTrans){
+
+	for (Entidad* cosa : gObjectsTrans) {
 		cosa->render(cam.viewMat());	//cada elemento renderiza
 	}
 }
@@ -210,10 +223,12 @@ void Scene::update() {
 }
 //-------------------------------------------------------------------------
 void Scene::changeScene(int id) {
-	resetGL();
-	free();
-	mid = id;
-	init();
+	if (id != mid) {
+		resetGL();
+		free();
+		mid = id;
+		init();
+	}
 }
 //-------------------------------------------------------------------------
 
