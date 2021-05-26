@@ -18,7 +18,7 @@ class Scene
 { 
 public:
 	Scene();
-	~Scene() { free(); resetGL(); };
+	~Scene();
 
 	Scene(const Scene& s) = delete;  // no copy constructor
 	Scene& operator=(const Scene& s) = delete;  // no copy assignment
@@ -51,6 +51,7 @@ public:
 
 	void darkScene();
 
+	void createLights();
 	
 protected:
 	void free();

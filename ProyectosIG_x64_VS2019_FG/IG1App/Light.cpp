@@ -32,8 +32,7 @@ void Light::setAmb(glm::fvec4 amb) {
 	uploadL();
 }
 
-void Light::setDiff(glm::fvec4 amb)
-{
+void Light::setDiff(glm::fvec4 amb){
 	diffuse = amb;
 	uploadL();
 }

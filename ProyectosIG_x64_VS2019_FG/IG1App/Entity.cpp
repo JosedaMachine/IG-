@@ -513,6 +513,7 @@ TIE::TIE(Texture* t, GLdouble size){
 	float radioDiscoCono = 100 * size;
 	//Cuerpo
 	Sphere* esfera = new Sphere(130.0 * size);
+	esfera->setColor({ 0.15, 0.28, 0.59 ,1});
 	gObjects.push_back(esfera);
 	//Front
 	Cylinder* cono = new Cylinder(radioDiscoCono, radioDiscoCono, 40.0);
@@ -669,7 +670,7 @@ void Grid::render(glm::dmat4 const& modelViewMat) const {
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	mTexture->bind(GL_REPLACE);
+	mTexture->bind(GL_MODULATE);
 	
 	//Añado esto para que se pueda mover y rotar desde fuera
 	dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication

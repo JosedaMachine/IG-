@@ -8,13 +8,15 @@ using namespace glm;
 Scene::Scene() {
 	glEnable(GL_LIGHTING);
 
+	createLights();
+}
 
-	dirLight = new DirLight();
-	dirLight->disable();
-
-	posLight = new PosLight();
-
-	posLight->setPosDir(glm::fvec3(200, 200, 0));
+Scene::~Scene(){
+	free(); resetGL();
+	if (dirLight)
+		delete dirLight;
+	if (posLight)
+		delete posLight;
 }
 //-------------------------------------------------------------------------
 void Scene::init() {
@@ -48,11 +50,10 @@ void Scene::init() {
 		gObjects.push_back(esfera);
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), glm::dvec3(0, 0, radius * 2)));
 
-
 		Sphere* sphere = new Sphere(radius);
 		gObjects.push_back(sphere);
 		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), glm::dvec3(radius * 2, 0, 0)));
-
+		sphere->setColor({ 0.15, 0.28, 0.59 ,1 });
 		//Cambiar el color
 		//Cambiar la posicion desde fuera
 		//Que no haya dependencia de movimiento
@@ -79,7 +80,17 @@ void Scene::init() {
 		//gObjects.back()->setTexture(gTextures.back());
 	}
 	else if (mid == 5) {
-		gObjects.push_back(new Esfera(10000, 50, 50));
+		Esfera* esf = new Esfera(10000, 50, 50);
+
+		Material* m = new Material();
+		m->setCopper();
+		esf->setMaterial(m);
+		//Color gold
+		//Material* gold = new Material();
+		//gold->setGold();
+		//esf->setMaterial(gold);
+		//cargamos la entidad
+		gObjects.push_back(esf);
 		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, -10500, 0)));
 		gObjects.back()->setColor(dvec4(0.20, 1, 0.92, 1));
 
@@ -98,21 +109,27 @@ void Scene::init() {
 		ties[2]->setModelMat(translate(dmat4(1), dvec3(0, 500, 1250)));
 	}
 }
-
+//-------------------------------------------------------------------------
 void Scene::enableDirLight() {
-	dirLight->enable();
+	if (dirLight)
+		dirLight->enable();
 }
+//-------------------------------------------------------------------------
 void Scene::disableDirLight() {
-	dirLight->disable();
+	if (dirLight)
+		dirLight->disable();
 }
-
+//-------------------------------------------------------------------------
 void Scene::disablePosLight()
 {
-	posLight->disable();
+	if (posLight)
+		posLight->disable();
 }
+//-------------------------------------------------------------------------
 void Scene::enablePosLight()
 {
-	posLight->enable();
+	if (posLight)
+		posLight->enable();
 }
 //-------------------------------------------------------------------------
 void Scene::chargeTextures() {
@@ -144,25 +161,41 @@ void Scene::chargeTextures() {
 	t = new Texture();
 	t->load("../Bmps/noche.bmp", 255 / 1.2);
 	gTextures.push_back(t);
-
-
-
-
 }
-
+//-------------------------------------------------------------------------
 void Scene::brightScene() {
-	dirLight->enable();
-	posLight->enable();
+	if(dirLight)
+		dirLight->enable();
+
+	if(posLight)
+		posLight->enable();
 	GLfloat amb[] = { 0.25,0.25,0.25, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 }
-
+//-------------------------------------------------------------------------
 void Scene::darkScene() {
 	//glDisable(GL_LIGHTING);
-	dirLight->disable();
-	posLight->disable();
+	if(dirLight)
+		dirLight->disable();
+
+	if (posLight)
+		posLight->disable();
+
 	GLfloat amb[] = { 0,0,0, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+}
+//-------------------------------------------------------------------------
+void Scene::createLights(){
+	dirLight = nullptr;
+	posLight = nullptr;
+
+	dirLight = new DirLight();
+
+	posLight = new PosLight();
+	posLight->setDiff({ 1, 1, 0, 1 });
+	posLight->setAmb({ 0.2, 0.2, 0, 1 });
+	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
+	posLight->setPosDir({ 115, 115, 0 });
 }
 //-------------------------------------------------------------------------
 void Scene::free()
@@ -179,8 +212,7 @@ void Scene::free()
 	for (Texture* el : gTextures) {
 		delete el;  el = nullptr;
 	}
-	delete dirLight;
-	delete posLight;
+
 	gTextures.clear();
 	gObjects.clear();
 	gObjectsTrans.clear();
@@ -220,8 +252,11 @@ void Scene::render(Camera const& cam) const {
 	//Ya no se renderiza la escena así. Sino con el atributo dirLight, bastante intuitivo eh Segundo
 
 	//sceneDirLight(cam);
+	//if (dirLight)
 	//dirLight->upload(cam.viewMat());
-	posLight->upload(cam.viewMat());
+	if (posLight)
+		posLight->upload(cam.viewMat());
+
 	cam.upload(); //viewport proyect
 
 	for (Entidad* el : gObjects) {
