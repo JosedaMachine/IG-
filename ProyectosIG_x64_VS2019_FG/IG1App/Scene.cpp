@@ -7,6 +7,14 @@
 using namespace glm;
 Scene::Scene() {
 	glEnable(GL_LIGHTING);
+
+
+	dirLight = new DirLight();
+	dirLight->disable();
+
+	posLight = new PosLight();
+
+	posLight->setPosDir(glm::fvec3(200, 200, 0));
 }
 //-------------------------------------------------------------------------
 void Scene::init() {
@@ -144,6 +152,7 @@ void Scene::chargeTextures() {
 
 void Scene::brightScene() {
 	dirLight->enable();
+	posLight->enable();
 	GLfloat amb[] = { 0.25,0.25,0.25, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 }
@@ -151,6 +160,7 @@ void Scene::brightScene() {
 void Scene::darkScene() {
 	//glDisable(GL_LIGHTING);
 	dirLight->disable();
+	posLight->disable();
 	GLfloat amb[] = { 0,0,0, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 }
@@ -170,6 +180,7 @@ void Scene::free()
 		delete el;  el = nullptr;
 	}
 	delete dirLight;
+	delete posLight;
 	gTextures.clear();
 	gObjects.clear();
 	gObjectsTrans.clear();
@@ -181,9 +192,6 @@ void Scene::setGL()
 	glClearColor(0.0, 0.0, 0.0, 1.0);  // background color (alpha=1 -> opaque)
 	glEnable(GL_DEPTH_TEST);  // enable Depth test 
 	glEnable(GL_TEXTURE_2D);
-
-	dirLight = new DirLight();
-	posLight = new PosLight();
 }
 //-------------------------------------------------------------------------
 void Scene::resetGL()
@@ -212,8 +220,8 @@ void Scene::render(Camera const& cam) const {
 	//Ya no se renderiza la escena así. Sino con el atributo dirLight, bastante intuitivo eh Segundo
 
 	//sceneDirLight(cam);
-	dirLight->upload(cam.viewMat());
-
+	//dirLight->upload(cam.viewMat());
+	posLight->upload(cam.viewMat());
 	cam.upload(); //viewport proyect
 
 	for (Entidad* el : gObjects) {

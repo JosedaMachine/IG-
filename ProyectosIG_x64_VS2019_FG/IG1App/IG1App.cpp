@@ -265,7 +265,7 @@ void IG1App::key(unsigned char key, int x, int y)
 		mScene->enablePosLight();
 		break;
 	case 's':
-		mScene->disableDirLight();
+		mScene->disablePosLight();
 		break;
 	case '0':
 		mScene->changeScene(0);

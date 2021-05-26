@@ -43,7 +43,6 @@ void Light::setSpec(glm::fvec4 amb)
 	specular = amb;
 	uploadL();
 }
-
 //----------------------------------------------
 
 void DirLight::upload(glm::dmat4 const& modelViewMat)
