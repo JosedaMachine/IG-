@@ -22,6 +22,8 @@ public:
 	// static single instance (singleton pattern)
 	static IG1App s_ig1app;
 
+	static bool lightOn;
+
 	IG1App(IG1App const & J) = delete; // no copy constructor
 	void operator =(IG1App const & J) = delete; // no copy assignment
 	

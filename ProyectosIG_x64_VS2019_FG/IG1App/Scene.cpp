@@ -4,11 +4,14 @@
 #include <gtc/type_ptr.hpp>
 #include "QuadricEntity.h"
 
+bool Scene::lightOn = false;
+
 using namespace glm;
 Scene::Scene() {
 	glEnable(GL_LIGHTING);
 
-	createLights();
+	if(!lightOn)
+	 createLights();
 }
 
 Scene::~Scene(){
@@ -186,6 +189,9 @@ void Scene::darkScene() {
 }
 //-------------------------------------------------------------------------
 void Scene::createLights(){
+
+	lightOn = true;
+
 	dirLight = nullptr;
 	posLight = nullptr;
 
@@ -252,8 +258,8 @@ void Scene::render(Camera const& cam) const {
 	//Ya no se renderiza la escena así. Sino con el atributo dirLight, bastante intuitivo eh Segundo
 
 	//sceneDirLight(cam);
-	//if (dirLight)
-	//dirLight->upload(cam.viewMat());
+	if (dirLight)
+		dirLight->upload(cam.viewMat());
 	if (posLight)
 		posLight->upload(cam.viewMat());
 
