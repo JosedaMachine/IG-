@@ -88,6 +88,17 @@ private:
 
 };
 //-------------------------------------------------------------------------
+class TIE_FORMATION : public CompoundEntity {
+public:
+	explicit TIE_FORMATION(glm::dvec3 pos, glm::dvec3 rotation, Texture* t, GLdouble size = 1.0);
+	~TIE_FORMATION();
+
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+
+private:
+
+};
+//-------------------------------------------------------------------------
 
 class EjesRGB : public Abs_Entity
 {

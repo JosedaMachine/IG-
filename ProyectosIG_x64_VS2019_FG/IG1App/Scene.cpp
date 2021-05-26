@@ -10,10 +10,27 @@ using namespace glm;
 Scene::Scene() {
 	glEnable(GL_LIGHTING);
 
+	dirLight = nullptr;
+	posLight = nullptr;
+
 	if(!lightOn)
 	 createLights();
 }
+//-------------------------------------------------------------------------
+void Scene::createLights() {
 
+	lightOn = true;
+
+	dirLight = new DirLight();
+	dirLight->setPosDir({ 0, 0, -1 });
+
+	posLight = new PosLight();
+	posLight->setDiff({ 1, 1, 0, 1 });
+	posLight->setAmb({ 0.2, 0.2, 0, 1 });
+	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
+	posLight->setPosDir({ 115, 115, 0 });
+}
+//-------------------------------------------------------------------------
 Scene::~Scene(){
 	free(); resetGL();
 	if (dirLight)
@@ -83,33 +100,26 @@ void Scene::init() {
 		//gObjects.back()->setTexture(gTextures.back());
 	}
 	else if (mid == 5) {
-		Esfera* esf = new Esfera(10000, 50, 50);
+		gObjects.push_back(new EjesRGB(400.0));
 
+		float radius = 1000;
+
+		if (posLight)
+			posLight->setPosDir({ radius + 30, radius + 30, 0 });
+
+		if(dirLight)
+			dirLight->setPosDir({0, 1, 0});
+
+		Esfera* esf = new Esfera(radius, 50, 50);
 		Material* m = new Material();
-		m->setCopper();
+		m->setGold();
 		esf->setMaterial(m);
-		//Color gold
-		//Material* gold = new Material();
-		//gold->setGold();
-		//esf->setMaterial(gold);
-		//cargamos la entidad
-		gObjects.push_back(esf);
-		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, -10500, 0)));
+		gObjects.push_back(esf);										
+		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(-radius, -radius, -radius))); /*Y = -10500*/
 		gObjects.back()->setColor(dvec4(0.20, 1, 0.92, 1));
-
-		int numTies = 3;
-		std::vector<TIE*> ties;
-
-		for (int i = 0; i < numTies; i++) {
-			TIE* t = new TIE(gTextures[6]);
-
-			gObjects.push_back(t);
-			ties.push_back(t);
-		}
-		ties[0]->setModelMat(translate(dmat4(1), dvec3(1250, 500, 0)));
-		ties[0]->setModelMat(rotate(ties[0]->modelMat(), radians(300.0), dvec3(0.0, 1.0, 0.0)));
-
-		ties[2]->setModelMat(translate(dmat4(1), dvec3(0, 500, 1250)));
+		
+		TIE_FORMATION* tieFor = new TIE_FORMATION(glm::dvec3(-radius,0, -radius), glm::dvec3(0, 0, 0), gTextures[6]);
+		gObjects.push_back(tieFor);
 	}
 }
 //-------------------------------------------------------------------------
@@ -186,22 +196,6 @@ void Scene::darkScene() {
 
 	GLfloat amb[] = { 0,0,0, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
-}
-//-------------------------------------------------------------------------
-void Scene::createLights(){
-
-	lightOn = true;
-
-	dirLight = nullptr;
-	posLight = nullptr;
-
-	dirLight = new DirLight();
-
-	posLight = new PosLight();
-	posLight->setDiff({ 1, 1, 0, 1 });
-	posLight->setAmb({ 0.2, 0.2, 0, 1 });
-	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
-	posLight->setPosDir({ 115, 115, 0 });
 }
 //-------------------------------------------------------------------------
 void Scene::free()

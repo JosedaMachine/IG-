@@ -7,28 +7,22 @@
 #include "Material.h"
 
 using namespace glm;
-
 //-------------------------------------------------------------------------
-
 void Abs_Entity::upload(dmat4 const& modelViewMat) const
 { 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(modelViewMat));  // transfers modelView matrix to the GPU
 }
 //-------------------------------------------------------------------------
-
 EjesRGB::EjesRGB(GLdouble l): Abs_Entity()
 {
   mMesh = Mesh::createRGBAxes(l);
 }
-//-------------------------------------------------------------------------
 
 EjesRGB::~EjesRGB() 
 { 
 	delete mMesh; mMesh = nullptr; 
 };
-//-------------------------------------------------------------------------
-
 void EjesRGB::render(dmat4 const& modelViewMat) const 
 {
 	if (mMesh != nullptr) {
@@ -43,7 +37,7 @@ void EjesRGB::render(dmat4 const& modelViewMat) const
 		glDisable(GL_COLOR_MATERIAL);
 	}
 }
-
+//-------------------------------------------------------------------------
 TrianguloRGB::TrianguloRGB(GLdouble rd, float rad) {
 	mMesh = Mesh::createTrianguloRGB(rd);
 
@@ -56,6 +50,7 @@ TrianguloRGB::~TrianguloRGB() {
 	delete mMesh; mMesh = nullptr;
 
 }
+
 void TrianguloRGB::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
@@ -78,7 +73,7 @@ void TrianguloRGB::update() {
 	setModelMat(rotate(modelMat(), radians(-angLoc), dvec3(0, 0, 1))); //Pasamos negativo porque los ángulos pues son iguales para todos los sitios
 
 }
-
+//-------------------------------------------------------------------------
 Poligono::Poligono(GLuint numL, GLdouble rd) {
 	mMesh = Mesh::generaPoligono(numL,  rd);
 }
@@ -101,7 +96,7 @@ void Poligono::render(glm::dmat4 const& modelViewMat) const
 		glColor3d(1, 1, 1);
 	}
 }
-
+//-------------------------------------------------------------------------
 SerPinspi::SerPinspi(GLuint rd, GLdouble numP) {
 	mMesh = Mesh::generaSierpinski(rd, numP);
 }
@@ -124,7 +119,7 @@ void SerPinspi::render(glm::dmat4 const& modelViewMat) const
 		glColor3d(1, 1, 1);
 	}
 }
-
+//-------------------------------------------------------------------------
 Rectangulo::Rectangulo(GLdouble w, GLdouble h) {
 	mMesh = Mesh::generaRectangulo(w, h);
 }
@@ -149,9 +144,7 @@ void Rectangulo::render(glm::dmat4 const& modelViewMat) const
 		glColor3d(1, 1, 1);
 	}
 }
-
-
-
+//-------------------------------------------------------------------------
 RectanguloRGB::RectanguloRGB(GLdouble w, GLdouble h) {
 	mMesh = Mesh::generaRectanguloRGB(w, h);
 }
@@ -177,8 +170,7 @@ void RectanguloRGB::render(glm::dmat4 const& modelViewMat) const
 		glColor3d(1, 1, 1);
 	}
 }
-
-
+//-------------------------------------------------------------------------
 Estrella3D::Estrella3D(GLdouble re, GLuint np, GLdouble h) {
 	mMesh = Mesh::generaEstrellaTexCor(re, np,h);
 
@@ -228,7 +220,6 @@ void Estrella3D::update() {
 	setModelMat(rotate(modelMat(), -radians(angY), dvec3(0, 0, 1)));
 }
 //-------------------------------------------------------------------------
-
 Caja::Caja(GLdouble ld, Texture* interi)
 {
 	mMesh = Mesh::generaContCuboTexCor(ld);
@@ -240,10 +231,6 @@ Caja::~Caja()
 	delete mMesh; mMesh = nullptr;
 }
 
-/// <summary>
-/// Renderiza la caja
-/// </summary>
-/// <param name="modelViewMat"></param>
 void Caja::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
@@ -285,7 +272,7 @@ void Caja::render(glm::dmat4 const& modelViewMat) const
 void Caja::update()
 {
 }
-
+//-------------------------------------------------------------------------
 Suelo::Suelo(GLdouble w, GLdouble h, GLuint rw, GLuint  rh)
 {
 	mMesh = Mesh::generaRectanguloTexCor(w, h, rw, rh);
@@ -312,7 +299,7 @@ void Suelo::update()
 {
 	
 }
-
+//-------------------------------------------------------------------------
 Foto::Foto(GLsizei width, GLsizei height, GLuint buffer)
 {
 	mTexture = new Texture();
@@ -342,7 +329,7 @@ void Foto::update()
 {
 	mTexture->loadColorBuffer(IG1App::s_ig1app.winWidth(), IG1App::s_ig1app.winheigth(), GL_FRONT);
 }
-
+//-------------------------------------------------------------------------
 Glass::Glass(GLdouble w, GLdouble h){
 	mMesh = Mesh::generaCristalera(w,h);
 }
@@ -382,7 +369,7 @@ void Glass::render(glm::dmat4 const& modelViewMat) const {
 void Glass::update()
 {
 }
-
+//-------------------------------------------------------------------------
 PoligonoText::PoligonoText(GLuint numL, GLdouble rd)
 {
 	mMesh = Mesh::generaPolygonTexCor(rd, numL);
@@ -419,12 +406,11 @@ void PoligonoText::render(glm::dmat4 const& modelViewMat) const
 		glDisable(GL_BLEND);
 	}
 }
-
+//-------------------------------------------------------------------------
 Planta::Planta(GLdouble w, GLdouble h)
 {
 	mMesh = Mesh::generaRectanguloTexCor(w, h, 1, 1);
 }
-//-------------------------------------------------------------------------
 
 void Planta::render(glm::dmat4 const& modelViewMat) const{
 	if (mMesh != nullptr) {
@@ -450,7 +436,7 @@ void Planta::render(glm::dmat4 const& modelViewMat) const{
 		glDisable(GL_ALPHA_TEST);
 	}
 }
-
+//-------------------------------------------------------------------------
 AnilloCuadrado::AnilloCuadrado()
 {
 	mMesh = IndexMesh::generaAnilloCuadradoIndexado(30,30);
@@ -469,7 +455,7 @@ void AnilloCuadrado::render(glm::dmat4 const& modelViewMat) const
 
 	glDisable(GL_COLOR_MATERIAL);
 }
-
+//-------------------------------------------------------------------------
 CuboConTapas::CuboConTapas(GLdouble l)
 {
 	mMesh = IndexMesh::generaCuboConTapadIndexado(l);
@@ -491,7 +477,7 @@ void CuboConTapas::render(glm::dmat4 const& modelViewMat) const{
 
 	glDisable(GL_COLOR_MATERIAL);
 }
-
+//-------------------------------------------------------------------------
 void CompoundEntity::addEntity(Entidad* ae){
 	gObjects.push_back(ae);
 }
@@ -508,7 +494,7 @@ void CompoundEntity::render(glm::dmat4 const& modelViewMat) const {
 
 	for (Entidad* ae : gObjectsTranslucid) ae->render(modelViewMat * modelMat());
 }
-
+//-------------------------------------------------------------------------
 TIE::TIE(Texture* t, GLdouble size){
 	float radioDiscoCono = 100 * size;
 	//Cuerpo
@@ -566,7 +552,7 @@ TIE::TIE(Texture* t, GLdouble size){
 }
 
 TIE::~TIE(){
-	int n = 0;
+
 }
 
 void TIE::render(glm::dmat4 const& modelViewMat) const{
@@ -576,7 +562,7 @@ void TIE::render(glm::dmat4 const& modelViewMat) const{
 	// 
 	CompoundEntity::render(modelViewMat);
 }
-
+//-------------------------------------------------------------------------
 ConeMbR::ConeMbR(GLdouble h, GLdouble r, GLuint n){
 	int m = 3;
 	dvec3* perfil = new dvec3[m];
@@ -604,7 +590,7 @@ void ConeMbR::render(glm::dmat4 const& modelViewMat) const{
 
 	glDisable(GL_COLOR_MATERIAL);
 }
-
+//-------------------------------------------------------------------------
 Esfera::Esfera(GLdouble r, GLdouble p, GLuint m){
 	dvec3* perfil = new dvec3[p];
 
@@ -631,6 +617,8 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const {
 		//glEnable(GL_COLOR_MATERIAL);
 		//glColorMaterial(GL_FRONT, GL_SPECULAR);
 		material->upload();
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
 		mMesh->render();
 		//glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 		//glDisable(GL_COLOR_MATERIAL);
@@ -654,7 +642,7 @@ void Esfera::render(glm::dmat4 const& modelViewMat) const {
 		glDisable(GL_COLOR_MATERIAL);
 	}
 }
-
+//-------------------------------------------------------------------------
 Grid::Grid(GLdouble r, GLint nDiv) {
 
 	mMesh = IndexMesh::generaGridTex(r, nDiv);
@@ -685,7 +673,7 @@ void Grid::render(glm::dmat4 const& modelViewMat) const {
 	mTexture->unbind();
 
 }
-
+//-------------------------------------------------------------------------
 GridCube::GridCube(GLdouble r, GLint nDiv, Texture* up, Texture* sides){
 	top = up;
 	side = sides;
@@ -749,4 +737,26 @@ void GridCube::setTextures(Texture* top_, Texture* side_){
 	top = top_;
 	side = side_;
 }
+//-------------------------------------------------------------------------
+TIE_FORMATION::TIE_FORMATION(glm::dvec3 pos, glm::dvec3 rotation, Texture* te,  GLdouble size){
 
+	int numTies = 3;
+	for (int i = 0; i < numTies; i++) {
+		TIE* t = new TIE(te);
+		gObjects.push_back(t);
+	}
+
+	gObjects[0]->setModelMat(translate(dmat4(1), dvec3(1250, 500, 0)));
+
+	gObjects[0]->setModelMat(rotate(gObjects[0]->modelMat(), radians(300.0), dvec3(0.0, 1.0, 0.0)));
+
+	gObjects[2]->setModelMat(translate(dmat4(1), dvec3(0, 500, 1250)));
+}
+
+TIE_FORMATION::~TIE_FORMATION(){
+
+}
+
+void TIE_FORMATION::render(glm::dmat4 const& modelViewMat) const{
+	CompoundEntity::render(modelViewMat);
+}

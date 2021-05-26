@@ -50,8 +50,8 @@ void IG1App::init()
 	mCamera->set2D();
 	mCamera1->set2D();
 
-	mScene1->setMid(0);
-	mScene->setMid(0);
+	mScene1->setMid(5);
+	mScene->setMid(5);
 
 	mScene->init();
 	mScene1->init();
