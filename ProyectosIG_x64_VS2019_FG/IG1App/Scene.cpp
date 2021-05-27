@@ -93,21 +93,21 @@ void Scene::init() {
 	chargeTextures(); //We charge here the textures
 
 	// Graphics objects (entities) of the scene
-	if (mid == 0) {
+	if (mid == 1) {
 		TIE* tie = new TIE(gTextures[6]);
 		gObjects.push_back(tie);
 		gObjects.push_back(new EjesRGB(400.0));
 	}
-	else if (mid == 1) {
+	else if (mid == 2) {
 		//Anillo cuadrado
 		gObjects.push_back(new EjesRGB(400.0));
 		gObjects.push_back(new AnilloCuadrado());
 	}
-	else if (mid == 2) {
+	else if (mid == 3) {
 		gObjects.push_back(new EjesRGB(400.0));
 		gObjects.push_back(new CuboConTapas(100));
 	}
-	else if (mid == 3) {
+	else if (mid == 4) {
 		//gObjects.push_back(new EjesRGB(400.0));
 
 		float radius = 100.0;
@@ -126,7 +126,7 @@ void Scene::init() {
 		//Cambiar la posicion desde fuera
 		//Que no haya dependencia de movimiento
 	}
-	else if (mid == 4) {
+	else if (mid == 5) {
 		Texture* t = new Texture();
 		t->load("../Bmps/checker.bmp", 255);
 		gTextures.push_back(t);
@@ -151,7 +151,7 @@ void Scene::init() {
 
 		//gObjects.back()->setTexture(gTextures.back());
 	}
-	else if (mid == 5) {
+	else if (mid == 6) {
 		gObjects.push_back(new EjesRGB(400.0));
 
 		radius = 5500;
@@ -180,6 +180,57 @@ void Scene::init() {
 		gObjects.push_back(tieFor);
 
 		tieForm = tieFor;
+	}		
+	else if (mid == 7) {
+		//Rect�ngulo
+		gObjects.push_back(new RectanguloRGB(800, 800));
+		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 0, -100)));
+
+		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+		gObjects.push_back(new Poligono(100, 300));
+		gObjects.back()->setColor(dvec4(1.0, 1.0, 0.0, 0.0));
+		gObjects.push_back(new Poligono(360, 200)); //igual hay que meterle 360 lados porque un c�rculo tiene 360 grados //Igual no
+		gObjects.back()->setColor(dvec4(1.0, 0.07, 0.57, 0.0));
+
+
+		//Serpinpi
+		gObjects.push_back(new SerPinspi(200, 10000));
+		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+
+
+		//Tri�ngulo
+		gObjects.push_back(new TrianguloRGB(20, 200));
+		gObjects.back()->setModelMat(translate(gObjects.back()->modelMat(), dvec3(200, 0, 0)));
+	}
+	else if(mid == 8) {
+		gObjects.push_back(new EjesRGB(400.0));
+
+		gObjects.push_back(new Suelo(700, 700, 5, 5));
+		gObjects.back()->setTexture(gTextures[0]);
+		gObjects.back()->setModelMat(glm::rotate(dmat4(1), radians(-90.0), dvec3(1, 0, 0)));
+
+		gObjects.push_back(new Estrella3D(50, 10, 100));
+		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
+		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(-200, 300, -200)));
+		gObjects.back()->setTexture(gTextures[1]);
+
+		int sideCube = 200.0f;
+		gObjects.push_back(new Caja(sideCube, gTextures[3]));
+		gObjects.back()->setTexture(gTextures[2]);
+		gObjects.back()->setModelMat(glm::translate(gObjects.back()->modelMat(), dvec3(-sideCube, sideCube / 2, -sideCube)));
+
+		gObjectsTrans.push_back(new Glass(700.0, 200));
+		gObjectsTrans.back()->setTexture(gTextures[4]);
+		gObjectsTrans.back()->setModelMat(glm::translate(gObjectsTrans.back()->modelMat(), dvec3(0, 100, 0)));
+
+		int sizePhoto = 100;
+		gObjects.push_back(new Foto(sizePhoto, sizePhoto, GL_FRONT));
+		gObjects.back()->setModelMat(glm::translate(dmat4(1), dvec3(0, 5, 0)));
+		gObjects.back()->setModelMat(glm::rotate(gObjects.back()->modelMat(), radians(-90.0), dvec3(1, 0, 0)));
+
+		Texture* t = new Texture();
+		gTextures.push_back(t);
+		gObjects.back()->setTexture(t);
 	}
 }
 //-------------------------------------------------------------------------

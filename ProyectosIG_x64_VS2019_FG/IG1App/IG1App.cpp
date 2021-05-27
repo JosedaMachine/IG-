@@ -51,7 +51,7 @@ void IG1App::init()
 	//mCamera1->set2D();
 
 	//mScene1->setMid(5);
-	mScene->setMid(5);
+	mScene->setMid(1);
 
 	mScene->init();
 	//mScene1->init();
@@ -251,16 +251,16 @@ void IG1App::key(unsigned char key, int x, int y)
 			mCamera->orbit(0, -40);
 		break;
 	case 'g':
-		if(mScene->getMid() == 5)mScene->TIEsLightsOn(true);
-		break;
-	case 'y':
-		if (mScene->getMid() == 5) mScene->orbita();
-		break;
-	case 'b':
-		if (mScene->getMid() == 5) mScene->rota();
+		if(mScene->getMid() == 6)mScene->TIEsLightsOn(true);
 		break;
 	case 't':
-		if (mScene->getMid() == 5)mScene->TIEsLightsOn(false);
+		if (mScene->getMid() == 6)mScene->TIEsLightsOn(false);
+		break;
+	case 'y':
+		if (mScene->getMid() == 6) mScene->orbita();
+		break;
+	case 'b':
+		if (mScene->getMid() == 6) mScene->rota();
 		break;
 	case 'q':
 		mScene->enableDirLight();
@@ -286,9 +286,6 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'x':
 		mScene->disableSpotLight();
 		break;
-	case '0':
-		mScene->changeScene(0);
-		break;
 	case '1':
 		mScene->changeScene(1);
 		break;
@@ -303,6 +300,15 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case '5':
 		mScene->changeScene(5);
+		break;
+	case '6':
+		mScene->changeScene(6);
+		break;
+	case '7':
+		mScene->changeScene(7);
+		break;
+	case '8':
+		mScene->changeScene(8);
 		break;
 	case 'p':
 		if (m2Scenes) {
