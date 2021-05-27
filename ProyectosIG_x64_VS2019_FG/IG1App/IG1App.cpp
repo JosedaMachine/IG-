@@ -11,7 +11,7 @@ IG1App IG1App::s_ig1app;  // default constructor (constructor with no parameters
 
 //-------------------------------------------------------------------------
 
-void IG1App::close()  
+void IG1App::close()
 {
 	if (!mStop) {  // if main loop has not stopped
 		cout << "Closing glut...\n";
@@ -36,7 +36,7 @@ void IG1App::run()   // enters the main event processing loop
 void IG1App::init()
 {
 	// create an OpenGL Context
-	iniWinOpenGL();   
+	iniWinOpenGL();
 
 	// create the scene after creating the context 
 	// allocate memory and resources
@@ -60,12 +60,12 @@ void IG1App::init()
 }
 //-------------------------------------------------------------------------
 
-void IG1App::iniWinOpenGL() 
+void IG1App::iniWinOpenGL()
 {  // Initialization
 	cout << "Starting glut...\n";
 	int argc = 0;
 	glutInit(&argc, nullptr);
-		
+
 	glutInitContextVersion(3, 3);
 	glutInitContextProfile(GLUT_COMPATIBILITY_PROFILE);  // GLUT_CORE_PROFILE
 	glutInitContextFlags(GLUT_DEBUG);		// GLUT_FORWARD_COMPATIBLE
@@ -76,15 +76,15 @@ void IG1App::iniWinOpenGL()
 	//glutInitWindowPosition (140, 140);
 
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH /*| GLUT_STENCIL*/); // RGBA colors, double buffer, depth buffer and stencil buffer   
-	
+
 	mWinId = glutCreateWindow("IG1App");  // with its associated OpenGL context, return window's identifier 
-	
+
 	// Callback registration
 	glutReshapeFunc(s_resize);
 	glutKeyboardFunc(s_key);
 	glutSpecialFunc(s_specialKey);
 	glutDisplayFunc(s_display);
-	
+
 	glutMouseFunc(s_mouse);
 	glutMotionFunc(s_motion);
 	glutMouseWheelFunc(s_mouseWheel);
@@ -96,7 +96,7 @@ void IG1App::iniWinOpenGL()
 }
 //-------------------------------------------------------------------------
 
-void IG1App::free() 
+void IG1App::free()
 {  // release memory and resources
 	delete mScene; mScene = nullptr;
 	delete mScene1; mScene1 = nullptr;
@@ -106,14 +106,14 @@ void IG1App::free()
 }
 //-------------------------------------------------------------------------
 
-void IG1App::display() const   
+void IG1App::display() const
 {  // double buffering
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);  // clears the back buffer
 
 	if (m2Scenes) display2Scenes();
 	else if (m2Vistas) display2Vistas();
 	else mScene->render(*mCamera);  // uploads the viewport and camera to the GPU
-	
+
 	glutSwapBuffers();	// swaps the front and back buffer
 }
 
@@ -158,7 +158,7 @@ void IG1App::display2Vistas() const
 	mViewPort->setPos(mWinW / 2, 0);
 	auxCam.setCenital();
 	mScene->render(auxCam);
-	
+
 	*mViewPort = auxVP; //restauramos el puntero de vista
 }
 
@@ -170,13 +170,13 @@ void IG1App::resize(int newWidth, int newHeight) {
 	mViewPort->setSize(newWidth, newHeight);
 
 	// Resize Scene Visible Area such that the scale is not modified
-	mCamera->setSize(mViewPort->width(), mViewPort->height()); 
+	mCamera->setSize(mViewPort->width(), mViewPort->height());
 
-	mCamera1->setSize(mViewPort->width(), mViewPort->height()); 
+	mCamera1->setSize(mViewPort->width(), mViewPort->height());
 }
 //-------------------------------------------------------------------------
 
-void IG1App::key(unsigned char key, int x, int y) 
+void IG1App::key(unsigned char key, int x, int y)
 {
 	bool need_redisplay = true;
 	int mdf = glutGetModifiers(); // returns the modifiers (Shift, Ctrl, Alt)
@@ -193,38 +193,43 @@ void IG1App::key(unsigned char key, int x, int y)
 	case 'l':
 		if (m2Scenes) {
 			if (mCoord.x >= (mWinW / 2)) {
-				mCamera1->set3D();
-				mScene1->set2D(false);
+				if(mCamera1) mCamera1->set3D();
+				if(mScene1) mScene1->set2D(false);
 			}
 			else {
-				mCamera->set3D();
-				mScene->set2D(false);
+				if(mCamera) mCamera->set3D();
+				if(mScene) mScene->set2D(false);
 			}
 		}
 		else {
-			mCamera->set3D();
-			mScene->set2D(false);
+			if(mCamera) mCamera->set3D();
+			if(mScene)mScene->set2D(false);
 		}
 		break;
 	case 'o':
 		if (m2Scenes) {
 			if (mCoord.x >= (mWinW / 2)) {
-				mCamera1->set2D();
-				mScene1->set2D(true);
+				if (mCamera1) mCamera1->set2D();
+				if (mScene1) mScene1->set2D(true);
 			}
 			else {
-				mCamera->set2D();
-				mScene->set2D(true);
+				if (mCamera) mCamera->set2D();
+				if (mScene) mScene->set2D(true);
 			}
 		}
 		else {
-			mCamera->set2D();
-			mScene->set2D(true);
+			if (mCamera) mCamera->set2D();
+			if(mScene) mScene->set2D(true);
 		}
 		break;
 	case 'u':
-		if(mCoord.x >= (mWinW / 2))mScene1->update();
-		else mScene->update();
+		if (m2Scenes){
+			if (mCoord.x >= (mWinW / 2)) if(mScene1) mScene1->update();
+			else if (mScene) mScene->update();
+		}
+		else{
+			if(mScene) mScene->update();
+		}
 		break;
 	case 'k':
 		m2Scenes = !m2Scenes;
@@ -236,22 +241,22 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'm':
 		//Rotar en el eje hortizontal
-		mCamera->orbit(1, 0);;		
+		mCamera->orbit(1, 0);;
 		break;
 	case 'n':
 		//Rotar en el eje hortizontal 
 		mCamera->orbit(-1, 0);
 		break;
 	case 'c':
-			//Eje Vertical
-			mCamera->orbit(0, 40);
-		break;	
+		//Eje Vertical
+		mCamera->orbit(0, 40);
+		break;
 	case 'v':
-			//Eje Vertical
-			mCamera->orbit(0, -40);
+		//Eje Vertical
+		mCamera->orbit(0, -40);
 		break;
 	case 'g':
-		if(mScene->getMid() == 6)mScene->TIEsLightsOn(true);
+		if (mScene->getMid() == 6)mScene->TIEsLightsOn(true);
 		break;
 	case 't':
 		if (mScene->getMid() == 6)mScene->TIEsLightsOn(false);
@@ -267,7 +272,7 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'w':
 		mScene->disableDirLight();
-		break;	
+		break;
 	case 'e':
 		mScene->darkScene();
 		break;
@@ -278,7 +283,7 @@ void IG1App::key(unsigned char key, int x, int y)
 		mScene->enablePosLight();
 		break;
 	case 's':
-		mScene->disablePosLight();	
+		mScene->disablePosLight();
 		break;
 	case 'z':
 		mScene->enableSpotLight();
@@ -339,7 +344,7 @@ void IG1App::key(unsigned char key, int x, int y)
 void IG1App::specialKey(int key, int x, int y) {
 	bool need_redisplay = true;
 	int mdf = glutGetModifiers(); // returns the modifiers (Shift, Ctrl, Alt)
-	
+
 	switch (key) {
 	case GLUT_KEY_RIGHT:
 		if (mdf == GLUT_ACTIVE_CTRL)
@@ -353,7 +358,7 @@ void IG1App::specialKey(int key, int x, int y) {
 		if (mdf == GLUT_ACTIVE_CTRL)
 			//mCamera->yaw(1);      // rotates 1 on the Y axis 
 			mCamera->moveUD(1);
-		else 
+		else
 			//mCamera->yaw(-1);     // rotate -1 on the Y axis 
 			mCamera->moveUD(-1);
 		break;
@@ -381,7 +386,7 @@ void IG1App::update() {
 
 	GLuintmLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
 }
-void IG1App::mouse(int b, int s, int x, int y){
+void IG1App::mouse(int b, int s, int x, int y) {
 	mCoord = dvec2(x, y);
 	mBot = b;
 }
@@ -398,27 +403,27 @@ void IG1App::motion(int x, int y) {
 				mCamera1->moveUD(-displacement.y);
 
 			}
-			else{
+			else {
 				mCamera->moveLR(displacement.x);
 				mCamera->moveUD(-displacement.y);
 			}
 		}
-		else{
+		else {
 			mCamera->moveLR(displacement.x);
 			mCamera->moveUD(-displacement.y);
 		}
 	}
-	else if(mBot == GLUT_LEFT_BUTTON) {
+	else if (mBot == GLUT_LEFT_BUTTON) {
 
-		if (m2Scenes){
+		if (m2Scenes) {
 			if (mCoord.x >= (mWinW / 2)) {
-				if(!mScene1->get2D())  
+				if (!mScene1->get2D())
 					mCamera1->orbit(displacement.x * 0.05f, -displacement.y);
 			}
-			else  if(!mScene->get2D()) 
+			else  if (!mScene->get2D())
 				mCamera->orbit(displacement.x * 0.05f, -displacement.y);
 		}
-		else if(!mScene->get2D()){
+		else if (!mScene->get2D()) {
 			mCamera->orbit(displacement.x * 0.05f, -displacement.y);
 		}
 
@@ -428,15 +433,15 @@ void IG1App::motion(int x, int y) {
 	glutPostRedisplay();//renderiza la escena
 }
 
-void IG1App::mouseWheel(int n, int d, int x, int y){
+void IG1App::mouseWheel(int n, int d, int x, int y) {
 	if (!glutGetModifiers())
 	{
 		if (m2Scenes && mCoord.x >= (mWinW / 2))
 			mCamera1->moveFB(d * 10);
 		else mCamera->moveFB(d * 10);
 	}
-	else{
-		if (GLUT_ACTIVE_CTRL){
+	else {
+		if (GLUT_ACTIVE_CTRL) {
 			if (m2Scenes && mCoord.x >= (mWinW / 2)) mCamera1->setScale(d);
 			else mCamera->setScale(d);
 		}
@@ -445,14 +450,14 @@ void IG1App::mouseWheel(int n, int d, int x, int y){
 	glutPostRedisplay();
 }
 
-void IG1App::s_mouse(int button, int state, int x, int y){
-	s_ig1app.mouse(button,state,x,y);
+void IG1App::s_mouse(int button, int state, int x, int y) {
+	s_ig1app.mouse(button, state, x, y);
 }
 
-void IG1App::s_motion(int x, int y){
+void IG1App::s_motion(int x, int y) {
 	s_ig1app.motion(x, y);
 }
-void IG1App::s_mouseWheel(int n, int d, int x, int y){
+void IG1App::s_mouseWheel(int n, int d, int x, int y) {
 	s_ig1app.mouseWheel(n, d, x, y);
 }
 //-------------------------------------------------------------------------

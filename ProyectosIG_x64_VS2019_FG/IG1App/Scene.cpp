@@ -8,8 +8,6 @@ bool Scene::lightOn = false;
 
 using namespace glm;
 Scene::Scene() {
-	glEnable(GL_LIGHTING);
-
 	dirLight = nullptr;
 	posLight = nullptr;
 	spotLight = nullptr;
@@ -44,6 +42,7 @@ void Scene::TIEsLightsOn(bool light)
 {
 	tieForm->turnLights(light);
 }
+//-------------------------------------------------------------------------
 void Scene::orbita() {
 
 	dmat4 mat = tieForm->modelMat();
@@ -70,6 +69,7 @@ void Scene::orbita() {
 
 	tieForm->setModelMat(mat);
 }
+//-------------------------------------------------------------------------
 void Scene::rota()
 {
 	tieForm->setModelMat(rotate(tieForm->modelMat(), radians(1.0), dvec3(0.0, 1.0, 0.0)));
@@ -94,21 +94,27 @@ void Scene::init() {
 
 	// Graphics objects (entities) of the scene
 	if (mid == 1) {
-		TIE* tie = new TIE(gTextures[6]);
+		glEnable(GL_LIGHTING);
+
+		TIE* tie = new TIE(gTextures[6], 0.05);
 		gObjects.push_back(tie);
 		gObjects.push_back(new EjesRGB(400.0));
 	}
 	else if (mid == 2) {
+		glDisable(GL_LIGHTING);
 		//Anillo cuadrado
 		gObjects.push_back(new EjesRGB(400.0));
 		gObjects.push_back(new AnilloCuadrado());
 	}
 	else if (mid == 3) {
+		glEnable(GL_LIGHTING);
 		gObjects.push_back(new EjesRGB(400.0));
 		gObjects.push_back(new CuboConTapas(100));
 	}
 	else if (mid == 4) {
-		//gObjects.push_back(new EjesRGB(400.0));
+		glEnable(GL_LIGHTING);
+
+		gObjects.push_back(new EjesRGB(400.0));
 
 		float radius = 100.0;
 		Esfera* esfera = new Esfera(radius, 50, 50);
@@ -127,6 +133,8 @@ void Scene::init() {
 		//Que no haya dependencia de movimiento
 	}
 	else if (mid == 5) {
+		glEnable(GL_LIGHTING);
+
 		Texture* t = new Texture();
 		t->load("../Bmps/checker.bmp", 255);
 		gTextures.push_back(t);
@@ -145,13 +153,10 @@ void Scene::init() {
 			spotLight->setPosDir({ 0, 0, -50 });
 			spotLight->setSpot(glm::fvec3(0.0, 0.0, 1.0), 20, 0);
 		}
-
-		//Grid* grilla = new Grid(200, 2);
-		//gObjects.push_back(grilla);
-
-		//gObjects.back()->setTexture(gTextures.back());
 	}
 	else if (mid == 6) {
+		glEnable(GL_LIGHTING);
+
 		gObjects.push_back(new EjesRGB(400.0));
 
 		radius = 5500;
@@ -182,6 +187,7 @@ void Scene::init() {
 		tieForm = tieFor;
 	}		
 	else if (mid == 7) {
+		glDisable(GL_LIGHTING);
 		//Rect�ngulo
 		gObjects.push_back(new RectanguloRGB(800, 800));
 		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, 0, -100)));
@@ -203,6 +209,8 @@ void Scene::init() {
 		gObjects.back()->setModelMat(translate(gObjects.back()->modelMat(), dvec3(200, 0, 0)));
 	}
 	else if(mid == 8) {
+		glDisable(GL_LIGHTING);
+
 		gObjects.push_back(new EjesRGB(400.0));
 
 		gObjects.push_back(new Suelo(700, 700, 5, 5));
@@ -303,6 +311,12 @@ void Scene::brightScene() {
 
 	if(posLight)
 		posLight->enable();
+
+	if (spotLight)
+		spotLight->enable();
+
+	if (tieForm) tieForm->turnLights(true);
+
 	GLfloat amb[] = { 0.25,0.25,0.25, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
 }
@@ -313,7 +327,12 @@ void Scene::darkScene() {
 		dirLight->disable();
 
 	if (posLight)
-		posLight->disable();
+		posLight->disable();	
+	
+	if (spotLight)
+		spotLight->disable();
+
+	if (tieForm) tieForm->turnLights(false);
 
 	GLfloat amb[] = { 0,0,0, 1.0 };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
