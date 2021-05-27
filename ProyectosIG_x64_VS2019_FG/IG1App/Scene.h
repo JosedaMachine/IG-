@@ -60,9 +60,7 @@ public:
 
 	void createLights();
 
-	void TIEsLightsOn();
-
-	void TIEsLightsOf();
+	void TIEsLightsOn(bool light);
 	
 protected:
 	void free();

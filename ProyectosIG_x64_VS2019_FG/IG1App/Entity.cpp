@@ -764,11 +764,13 @@ TIE_FORMATION::TIE_FORMATION(Texture* te,  GLdouble size){
 		gObjects.push_back(t);
 	}
 
-	gObjects[0]->setModelMat(translate(dmat4(1), dvec3(1250, 500, 0)));
+	gObjects[0]->setModelMat(translate(dmat4(1), dvec3(1250, 0, 0)));
 
 	gObjects[0]->setModelMat(rotate(gObjects[0]->modelMat(), radians(300.0), dvec3(0.0, 1.0, 0.0)));
 
-	gObjects[2]->setModelMat(translate(dmat4(1), dvec3(0, 500, 1250)));
+	gObjects[2]->setModelMat(translate(dmat4(1), dvec3(0, 0, 1250)));
+
+	gObjects[2]->setModelMat(rotate(gObjects[2]->modelMat(), radians(300.0), dvec3(0.0, 1.0, 0.0)));
 }
 
 TIE_FORMATION::~TIE_FORMATION(){
@@ -782,12 +784,12 @@ void TIE_FORMATION::render(glm::dmat4 const& modelViewMat) const{
 	CompoundEntity::render(modelViewMat);
 }
 
-void TIE_FORMATION::turnLightsOn()
+void TIE_FORMATION::turnLights(bool light)
 {
-
-}
-
-void TIE_FORMATION::turnLightsOf()
-{
-	
+	if (light) {
+		for (Entidad* e : gObjects) dynamic_cast<TIE*>(e)->turnLight(true);
+	}
+	else {
+		for (Entidad* e : gObjects) dynamic_cast<TIE*>(e)->turnLight(false);
+	}
 }

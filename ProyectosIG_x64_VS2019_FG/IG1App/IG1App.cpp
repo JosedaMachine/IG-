@@ -235,19 +235,26 @@ void IG1App::key(unsigned char key, int x, int y)
 		break;
 	case 'b':
 		//Rotar en el eje vertical
-		mCamera->orbit(0,-40);
+		mCamera->orbit(-1, 0);
 		break;
-	case 'g':
-		//Rotar en el eje vertical
+
+	case 'h':
 		mCamera->orbit(0,40);
 		break;
-	case 'n':
+	case 'm':
 		//Rotar en el eje hortizontal
 		mCamera->orbit(1,0);
 		break;
-	case 'v':
+	case 'n':
 		//Rotar en el eje hortizontal
-		mCamera->orbit(-1,0);
+		mCamera->orbit(0, -40);
+		break;
+	case 'g':
+		//Rotar en el eje vertical
+		mScene->TIEsLightsOn(true);
+		break;
+	case 't':
+		mScene->TIEsLightsOn(false);
 		break;
 	case 'q':
 		mScene->enableDirLight();
