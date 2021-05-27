@@ -25,17 +25,19 @@ void Scene::createLights() {
 	dirLight = new DirLight();
 	dirLight->setPosDir({ 0, 0, -1 });
 	//dirLight->disable();
+	lights.push_back(dirLight);
 
 	posLight = new PosLight();
 	posLight->setDiff({ 1, 1, 0, 1 });
 	posLight->setAmb({ 0.2, 0.2, 0, 1 });
 	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
 	posLight->setPosDir({ 115, 115, 0 });
-	posLight->disable();
-
+	//posLight->disable();
+	lights.push_back(posLight);
 
 	spotLight = new SpotLight();
-	spotLight->disable();
+	//spotLight->disable();
+	lights.push_back(spotLight);
 }
 //-------------------------------------------------------------------------
 void Scene::TIEsLightsOn(bool light)
@@ -89,7 +91,6 @@ Scene::~Scene() {
 //-------------------------------------------------------------------------
 void Scene::init() {
 	setGL();  // OpenGL settings
-
 	chargeTextures(); //We charge here the textures
 
 	// Graphics objects (entities) of the scene
@@ -139,11 +140,9 @@ void Scene::init() {
 		t->load("../Bmps/checker.bmp", 255);
 		gTextures.push_back(t);
 
-
 		t = new Texture();
 		t->load("../Bmps/stones.bmp", 255);
 		gTextures.push_back(t);
-
 
 		gObjects.push_back(new EjesRGB(400.0));
 
@@ -197,7 +196,6 @@ void Scene::init() {
 		gObjects.back()->setColor(dvec4(1.0, 1.0, 0.0, 0.0));
 		gObjects.push_back(new Poligono(360, 200)); //igual hay que meterle 360 lados porque un c�rculo tiene 360 grados //Igual no
 		gObjects.back()->setColor(dvec4(1.0, 0.07, 0.57, 0.0));
-
 
 		//Serpinpi
 		gObjects.push_back(new SerPinspi(200, 10000));
@@ -306,14 +304,9 @@ void Scene::chargeTextures() {
 }
 //-------------------------------------------------------------------------
 void Scene::brightScene() {
-	if(dirLight)
-		dirLight->enable();
-
-	if(posLight)
-		posLight->enable();
-
-	if (spotLight)
-		spotLight->enable();
+	for (Light* light : lights){
+		if (light) light->enable();
+	}
 
 	if (tieForm) tieForm->turnLights(true);
 
@@ -322,15 +315,9 @@ void Scene::brightScene() {
 }
 //-------------------------------------------------------------------------
 void Scene::darkScene() {
-	//glDisable(GL_LIGHTING);
-	if(dirLight)
-		dirLight->disable();
-
-	if (posLight)
-		posLight->disable();	
-	
-	if (spotLight)
-		spotLight->disable();
+	for (Light* light : lights) {
+		if (light) light->disable();
+	}
 
 	if (tieForm) tieForm->turnLights(false);
 

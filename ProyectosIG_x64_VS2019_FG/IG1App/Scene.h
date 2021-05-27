@@ -82,6 +82,9 @@ protected:
 	DirLight* dirLight;
 	PosLight* posLight;
 	SpotLight* spotLight;
+
+	std::vector<Light*> lights;
+
 	bool es2D = true;
 
 	TIE_FORMATION* tieForm;
