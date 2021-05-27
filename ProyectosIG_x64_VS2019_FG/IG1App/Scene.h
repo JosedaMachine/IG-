@@ -62,6 +62,7 @@ public:
 
 	void TIEsLightsOn(bool light);
 	
+	int getMid() { return mid; }
 protected:
 	void free();
 	void setGL();

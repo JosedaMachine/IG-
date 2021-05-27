@@ -250,11 +250,10 @@ void IG1App::key(unsigned char key, int x, int y)
 		mCamera->orbit(0, -40);
 		break;
 	case 'g':
-		//Rotar en el eje vertical
-		mScene->TIEsLightsOn(true);
+		if(mScene->getMid() == 5)mScene->TIEsLightsOn(true);
 		break;
 	case 't':
-		mScene->TIEsLightsOn(false);
+		if (mScene->getMid() == 5)mScene->TIEsLightsOn(false);
 		break;
 	case 'q':
 		mScene->enableDirLight();

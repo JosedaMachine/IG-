@@ -562,7 +562,7 @@ TIE::TIE(Texture* t, GLdouble size, bool hasLight){
 }
 
 TIE::~TIE(){
-
+	delete light;
 }
 
 void TIE::render(glm::dmat4 const& modelViewMat) const{
