@@ -130,7 +130,7 @@ void Scene::init() {
 	else if (mid == 5) {
 		gObjects.push_back(new EjesRGB(400.0));
 
-		float radius = 2500;
+		float radius = 5500;
 
 		if (posLight)
 			posLight->setPosDir({ radius + 30, radius + 30, 0 });
@@ -151,7 +151,8 @@ void Scene::init() {
 		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, -radius * 1.2f, 0))); /*Y = -10500*/
 		gObjects.back()->setColor(dvec4(0.20, 1, 0.92, 1));
 		
-		TIE_FORMATION* tieFor = new TIE_FORMATION(gTextures[6], 1.5);
+		TIE_FORMATION* tieFor = new TIE_FORMATION(gTextures[6], 0.5);
+		tieFor->setModelMat(translate(dmat4(1), dvec3(0, -900, 0)));
 		gObjects.push_back(tieFor);
 
 		tieForm = tieFor;
