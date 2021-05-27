@@ -52,6 +52,8 @@ Scene::~Scene() {
 		delete posLight;
 	if (spotLight)
 		delete spotLight;
+
+	delete tieForm;
 }
 //-------------------------------------------------------------------------
 void Scene::init() {
