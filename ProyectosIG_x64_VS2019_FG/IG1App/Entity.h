@@ -100,8 +100,10 @@ public:
 
 	void turnLights(bool light);
 
+	float getAng() { return ang; }
+	void addAng(float cuant) { ang += cuant; }
 private:
-
+	float ang = 0;
 };
 //-------------------------------------------------------------------------
 

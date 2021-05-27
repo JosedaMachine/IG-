@@ -46,6 +46,8 @@ void Scene::TIEsLightsOn(bool light)
 }
 void Scene::orbita()
 {
+	tieForm->setModelMat((translate(tieForm->modelMat(), dvec3(radius * sin(tieForm->getAng()), 0, radius * cos(tieForm->getAng())))));
+	tieForm->addAng(10);
 }
 void Scene::rota()
 {
@@ -130,7 +132,7 @@ void Scene::init() {
 	else if (mid == 5) {
 		gObjects.push_back(new EjesRGB(400.0));
 
-		float radius = 5500;
+		radius = 5500;
 
 		if (posLight)
 			posLight->setPosDir({ radius + 30, radius + 30, 0 });

@@ -85,6 +85,7 @@ protected:
 	bool es2D = true;
 
 	TIE_FORMATION* tieForm;
+	float radius;
 };
 //-------------------------------------------------------------------------
 
