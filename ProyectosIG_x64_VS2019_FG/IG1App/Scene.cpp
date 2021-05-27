@@ -72,6 +72,7 @@ void Scene::orbita() {
 }
 void Scene::rota()
 {
+	tieForm->setModelMat(rotate(tieForm->modelMat(), radians(1.0), dvec3(0.0, 1.0, 0.0)));
 }
 //-------------------------------------------------------------------------
 Scene::~Scene() {
