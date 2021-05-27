@@ -781,3 +781,13 @@ void TIE_FORMATION::render(glm::dmat4 const& modelViewMat) const{
 
 	CompoundEntity::render(modelViewMat);
 }
+
+void TIE_FORMATION::turnLightsOn()
+{
+
+}
+
+void TIE_FORMATION::turnLightsOf()
+{
+	
+}

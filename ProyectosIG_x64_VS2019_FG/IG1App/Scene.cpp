@@ -14,6 +14,8 @@ Scene::Scene() {
 	posLight = nullptr;
 	spotLight = nullptr;
 
+	tieForm = nullptr;
+
 	if(!lightOn)
 	 createLights();
 }
@@ -36,6 +38,14 @@ void Scene::createLights() {
 
 	spotLight = new SpotLight();
 	spotLight->disable();
+}
+void Scene::TIEsLightsOn()
+{
+
+}
+void Scene::TIEsLightsOf()
+{
+
 }
 //-------------------------------------------------------------------------
 Scene::~Scene() {
@@ -136,8 +146,10 @@ void Scene::init() {
 		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, -radius, 0))); /*Y = -10500*/
 		gObjects.back()->setColor(dvec4(0.20, 1, 0.92, 1));
 		
-		TIE_FORMATION* tieFor = new TIE_FORMATION(gTextures[6], 1);
+		TIE_FORMATION* tieFor = new TIE_FORMATION(glm::dvec3(-radius,0, -radius), glm::dvec3(0, 0, 0), gTextures[6]);
 		gObjects.push_back(tieFor);
+
+		tieForm = tieFor;
 	}
 }
 //-------------------------------------------------------------------------
@@ -277,7 +289,7 @@ void Scene::sceneDirLight(Camera const& cam) const {
 }
 //-------------------------------------------------------------------------
 void Scene::render(Camera const& cam) const {
-	//Ya no se renderiza la escena así. Sino con el atributo dirLight, bastante intuitivo eh Segundo
+	//Ya no se renderiza la escena asï¿½. Sino con el atributo dirLight, bastante intuitivo eh Segundo
 
 	//sceneDirLight(cam);
 	if (dirLight)

@@ -59,6 +59,10 @@ public:
 	void darkScene();
 
 	void createLights();
+
+	void TIEsLightsOn();
+
+	void TIEsLightsOf();
 	
 protected:
 	void free();
@@ -76,6 +80,8 @@ protected:
 	PosLight* posLight;
 	SpotLight* spotLight;
 	bool es2D = true;
+
+	TIE_FORMATION* tieForm;
 };
 //-------------------------------------------------------------------------
 

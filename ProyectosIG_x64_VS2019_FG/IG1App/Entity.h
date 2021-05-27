@@ -96,6 +96,9 @@ public:
 	virtual ~TIE_FORMATION();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 
+	void turnLightsOn();
+
+	void turnLightsOf();
 private:
 
 };
