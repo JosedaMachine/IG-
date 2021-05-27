@@ -494,9 +494,9 @@ void CompoundEntity::render(glm::dmat4 const& modelViewMat) const {
 
 	for (Entidad* ae : gObjectsTranslucid) ae->render(modelViewMat * modelMat());
 }
+
 //-------------------------------------------------------------------------
 TIE::TIE(Texture* t, GLdouble size, bool hasLight){
-
 	float radioEsfera = 130.0 * size;
 	float radioDiscoCono = 90 * size;
 	//Un 80% del tamaño introducido
@@ -507,6 +507,8 @@ TIE::TIE(Texture* t, GLdouble size, bool hasLight){
 	esfera->setColor({ 0.15, 0.28, 0.59 ,1});
 	gObjects.push_back(esfera);
 
+	//Las luces de los tie solo se crean una vez
+	//Usamos un booleano de control estático en la clase Scene
 	if (hasLight) {
 		light = new SpotLight();
 		//light->setDiff({ 0.01, 0.01, 0.01, 1 });
@@ -514,6 +516,9 @@ TIE::TIE(Texture* t, GLdouble size, bool hasLight){
 		//light->setSpec({ 0.01, 0.01, 0.01, 1 });
 		light->setPosDir({ 0, 0, 0 });
 		light->setSpot(glm::fvec3(0.0, -1.0, 0.0), 10, 80);
+	}
+	else{
+		if (light) light->enable();
 	}
 	//-------------------------------------------------------------------
 	////Front
@@ -559,7 +564,10 @@ TIE::TIE(Texture* t, GLdouble size, bool hasLight){
 }
 
 TIE::~TIE(){
-	delete light;
+	if(light) { 
+		light->disable();
+		delete light ;
+	}
 }
 
 void TIE::render(glm::dmat4 const& modelViewMat) const{

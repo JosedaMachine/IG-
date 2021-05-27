@@ -71,26 +71,6 @@ void Camera::set3D() {
 }
 //-------------------------------------------------------------------------
 
-//void Camera::pitch(GLdouble a) 
-//{  
-//	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(1.0, 0, 0));
-//	// glm::rotate returns mViewMat * rotationMatrix
-//}
-////-------------------------------------------------------------------------
-//
-//void Camera::yaw(GLdouble a) 
-//{
-//	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 1.0, 0));
-//	// glm::rotate returns mViewMat * rotationMatrix
-//}
-////-------------------------------------------------------------------------
-//
-//void Camera::roll(GLdouble a) 
-//{
-//	mViewMat = rotate(mViewMat, glm::radians(a), glm::dvec3(0, 0, 1.0));
-//	// glm::rotate returns mViewMat * rotationMatrix
-//}
-
 void Camera::moveLR(GLdouble cs) {
 	mEye += mRight * cs;
 	mLook += mRight * cs;

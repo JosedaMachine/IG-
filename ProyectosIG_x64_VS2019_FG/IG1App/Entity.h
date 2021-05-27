@@ -72,7 +72,9 @@ public:
 	void addEntity(Entidad* ae);
 
 	virtual void render(glm::dmat4 const& modelViewMat) const;
+
 	virtual void update() {};
+
 protected:
 	//Vector de entidades Opacas y Translucidas
 	std::vector<Entidad*> gObjects, gObjectsTranslucid;
@@ -110,7 +112,6 @@ public:
 	virtual ~EjesRGB();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
 
 class TrianguloRGB : public Abs_Entity
 {

@@ -39,6 +39,7 @@ void Scene::createLights() {
 	spotLight = new SpotLight();
 	spotLight->disable();
 }
+//-------------------------------------------------------------------------
 void Scene::TIEsLightsOn(bool light)
 {
 	tieForm->turnLights(light);

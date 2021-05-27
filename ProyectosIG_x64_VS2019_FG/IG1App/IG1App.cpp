@@ -45,16 +45,16 @@ void IG1App::init()
 	mCamera1 = new Camera(mViewPort);
 
 	mScene = new Scene;
-	mScene1 = new Scene;
+	//mScene1 = new Scene;
 
 	mCamera->set2D();
-	mCamera1->set2D();
+	//mCamera1->set2D();
 
-	mScene1->setMid(5);
-	mScene->setMid(5);
+	//mScene1->setMid(5);
+	mScene->setMid(0);
 
 	mScene->init();
-	mScene1->init();
+	//mScene1->init();
 
 	GLuintmLastUpdateTime = glutGet(GLUT_ELAPSED_TIME);
 }

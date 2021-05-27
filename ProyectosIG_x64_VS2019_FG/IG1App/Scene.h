@@ -19,7 +19,6 @@ class Scene
 public:
 
 	static bool lightOn;
-
 	Scene();
 	~Scene();
 
