@@ -97,7 +97,7 @@ void Scene::init() {
 	if (mid == 1) {
 		glEnable(GL_LIGHTING);
 
-		TIE* tie = new TIE(gTextures[6], 0.05);
+		TIE* tie = new TIE(gTextures[6], 1);
 		gObjects.push_back(tie);
 		gObjects.push_back(new EjesRGB(400.0));
 	}
@@ -201,7 +201,6 @@ void Scene::init() {
 		gObjects.push_back(new Sierpinski(200, 10000));
 		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 
-
 		//Tri�ngulo
 		gObjects.push_back(new TrianguloRGB(20, 200));
 		gObjects.back()->setModelMat(translate(gObjects.back()->modelMat(), dvec3(200, 0, 0)));
@@ -228,6 +227,13 @@ void Scene::init() {
 		gObjectsTrans.push_back(new Glass(700.0, 200));
 		gObjectsTrans.back()->setTexture(gTextures[4]);
 		gObjectsTrans.back()->setModelMat(glm::translate(gObjectsTrans.back()->modelMat(), dvec3(0, 100, 0)));
+
+		// Planta
+		Grass* planta = new Grass(150, 150);
+		gObjects.push_back(planta);
+		planta->setTexture(gTextures[5]);
+		planta->setModelMat(translate(planta->modelMat(), dvec3(150, 75, -150)));
+
 
 		int sizePhoto = 100;
 		gObjects.push_back(new Foto(sizePhoto, sizePhoto, GL_FRONT));

@@ -407,36 +407,6 @@ void PoligonoText::render(glm::dmat4 const& modelViewMat) const
 	}
 }
 //-------------------------------------------------------------------------
-Planta::Planta(GLdouble w, GLdouble h)
-{
-	mMesh = Mesh::generaRectanguloTexCor(w, h, 1, 1);
-}
-
-void Planta::render(glm::dmat4 const& modelViewMat) const{
-	if (mMesh != nullptr) {
-		glEnable(GL_ALPHA_TEST);
-		glAlphaFunc(GL_GREATER, 0.0);
-
-		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
-		upload(aMat);
-		mTexture->setWrap(GL_REPEAT);
-		mTexture->bind(GL_REPLACE);
-		mMesh->render();
-
-		aMat = rotate(aMat, radians(60.0), dvec3(0.0, 1.0, 0.0)); // rotamos la matriz
-		upload(aMat);
-		mMesh->render();
-
-		aMat = rotate(aMat, radians(60.0), dvec3(0.0, 1.0, 0.0)); // rotamos la matriz
-		upload(aMat);
-		mMesh->render();
-
-		mTexture->unbind();
-
-		glDisable(GL_ALPHA_TEST);
-	}
-}
-//-------------------------------------------------------------------------
 AnilloCuadrado::AnilloCuadrado()
 {
 	mMesh = IndexMesh::generaAnilloCuadradoIndexado(30,30);
@@ -797,4 +767,44 @@ void TIE_FORMATION::turnLights(bool light) {
 		for (Entidad* e : gObjects) dynamic_cast<TIE*>(e)->turnLight(false);
 	}
 }
+//-------------------------------------------------------------------------
+Grass::Grass(GLdouble w, GLdouble h) {
+	mMesh = Mesh::generaRectanguloTexCor(w, h, 1, 1);	
+}
 
+void Grass::render(glm::dmat4 const& modelViewMat) const {
+	if (mMesh != nullptr) {
+		glEnable(GL_ALPHA_TEST);
+
+		//El primer parametro indica el modo de la concidion para determinar qué objetos pasan el test 
+		//Puede ser GL_GREATER, GL_EQUAL, GL_LESS
+		//El segundo es el valor del alpha entre 0 y 1
+		glAlphaFunc(GL_GREATER, 0.0);
+
+		//glEnable(GL_BLEND); //Activar blending
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//Solo pasan el test los fragmentos NO transparentes, es decir, aquellas partes de las texturas que no tienen un canal alpha
+
+		//La planta tambien se puede realizar como la cristalera pero desactivando el test de profundidad | El unico inconveniente es que cuando
+		//hay una textura que es translucida, pasa el test el canal alpha y se ve negro ese fragmento. Las lineas estan comentadas aqui para probarlo
+
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		mTexture->setWrap(GL_REPEAT);
+		mTexture->bind(GL_REPLACE);
+		mMesh->render();
+
+		aMat = rotate(aMat, radians(60.0), dvec3(0.0, 1.0, 0.0)); // rotamos la matriz
+		upload(aMat);
+		mMesh->render();
+
+		aMat = rotate(aMat, radians(60.0), dvec3(0.0, 1.0, 0.0)); // rotamos la matriz
+		upload(aMat);
+		mMesh->render();
+
+		mTexture->unbind();
+
+		//glDisable(GL_BLEND);
+		glDisable(GL_ALPHA_TEST);
+	}
+}

@@ -106,7 +106,6 @@ private:
 	float ang = 0;
 };
 //-------------------------------------------------------------------------
-
 class EjesRGB : public Abs_Entity
 {
 public:
@@ -114,7 +113,7 @@ public:
 	virtual ~EjesRGB();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
 class TrianguloRGB : public Abs_Entity
 {
 public:
@@ -130,7 +129,7 @@ private:
 
 	float radius;
 };
-
+//-------------------------------------------------------------------------
 class Poligono : public Abs_Entity
 {
 public:
@@ -138,7 +137,7 @@ public:
 	virtual ~Poligono();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
 class PoligonoText : public Abs_Entity
 {
 public:
@@ -146,7 +145,7 @@ public:
 	virtual ~PoligonoText();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
 class Sierpinski : public Abs_Entity
 {
 public:
@@ -154,7 +153,7 @@ public:
 	virtual ~Sierpinski();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
 class Rectangulo : public Abs_Entity
 {
 public:
@@ -162,7 +161,7 @@ public:
 	virtual ~Rectangulo();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
 class RectanguloRGB : public Abs_Entity
 {
 public:
@@ -170,7 +169,7 @@ public:
 	virtual ~RectanguloRGB();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
 class Estrella3D : public Abs_Entity
 {
 public:
@@ -184,7 +183,7 @@ private:
 
 	double angZ, angY;
 };
-
+//-------------------------------------------------------------------------
 class Caja : public Abs_Entity
 {
 public:
@@ -197,7 +196,7 @@ public:
 private:
 	Texture* interior;
 };
-
+//-------------------------------------------------------------------------
 class Suelo : public Abs_Entity
 {
 public:
@@ -208,9 +207,8 @@ public:
 	virtual void update();
 
 private:
-
 };
-
+//-------------------------------------------------------------------------
 class Foto : public Abs_Entity
 {
 public:
@@ -223,7 +221,7 @@ public:
 private:
 
 };
-
+//-------------------------------------------------------------------------
 class Glass : public Abs_Entity
 {
 public:
@@ -235,16 +233,16 @@ public:
 private:
 
 };
-
-class Planta : public Abs_Entity
+//-------------------------------------------------------------------------
+class Grass : public Abs_Entity
 {
 public:
-	explicit Planta(GLdouble w, GLdouble h);
-	virtual ~Planta() {};
+	explicit Grass(GLdouble w, GLdouble h);
+	virtual ~Grass() {};
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 	virtual void update() {};
 };
-
+//-------------------------------------------------------------------------
 class AnilloCuadrado : public Abs_Entity
 {
 public:
@@ -252,7 +250,7 @@ public:
 	virtual ~AnilloCuadrado();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
 class CuboConTapas : public EntityWithIndexMesh
 {
 public:
@@ -260,7 +258,7 @@ public:
 	virtual ~CuboConTapas();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
 class ConeMbR : public Abs_Entity
 {
 public:
@@ -268,7 +266,7 @@ public:
 	virtual ~ConeMbR();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
 class Esfera : public EntityWithMaterial
 {
 public:
@@ -276,7 +274,7 @@ public:
 	virtual ~Esfera();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
 class Grid : public Abs_Entity
 {
 public:
@@ -284,7 +282,7 @@ public:
 	virtual ~Grid();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 };
-
+//-------------------------------------------------------------------------
 class GridCube : public CompoundEntity
 {
 public:
