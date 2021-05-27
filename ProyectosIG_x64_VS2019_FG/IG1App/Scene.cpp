@@ -26,7 +26,7 @@ void Scene::createLights() {
 
 	dirLight = new DirLight();
 	dirLight->setPosDir({ 0, 0, -1 });
-	dirLight->disable();
+	//dirLight->disable();
 
 	posLight = new PosLight();
 	posLight->setDiff({ 1, 1, 0, 1 });
@@ -44,10 +44,31 @@ void Scene::TIEsLightsOn(bool light)
 {
 	tieForm->turnLights(light);
 }
-void Scene::orbita()
-{
-	tieForm->setModelMat((translate(tieForm->modelMat(), dvec3(radius * sin(tieForm->getAng()), 0, radius * cos(tieForm->getAng())))));
-	tieForm->addAng(10);
+void Scene::orbita() {
+
+	dmat4 mat = tieForm->modelMat();
+	//tieForm->setModelMat((translate(dmat4(1), dvec3(radius * sin(tieForm->getAng()), -radius , radius * cos(tieForm->getAng())))));
+	////tieForm->setModelMat(rotate(tieForm->modelMat(), radians(1.0), dvec3(0, 0.0f, 1)));
+	//tieForm->setModelMat(rotate(tieForm->modelMat(), radians(90.0), dvec3(1, 0, 0)));
+	//tieForm->addAng(0.1);
+
+	//Rotacion Horizontal
+	//para sacar el angulo perpendicular a la esfera podemos usar el teoream del coseno.
+	// Dada una posicion inicial c, una posicion final b, y el centro de la esfera a,
+	// usamos Rotar en Y : cosA = (a^2 - b^2 - c^2)/(-2*b*c). Y luego ang(A) = cos^-1(cos(A));
+	// El mismo concepto para rotar en X
+
+	//ESTO DA ASCO
+	//Lo mete en el centro de la esfera
+	mat = translate(mat, dvec3(0.0, -radius - 200, 0.0));
+
+	//Rota el objeto y con ello sus ejes
+	mat = rotate(mat, radians(1.0), dvec3(1, 0.0, 0));
+
+	//Lo posiciona donde de verdad tiene que ir con sus ejes rotados
+	mat = translate(mat, dvec3(0.0, radius + 200, 0.0));
+
+	tieForm->setModelMat(mat);
 }
 void Scene::rota()
 {

@@ -11,6 +11,7 @@ Camera::Camera(Viewport* vp) : mViewPort(vp), mViewMat(1.0), mProjMat(1.0),
 xRight(vp->width() / 2.0), xLeft(-xRight),
 yTop(vp->height() / 2.0), yBot(-yTop)
 {
+	mScaleFact = 15.240000000000023; //BORRAR
 	setPM();
 }
 //-------------------------------------------------------------------------
