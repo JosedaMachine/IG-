@@ -142,7 +142,7 @@ void Scene::init() {
 		gObjects.back()->setModelMat(translate(dmat4(1), dvec3(0, -radius * 1.2f, 0))); /*Y = -10500*/
 		gObjects.back()->setColor(dvec4(0.20, 1, 0.92, 1));
 		
-		TIE_FORMATION* tieFor = new TIE_FORMATION(gTextures[6]);
+		TIE_FORMATION* tieFor = new TIE_FORMATION(gTextures[6], 1.5);
 		gObjects.push_back(tieFor);
 
 		tieForm = tieFor;

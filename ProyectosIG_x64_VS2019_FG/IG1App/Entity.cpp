@@ -497,9 +497,13 @@ void CompoundEntity::render(glm::dmat4 const& modelViewMat) const {
 //-------------------------------------------------------------------------
 TIE::TIE(Texture* t, GLdouble size, bool hasLight){
 
-	float radioDiscoCono = 100 * size;
+	float radioEsfera = 130.0 * size;
+	float radioDiscoCono = 90 * size;
+	//Un 80% del tamaño introducido
+	float largeCylinder = 90.0f * (size * 0.8);
+
 	//Cuerpo
-	Sphere* esfera = new Sphere(130.0 * size);
+	Sphere* esfera = new Sphere(radioEsfera);
 	esfera->setColor({ 0.15, 0.28, 0.59 ,1});
 	gObjects.push_back(esfera);
 
@@ -511,50 +515,43 @@ TIE::TIE(Texture* t, GLdouble size, bool hasLight){
 		light->setPosDir({ 0, 0, 0 });
 		light->setSpot(glm::fvec3(0.0, -1.0, 0.0), 10, 80);
 	}
-	//Front
-	Cylinder* cono = new Cylinder(radioDiscoCono, radioDiscoCono, 40.0);
+	//-------------------------------------------------------------------
+	////Front
+	Cylinder* cono = new Cylinder(radioDiscoCono, radioDiscoCono, largeCylinder);
 	glm::dmat4 mAux = cono->modelMat();
-	mAux = translate(mAux, dvec3(0, 0, 101));
+	mAux = translate(mAux, dvec3(0, 0, radioEsfera - (largeCylinder/1.5)));
 	cono->setModelMat(mAux);
-
 	gObjects.push_back(cono);
-	//Front
+	////Front
 	Disk* disco = new Disk(radioDiscoCono, 0, 360);
 	glm::dmat4 mAux2 = disco->modelMat();
-	mAux2 = translate(mAux2, dvec3(0, 0, 141));
+	mAux2 = translate(mAux2, dvec3(0, 0, radioEsfera + (largeCylinder / 3)));
 	disco->setModelMat(mAux2);
 	gObjects.push_back(disco);
-
-	//Eje transversal
-	Cylinder* cono1 = new Cylinder(50.0 * size, 50 * size, 200.0);
+	//-------------------------------------------------------------------
+	////Eje transversal
+	float largeAxe = 1.8;
+	Cylinder* cono1 = new Cylinder(50.0 * size, 50 * size, radioEsfera * 2 * largeAxe);
 	glm::dmat4 mAux3 = cono1->modelMat();
 	mAux3 = rotate(mAux3, radians(90.0), dvec3(0, 1.0, 0));
-	mAux3 = translate(mAux3, dvec3(0, 0, 120));
+	mAux3 = translate(mAux3, dvec3(0, 0, -(radioEsfera * 2 * largeAxe) / 2));
 	cono1->setModelMat(mAux3);
 	gObjects.push_back(cono1);
-
-	//Eje transversal
-	Cylinder* cono2 = new Cylinder(50.0 * size, 50* size, 200.0);
-	glm::dmat4 mAux4 = cono2->modelMat();
-	mAux4 = rotate(mAux4, radians(-90.0), dvec3(0, 1.0, 0));
-	mAux4 = translate(mAux4, dvec3(0, 0, 120));
-	cono2->setModelMat(mAux4);
-	gObjects.push_back(cono2);
-
-	//Ala1
-	PoligonoText* ala2 = new PoligonoText(6, 500 * size);
+	//-------------------------------------------------------------------
+	////Ala1
+	PoligonoText* ala2 = new PoligonoText(6, 300 * size);
 	glm::dmat4 mAux6 = ala2->modelMat();
 	mAux6 = rotate(mAux6, radians(90.0), dvec3(0, 1.0, 0));
-	mAux6 = translate(mAux6, dvec3(0, 0, 320));
+	mAux6 = translate(mAux6, dvec3(0, 0, radioEsfera * largeAxe));
 	ala2->setModelMat(mAux6);
 	gObjectsTranslucid.push_back(ala2);
 	gObjectsTranslucid.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 	gObjectsTranslucid.back()->setTexture(t);
-	//Ala2
-	PoligonoText* ala1 = new PoligonoText(6, 500 * size);
+	////Ala2
+	PoligonoText* ala1 = new PoligonoText(6, 300 * size);
 	glm::dmat4 mAux5 = ala1->modelMat();
 	mAux5 = rotate(mAux5, radians(-90.0), dvec3(0, 1.0, 0));
-	mAux5 = translate(mAux5, dvec3(0, 0, 320));
+	mAux5 = translate(mAux5, dvec3(0, 0, radioEsfera * largeAxe));
 	ala1->setModelMat(mAux5);
 	gObjectsTranslucid.push_back(ala1);
 	gObjectsTranslucid.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
@@ -764,11 +761,11 @@ TIE_FORMATION::TIE_FORMATION(Texture* te,  GLdouble size){
 		gObjects.push_back(t);
 	}
 
-	gObjects[0]->setModelMat(translate(dmat4(1), dvec3(1250, 0, 0)));
+	gObjects[0]->setModelMat(translate(dmat4(1), dvec3(1000 * size, 0, 0)));
 
 	gObjects[0]->setModelMat(rotate(gObjects[0]->modelMat(), radians(300.0), dvec3(0.0, 1.0, 0.0)));
 
-	gObjects[2]->setModelMat(translate(dmat4(1), dvec3(0, 0, 1250)));
+	gObjects[2]->setModelMat(translate(dmat4(1), dvec3(0, 0, 1000 * size)));
 
 	gObjects[2]->setModelMat(rotate(gObjects[2]->modelMat(), radians(300.0), dvec3(0.0, 1.0, 0.0)));
 }
@@ -784,8 +781,7 @@ void TIE_FORMATION::render(glm::dmat4 const& modelViewMat) const{
 	CompoundEntity::render(modelViewMat);
 }
 
-void TIE_FORMATION::turnLights(bool light)
-{
+void TIE_FORMATION::turnLights(bool light) {
 	if (light) {
 		for (Entidad* e : gObjects) dynamic_cast<TIE*>(e)->turnLight(true);
 	}
@@ -793,3 +789,4 @@ void TIE_FORMATION::turnLights(bool light)
 		for (Entidad* e : gObjects) dynamic_cast<TIE*>(e)->turnLight(false);
 	}
 }
+
