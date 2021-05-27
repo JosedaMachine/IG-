@@ -62,6 +62,11 @@ public:
 	void TIEsLightsOn(bool light);
 	
 	int getMid() { return mid; }
+
+	void orbita();
+
+	void rota();
+
 protected:
 	void free();
 	void setGL();

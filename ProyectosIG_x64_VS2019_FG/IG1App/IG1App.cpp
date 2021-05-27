@@ -179,7 +179,8 @@ void IG1App::resize(int newWidth, int newHeight) {
 void IG1App::key(unsigned char key, int x, int y) 
 {
 	bool need_redisplay = true;
-	
+	int mdf = glutGetModifiers(); // returns the modifiers (Shift, Ctrl, Alt)
+
 	switch (key) {
 	case 27:  // Escape key 
 		glutLeaveMainLoop();  // stops main loop and destroy the OpenGL context
@@ -233,24 +234,30 @@ void IG1App::key(unsigned char key, int x, int y)
 		m2Vistas = !m2Vistas;
 		if (m2Scenes)m2Scenes = false;
 		break;
-	case 'b':
-		//Rotar en el eje vertical
-		mCamera->orbit(-1, 0);
-		break;
-
-	case 'h':
-		mCamera->orbit(0,40);
-		break;
 	case 'm':
 		//Rotar en el eje hortizontal
-		mCamera->orbit(1,0);
+		mCamera->orbit(1, 0);;		
 		break;
 	case 'n':
-		//Rotar en el eje hortizontal
-		mCamera->orbit(0, -40);
+		//Rotar en el eje hortizontal 
+		mCamera->orbit(-1, 0);
+		break;
+	case 'c':
+			//Eje Vertical
+			mCamera->orbit(0, 40);
+		break;	
+	case 'v':
+			//Eje Vertical
+			mCamera->orbit(0, -40);
 		break;
 	case 'g':
 		if(mScene->getMid() == 5)mScene->TIEsLightsOn(true);
+		break;
+	case 'y':
+		if (mScene->getMid() == 5) mScene->orbita();
+		break;
+	case 'b':
+		if (mScene->getMid() == 5) mScene->rota();
 		break;
 	case 't':
 		if (mScene->getMid() == 5)mScene->TIEsLightsOn(false);

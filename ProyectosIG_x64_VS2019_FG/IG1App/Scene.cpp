@@ -44,6 +44,12 @@ void Scene::TIEsLightsOn(bool light)
 {
 	tieForm->turnLights(light);
 }
+void Scene::orbita()
+{
+}
+void Scene::rota()
+{
+}
 //-------------------------------------------------------------------------
 Scene::~Scene() {
 	free(); resetGL();
