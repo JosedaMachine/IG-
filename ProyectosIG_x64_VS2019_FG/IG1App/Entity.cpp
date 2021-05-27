@@ -97,16 +97,16 @@ void Poligono::render(glm::dmat4 const& modelViewMat) const
 	}
 }
 //-------------------------------------------------------------------------
-SerPinspi::SerPinspi(GLuint rd, GLdouble numP) {
+Sierpinski::Sierpinski(GLuint rd, GLdouble numP) {
 	mMesh = Mesh::generaSierpinski(rd, numP);
 }
 
-SerPinspi::~SerPinspi()
+Sierpinski::~Sierpinski()
 {
 	delete mMesh; mMesh = nullptr;
 }
 
-void SerPinspi::render(glm::dmat4 const& modelViewMat) const
+void Sierpinski::render(glm::dmat4 const& modelViewMat) const
 {
 	if (mMesh != nullptr) {
 		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication

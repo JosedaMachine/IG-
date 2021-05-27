@@ -6,7 +6,6 @@
 using namespace glm;
 
 //-------------------------------------------------------------------------
-
 Camera::Camera(Viewport* vp) : mViewPort(vp), mViewMat(1.0), mProjMat(1.0),
 xRight(vp->width() / 2.0), xLeft(-xRight),
 yTop(vp->height() / 2.0), yBot(-yTop)
@@ -14,24 +13,24 @@ yTop(vp->height() / 2.0), yBot(-yTop)
 	setPM();
 }
 //-------------------------------------------------------------------------
-
 void Camera::uploadVM() const
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixd(value_ptr(mViewMat)); // transfers view matrix to the GPU 
 }
-
+//-------------------------------------------------------------------------
 void Camera::setAxes() {
 	mRight = row(mViewMat, 0);
 	mUpward = row(mViewMat, 1);
 	mFront = -row(mViewMat, 2);
 }
-
+//-------------------------------------------------------------------------
 void Camera::changePrj()
 {
 	bOrto = !bOrto;
 	setPM();
 }
+//-------------------------------------------------------------------------
 void Camera::setCenital()
 {
 	mEye = dvec3(0, 1000, 0);
@@ -42,13 +41,11 @@ void Camera::setCenital()
 	setVM();
 }
 //-------------------------------------------------------------------------
-
 void Camera::setVM() {
 	mViewMat = lookAt(mEye, mLook, mUp);  // glm::lookAt defines the view matrix 
 	setAxes();
 }
 //-------------------------------------------------------------------------
-
 void Camera::set2D()
 {
 	mEye = dvec3(0, 0, 500);
@@ -57,7 +54,6 @@ void Camera::set2D()
 	setVM();
 }
 //-------------------------------------------------------------------------
-
 void Camera::set3D() {
 	mEye = dvec3(500, 500, 500);
 	mLook = dvec3(0, 10, 0);
@@ -70,25 +66,24 @@ void Camera::set3D() {
 	setVM();
 }
 //-------------------------------------------------------------------------
-
 void Camera::moveLR(GLdouble cs) {
 	mEye += mRight * cs;
 	mLook += mRight * cs;
 	setVM();
 }
-
+//-------------------------------------------------------------------------
 void Camera::moveFB(GLdouble cs) {
 	mEye += mFront * cs;
 	mLook += mFront * cs;
 	setVM();
 }
-
+//-------------------------------------------------------------------------
 void Camera::moveUD(GLdouble cs) {
 	mEye += mUpward * cs;
 	mLook += mUpward * cs;
 	setVM();
 }
-
+//-------------------------------------------------------------------------
 void Camera::orbit(GLdouble incAng, GLdouble incY) {
 	mAng += incAng;
 	mEye.x = mLook.x + cos(radians(mAng)) * mRadio;
@@ -96,9 +91,7 @@ void Camera::orbit(GLdouble incAng, GLdouble incY) {
 	mEye.y += incY;
 	setVM();
 }
-
 //-------------------------------------------------------------------------
-
 void Camera::setSize(GLdouble xw, GLdouble yh) {
 	xRight = xw / 2.0;
 	xLeft = -xRight;
@@ -107,14 +100,12 @@ void Camera::setSize(GLdouble xw, GLdouble yh) {
 	setPM();
 }
 //-------------------------------------------------------------------------
-
 void Camera::setScale(GLdouble s) {
 	mScaleFact -= s;
 	if (mScaleFact < 0) mScaleFact = 0.01;
 	setPM();
 }
 //-------------------------------------------------------------------------
-
 void Camera::setPM() {
 	if (bOrto) {//si orto esta a true la vista sera ortogonal
 		//(left, right, bottom, top, near, far)
@@ -128,7 +119,6 @@ void Camera::setPM() {
 	uploadPM();
 }
 //-------------------------------------------------------------------------
-
 void Camera::uploadPM() const {
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixd(value_ptr(mProjMat)); // transfers projection matrix to the GPU

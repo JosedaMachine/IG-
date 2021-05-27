@@ -198,7 +198,7 @@ void Scene::init() {
 		gObjects.back()->setColor(dvec4(1.0, 0.07, 0.57, 0.0));
 
 		//Serpinpi
-		gObjects.push_back(new SerPinspi(200, 10000));
+		gObjects.push_back(new Sierpinski(200, 10000));
 		gObjects.back()->setColor(dvec4(1.0, 1.0, 1.0, 0.0));
 
 
@@ -304,9 +304,8 @@ void Scene::chargeTextures() {
 }
 //-------------------------------------------------------------------------
 void Scene::brightScene() {
-	for (Light* light : lights){
+	for (Light* light : lights)
 		if (light) light->enable();
-	}
 
 	if (tieForm) tieForm->turnLights(true);
 
@@ -315,9 +314,8 @@ void Scene::brightScene() {
 }
 //-------------------------------------------------------------------------
 void Scene::darkScene() {
-	for (Light* light : lights) {
+	for (Light* light : lights)
 		if (light) light->disable();
-	}
 
 	if (tieForm) tieForm->turnLights(false);
 
