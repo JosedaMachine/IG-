@@ -808,3 +808,91 @@ void Grass::render(glm::dmat4 const& modelViewMat) const {
 		glDisable(GL_ALPHA_TEST);
 	}
 }
+
+CascoMinero::CascoMinero(GLdouble r, GLuint m, GLdouble h, GLdouble p)
+{
+	dvec3* perfil = new dvec3[p];
+	//perfil[0] = dvec3(r, 0.0, 0.0);
+	//perfil[1] = dvec3(r, 0.0, 0.0);
+	//perfil[2] = dvec3(0.0, h, 0.0);
+
+
+	float angIni = 0.0;
+
+	float angToAdd = (90.0 / (p - 1));
+	vec2 c(0, 0);
+
+	for (int i = 0; i < p; i++) {
+		perfil[i] = dvec3(c.x + r * cos(radians(angIni)), c.y + r * sin(radians(angIni)), 0);
+		angIni += angToAdd;
+	}
+
+
+	mMesh = MbR::generaIndexMeshByRevolution(p, m, perfil);
+}
+
+CascoMinero::~CascoMinero()
+{
+	delete mMesh; mMesh = nullptr;
+}
+
+void CascoMinero::render(glm::dmat4 const& modelViewMat) const
+{
+	if (material != nullptr) {
+		//glEnable(GL_COLOR_MATERIAL);
+		//glColorMaterial(GL_FRONT, GL_SPECULAR);
+		material->upload();
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		mMesh->render();
+		//glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+		//glDisable(GL_COLOR_MATERIAL);
+	}
+	else {
+		glEnable(GL_COLOR_MATERIAL);
+
+		glColor3f(mColor.r, mColor.g, mColor.b);
+
+		//glLineWidth(4);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+		upload(aMat);
+		mMesh->render();
+
+		//glLineWidth(1);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+		glColor3f(1.0, 1.0, 1.0);
+
+		glDisable(GL_COLOR_MATERIAL);
+	}
+}
+//SI TE DA PROBLEMAS CREAR UNA LUZ DENTRO DE UN OBJETO ES BASTANTE POSIBLE QUE SEA PORQUE TIENES MAL EL RENDER
+CascoMineroConLuz::CascoMineroConLuz(GLdouble r, GLuint m, GLdouble h, GLdouble p)
+{
+	CascoMinero* cM = new CascoMinero(r, m, h, p);
+	Material* mat = new Material();
+	mat->setCopper();
+	cM->setMaterial(mat);
+
+	gObjects.push_back(cM);
+	
+	light = new SpotLight();
+
+	light->setPosDir({ 0, 80, 0 });
+	light->setSpot(glm::fvec3(1.0, 0.0, 0.0), 15, 0);
+	
+}
+
+CascoMineroConLuz::~CascoMineroConLuz()
+{
+	delete light;
+}
+
+void CascoMineroConLuz::render(glm::dmat4 const& modelViewMat) const
+{
+	dmat4 aMat = modelViewMat * mModelMat;  // glm matrix multiplication
+	upload(aMat);
+	if (light) light->upload(aMat);
+	CompoundEntity::render(modelViewMat);
+}

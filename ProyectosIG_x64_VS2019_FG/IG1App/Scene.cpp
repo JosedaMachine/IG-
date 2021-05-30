@@ -22,22 +22,22 @@ void Scene::createLights() {
 
 	lightOn = true;
 
-	dirLight = new DirLight();
-	dirLight->setPosDir({ 0, 0, -1 });
-	//dirLight->disable();
-	lights.push_back(dirLight);
+	//dirLight = new DirLight();
+	//dirLight->setPosDir({ 0, 0, -1 });
+	////dirLight->disable();
+	//lights.push_back(dirLight);
 
-	posLight = new PosLight();
-	posLight->setDiff({ 1, 1, 0, 1 });
-	posLight->setAmb({ 0.2, 0.2, 0, 1 });
-	posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
-	posLight->setPosDir({ 115, 115, 0 });
-	//posLight->disable();
-	lights.push_back(posLight);
+	//posLight = new PosLight();
+	//posLight->setDiff({ 1, 1, 0, 1 });
+	//posLight->setAmb({ 0.2, 0.2, 0, 1 });
+	//posLight->setSpec({ 0.5, 0.5, 0.5, 1 });
+	//posLight->setPosDir(glm::fvec3(0.0, 0.0, 1.0));
+	////posLight->disable();
+	//lights.push_back(posLight);
 
-	spotLight = new SpotLight();
-	//spotLight->disable();
-	lights.push_back(spotLight);
+	//spotLight = new SpotLight();
+	////spotLight->disable();
+	//lights.push_back(spotLight);
 }
 //-------------------------------------------------------------------------
 void Scene::TIEsLightsOn(bool light)
@@ -243,6 +243,36 @@ void Scene::init() {
 		Texture* t = new Texture();
 		gTextures.push_back(t);
 		gObjects.back()->setTexture(t);
+	}
+	else if (mid == 9) {
+		glEnable(GL_LIGHTING);
+
+		Texture* t = new Texture();
+		t->load("../Bmps/checker.bmp", 255);
+		gTextures.push_back(t);
+
+		t = new Texture();
+		t->load("../Bmps/stones.bmp", 255);
+		gTextures.push_back(t);
+
+		GridCube* cubito = new GridCube(200.0f, 100, gTextures[7], gTextures.back());
+
+		cubito->setModelMat(translate(dmat4(1), dvec3(300, 0, 0)));
+		cubito->setModelMat(translate(cubito->modelMat(), dvec3(0, 100, 0)));
+
+		gObjects.push_back(cubito);
+
+		gObjects.push_back(new EjesRGB(400.0));
+
+		CascoMineroConLuz* cM = new CascoMineroConLuz(100, 360, 70, 30);
+
+		gObjects.push_back(cM);
+
+		if (spotLight) {
+			spotLight->setPosDir({ 0, 80, 0 });
+			spotLight->setSpot(glm::fvec3(1.0, 0.0, 0.0), 15, 0);
+		}
+
 	}
 }
 //-------------------------------------------------------------------------

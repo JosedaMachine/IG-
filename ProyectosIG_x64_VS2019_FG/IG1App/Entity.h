@@ -294,6 +294,25 @@ public:
 private:
 	Texture* top, * side;
 };
+
+class CascoMinero : public EntityWithMaterial
+{
+public:
+	explicit CascoMinero(GLdouble r, GLuint m, GLdouble h, GLdouble p);
+	virtual ~CascoMinero();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+};
 //-------------------------------------------------------------------------
+class CascoMineroConLuz : public CompoundEntity
+{
+public:
+	explicit CascoMineroConLuz(GLdouble r, GLuint m, GLdouble h, GLdouble p);
+	virtual ~CascoMineroConLuz();
+	virtual void render(glm::dmat4 const& modelViewMat) const;
+
+private:
+	SpotLight* light;
+};
 
 #endif //_H_Entities_H_
+
