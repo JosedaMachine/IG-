@@ -306,7 +306,7 @@ public:
 class CascoMineroConLuz : public CompoundEntity
 {
 public:
-	explicit CascoMineroConLuz(GLdouble r, GLuint m, GLdouble h, GLdouble p);
+	explicit CascoMineroConLuz(GLdouble r, GLuint m, GLdouble h, GLdouble p, Texture* gla);
 	virtual ~CascoMineroConLuz();
 	virtual void render(glm::dmat4 const& modelViewMat) const;
 

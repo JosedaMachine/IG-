@@ -22,7 +22,7 @@ protected:
 class Cylinder : public QuadricEntity
 {
 public:
-	Cylinder(GLdouble rs, GLdouble ri, GLdouble hei); // r es el radio de la esfera
+	Cylinder(GLdouble rs, GLdouble ri, GLdouble hei); 
 	void render(glm::dmat4 const& modelViewMat) const;
 protected:
 	GLdouble rS, rI, h;

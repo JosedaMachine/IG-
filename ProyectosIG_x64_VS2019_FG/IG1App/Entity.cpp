@@ -352,7 +352,7 @@ void Glass::render(glm::dmat4 const& modelViewMat) const {
 		//glEnable(GL_CULL_FACE);
 
 		//Hacemos Bind de la texture
-		mTexture->bind(GL_REPLACE);
+		mTexture->bind(GL_MODULATE);
 		//glCullFace(GL_BACK);
 
 		//Renderizamos
@@ -812,10 +812,6 @@ void Grass::render(glm::dmat4 const& modelViewMat) const {
 CascoMinero::CascoMinero(GLdouble r, GLuint m, GLdouble h, GLdouble p)
 {
 	dvec3* perfil = new dvec3[p];
-	//perfil[0] = dvec3(r, 0.0, 0.0);
-	//perfil[1] = dvec3(r, 0.0, 0.0);
-	//perfil[2] = dvec3(0.0, h, 0.0);
-
 
 	float angIni = 0.0;
 
@@ -847,6 +843,7 @@ void CascoMinero::render(glm::dmat4 const& modelViewMat) const
 		mMesh->render();
 		//glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 		//glDisable(GL_COLOR_MATERIAL);
+		;
 	}
 	else {
 		glEnable(GL_COLOR_MATERIAL);
@@ -867,12 +864,12 @@ void CascoMinero::render(glm::dmat4 const& modelViewMat) const
 		glDisable(GL_COLOR_MATERIAL);
 	}
 }
-//SI TE DA PROBLEMAS CREAR UNA LUZ DENTRO DE UN OBJETO ES BASTANTE POSIBLE QUE SEA PORQUE TIENES MAL EL RENDER
-CascoMineroConLuz::CascoMineroConLuz(GLdouble r, GLuint m, GLdouble h, GLdouble p)
+//SI TE DA PROBLEMAS CREAR UNA LUZ DENTRO DE UN OBJETO ES BASTANTE POSIBLE QUE SEA PORQUE TIENES MAL EL RENDER(Te falta upload de la luz)
+CascoMineroConLuz::CascoMineroConLuz(GLdouble r, GLuint m, GLdouble h, GLdouble p, Texture* gla)
 {
 	CascoMinero* cM = new CascoMinero(r, m, h, p);
 	Material* mat = new Material();
-	mat->setCopper();
+	mat->setGold();
 	cM->setMaterial(mat);
 
 	gObjects.push_back(cM);
@@ -881,6 +878,18 @@ CascoMineroConLuz::CascoMineroConLuz(GLdouble r, GLuint m, GLdouble h, GLdouble 
 
 	light->setPosDir({ 0, 80, 0 });
 	light->setSpot(glm::fvec3(1.0, 0.0, 0.0), 15, 0);
+	
+	Cylinder* c = new Cylinder(10, 10, 50);
+	c->setModelMat(translate(dmat4(1), dvec3(50, 0, 0)));
+	c->setModelMat(translate(c->modelMat(), dvec3(0, 120, 0)));
+	c->setModelMat(rotate(c->modelMat(), radians(90.0),dvec3(1.0, 0.0, 0.0)));
+	gObjects.push_back(c);
+
+	Glass* g = new Glass(20, 20);
+	g->setModelMat(translate(dmat4(1), dvec3(50, 0, 0)));
+	g->setModelMat(translate(g->modelMat(), dvec3(0, 125, 0)));
+	g->setTexture(gla);
+	gObjects.push_back(g);
 	
 }
 
